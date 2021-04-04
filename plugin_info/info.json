@@ -1,0 +1,16 @@
+{
+	"id" : "panne",
+	"name" : "Panne",
+	"description" : "Surveillance de cohérence état/mesure",
+	"licence" : "AGPL",
+	"author" : "KTN01",
+	"require" : "4.1.20",
+	"category" : "monitoring",
+	"changelog" : "",
+	"hasDependency" : false,
+	"hasOwnDeamon" : false,
+	"maxDependancyInstallTime" : 0,
+	"documentation" : "",
+	"language" : "",
+	"compatibility" : ["miniplus","smart","rpi","docker","diy","mobile","v4"]
+}
