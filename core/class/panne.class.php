@@ -287,4 +287,5 @@ class panneCmd extends cmd {
     }
 
     /*     * **********************Getteur Setteur*************************** */
+
 }
