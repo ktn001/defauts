@@ -163,48 +163,44 @@ class panneCmd extends cmd {
 
 	if ($this->getLogicalId() == 'surveillance') {
 
-	    /*
-	     * Vérification de la limite
-	     */
+	    // Vérification de la limite
 	    if ( !is_numeric($this->getConfiguration('limite'))) {
 		throw new Exception (__('La limite doit être un nombre entier!',__FILE__));
 	    }
 
-	    /*
-	     * Vérification du délais
-	     */
+	    // Vérification du délais
 	    if ( !is_numeric($this->getConfiguration('delais'))) {
 		throw new Exception (__('Le délais doit être un nombre entier!',__FILE__));
 	    }
 
-	    /*
-	     * Vérification de la répétition
-	     */
+	    // Vérification de la répétition
 	    if ( !is_numeric($this->getConfiguration('repetition'))) {
 		throw new Exception (__('Le temps d\'attente avant répétition doit être un nombre entier!',__FILE__));
 	    }
-	    if ( $this->getConfiguration('etat') == '' ) {
+
+	    // Vérification de l'état
+	    $etat = trim ($this->getConfiguration('etat'));
+	    if ( $etat == '' ) {
 		throw new Exception (__('L\'état doit être défini!',__FILE__));
 	    }
-
-	    /*
-	     * Vérification de l'état
-	     */
-	    if ( is_numeric (stripos ($this->getConfiguration('etat'),"#" . $this->getId() . "#"))) {
-		throw new Exception (__("Vous ne pouvez utilier l'info elle même dans l'Etat",__FILE__));
+	    if ( is_numeric (stripos ($etat,"#" . $this->getId() . "#"))) {
+		throw new Exception (__("Vous ne pouvez utiliser l'info elle même dans l'Etat",__FILE__));
 	    }
-	    if ( $this->getConfiguration('mesure') == '' ) {
+	    if (! preg_match ("/^#[^#]+#$/", $etat)) {
+		throw new Exception (__("L'etat doit être une information simple",__FILE__));
+	    }
+
+	    // Vérification de la mesure
+	    $mesure = $this->getConfiguration('mesure');
+	    if ( $mesure == '' ) {
 		throw new Exception (__('La mesure doit être définie!',__FILE__));
 	    }
 
-	    /*
-	     * Renseignement du paramête "value" qui contient la liste des
-	     * commandes et variables qui influancent la valeur de $this
-	     */
+	    // Renseignement du paramête "value" qui contient la liste des
+	    // commandes et variables qui influancent la valeur de $this
 	    $value = '';
-	    /*
-	     * recherche de commandes dans "etat"
-	     */
+
+	    // recherche de commandes dans "etat"
 	    $etat = $this->getConfiguration('etat');
 	    preg_match_all("/#([0-9]+)#/", $etat, $matches);
 	    foreach ($matches[1] as $cmd_id) {
@@ -213,16 +209,14 @@ class panneCmd extends cmd {
 		    $value .= '#' . $cmd_id . '#';
 		}
 	    }
-	    /*
-	     * recherche de variables dans etat"
-	     */	
+
+	    // recherche de variables dans etat"
 	    preg_match_all("/variable\((.*?)\)/", $etat, $matches);
 	    foreach ($matches[1] as $variable) {
 		$value .= '#variable(' . $variable . ')#';
 	    }
-	    /*
-	     * recherche de commandes dans "mesure"
-	     */
+
+	    // recherche de commandes dans "mesure"
 	    $mesure = $this->getConfiguration('mesure');
 	    preg_match_all("/#([0-9]+)#/", $mesure, $matches);
 	    foreach ($matches[1] as $cmd_id) {
@@ -231,9 +225,8 @@ class panneCmd extends cmd {
 		    $value .= '#' . $cmd_id . '#';
 		}
 	    }
-	    /*
-	     * recherche de variables dans etat"
-	     */
+
+	    // recherche de variables dans etat"
 	    preg_match_all("/variable\((.*?)\)/", $mesure, $matches);
 	    foreach ($matches[1] as $variable) {
 		$value .= '#variable(' . $variable . ')#';
@@ -242,35 +235,50 @@ class panneCmd extends cmd {
 	}
     }
 
+    public function dateEtat () {
+	$etat = $this->getConfiguration('etat');
+	preg_match_all('/#(\d+)#/',$this->getConfiguration('etat'),$matches);
+	$return = 0;
+	foreach ($matches[1] as $cmd_id) {
+	    $cmd = cmd::byId($cmd_id);
+	    $date = DateTime::createFromFormat("Y-m-d H:i:s",$cmd->getValueDate())->format("U");
+	    $return = $date > $return ? $date : $return;
+	}
+	return ($return);
+    }
+
   // Exécution d'une commande
     public function execute($_options = array()) {
-	log::add("panne", "debug", "options : " . print_r($_options, true));
 	if ($this->getLogicalId() == 'surveillance') {
-	    $toto = jeedom::evaluateExpression("#10#");
-	    log::add("panne", "debug", "evaluation de #10#: $toto");
+	    
+#	    $etat = $this->getConfiguration('etat');
+#
+#	    preg_match_all('/#(\d+)#/',$this->getConfiguration('etat'),$matches);
+#
+#	    $age = time(); // Age de la plus récente de info;
+#	    foreach ($matches[1] as $cmd_id) {
+#		$cmd_e = cmd::byId($cmd_id);
+#		$a = time() - DateTime::createFromFormat("Y-m-d H:i:s",$cmd_e->getValueDate())->format("U");
+#		$age = $a < $age ? $a : $age;
+#	    }
+#	    log::add("panne", "debug", "AGE : ". $age . " secondes");
+#
+#	    $delais = jeedom::evaluateExpression($this->getConfiguration('delais'));
+#	    if ($age < $delais) {
+#		$pid = pcntl_fork();
+#		log::add("panne", "debug","pid: " . $pid . "\n");
+#		if ( $pid == 0) {
+#			log::add ("panne", "error", "Erreur lors du fork");
+#		}
+#		$wait = $delais - $age;
+#	    }
+	    
 
 	    $etat =jeedom::evaluateExpression($this->getConfiguration('etat'));
 	    $mesure =jeedom::evaluateExpression($this->getConfiguration('mesure'));
 	    $limite =jeedom::evaluateExpression($this->getConfiguration('limite'));
 	    $invert = jeedom::evaluateExpression($this->getConfiguration('invert'));
-	    $delais = jeedom::evaluateExpression($this->getConfiguration('delais'));
 
-	    /*
-	     * Vérification si le délais est écoulé depuis le dernier changement de l'état
-	     */
-	    preg_match_all('/#(\d+)#/',$this->getConfiguration('etat'),$matches);
-	    foreach ($matches[1] as $cmd_id) {
-		$state = cmd::byId($cmd_id)->getCache(array('valueDate'));
-		if(isset($state['valueDate'])){
-		    $valueAge = time() - DateTime::createFromFormat("Y-m-d H:i:s",$state['valueDate'])->format("U");
-		    if ($valueAge < $delais) {
-			//event::add("cmd::update", array( "cmd_id" => $cmd_id, "xrepeat" => true));
-			    log::add ("panne", "debug", "REPEAT...");
-			$this->event("repete");
-			return;
-		    }
-		}
-	    }
 
 	    if ($invert == 1) {
 		$etat = $etat==1 ? 0 : 1;
@@ -281,7 +289,6 @@ class panneCmd extends cmd {
 	    } else {
 		$return = $mesure < $limite ? 0 : 1;
 	    }
-	    $toto = jeedom::evaluateExpression("#10#");
 	    return $return;
 	}
     }

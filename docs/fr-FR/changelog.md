@@ -1,3 +1,3 @@
-# Cahngelog Panne
+# Changelog Panne
 
-## Pas encore publié
+## Plougin pas encore publié
