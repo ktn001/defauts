@@ -246,50 +246,33 @@ class panneCmd extends cmd {
 	}
 	return ($return);
     }
+	
+    public function calculSurveillance () {
+	$etat =jeedom::evaluateExpression($this->getConfiguration('etat'));
+	$mesure =jeedom::evaluateExpression($this->getConfiguration('mesure'));
+	$limite =jeedom::evaluateExpression($this->getConfiguration('limite'));
+	$invert = jeedom::evaluateExpression($this->getConfiguration('invert'));
+
+        if ($invert == 1) {
+	    $etat = $etat==1 ? 0 : 1;
+	}
+
+	if ($etat == 1) {
+	    $return = $mesure > $limite ? 0 : 1;
+	} else {
+	    $return = $mesure < $limite ? 0 : 1;
+	}
+	return $return;
+    }
 
   // Exécution d'une commande
     public function execute($_options = array()) {
 	if ($this->getLogicalId() == 'surveillance') {
-	    
-#	    $etat = $this->getConfiguration('etat');
-#
-#	    preg_match_all('/#(\d+)#/',$this->getConfiguration('etat'),$matches);
-#
-#	    $age = time(); // Age de la plus récente de info;
-#	    foreach ($matches[1] as $cmd_id) {
-#		$cmd_e = cmd::byId($cmd_id);
-#		$a = time() - DateTime::createFromFormat("Y-m-d H:i:s",$cmd_e->getValueDate())->format("U");
-#		$age = $a < $age ? $a : $age;
-#	    }
-#	    log::add("panne", "debug", "AGE : ". $age . " secondes");
-#
-#	    $delais = jeedom::evaluateExpression($this->getConfiguration('delais'));
-#	    if ($age < $delais) {
-#		$pid = pcntl_fork();
-#		log::add("panne", "debug","pid: " . $pid . "\n");
-#		if ( $pid == 0) {
-#			log::add ("panne", "error", "Erreur lors du fork");
-#		}
-#		$wait = $delais - $age;
-#	    }
-	    
-
-	    $etat =jeedom::evaluateExpression($this->getConfiguration('etat'));
-	    $mesure =jeedom::evaluateExpression($this->getConfiguration('mesure'));
-	    $limite =jeedom::evaluateExpression($this->getConfiguration('limite'));
-	    $invert = jeedom::evaluateExpression($this->getConfiguration('invert'));
-
-
-	    if ($invert == 1) {
-		$etat = $etat==1 ? 0 : 1;
+	    $delais = jeedom::evaluateExpression($this->getConfiguration('delais'));
+	    if (($this->dateEtat()+$delais) > time()) {
 	    }
 
-	    if ($etat == 1) {
-		$return = $mesure > $limite ? 0 : 1;
-	    } else {
-		$return = $mesure < $limite ? 0 : 1;
-	    }
-	    return $return;
+	    return calculSurveillance();
 	}
     }
 
