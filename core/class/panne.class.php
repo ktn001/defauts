@@ -246,14 +246,14 @@ class panneCmd extends cmd {
 	}
 	return ($return);
     }
-	
+
     public function calculSurveillance () {
 	$etat =jeedom::evaluateExpression($this->getConfiguration('etat'));
 	$mesure =jeedom::evaluateExpression($this->getConfiguration('mesure'));
 	$limite =jeedom::evaluateExpression($this->getConfiguration('limite'));
 	$invert = jeedom::evaluateExpression($this->getConfiguration('invert'));
 
-        if ($invert == 1) {
+	if ($invert == 1) {
 	    $etat = $etat==1 ? 0 : 1;
 	}
 
@@ -269,10 +269,17 @@ class panneCmd extends cmd {
     public function execute($_options = array()) {
 	if ($this->getLogicalId() == 'surveillance') {
 	    $delais = jeedom::evaluateExpression($this->getConfiguration('delais'));
-	    if (($this->dateEtat()+$delais) > time()) {
+	    $dateEtat = $this->dateEtat();
+	    if (($dateEtat + $delais) > time()) {
+		$cmd = __DIR__ . "/../php/executeCmd.php";
+		$cmd .= ' -c ' . $this->getId();
+		$cmd .= ' -t ' . $dateEtat;
+		log::add("panne","info",$cmd);
+		system::php($cmd . ' >> ' . log::getPathToLog('executeCmd.log') . ' 2>&1 &' );
+		return $this->execCmd();
 	    }
 
-	    return calculSurveillance();
+	    return $this->calculSurveillance();
 	}
     }
 

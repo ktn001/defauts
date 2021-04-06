@@ -69,4 +69,6 @@ if ($dateEtat < $cmd->dateEtat()) {
 	exit (0);
 }
 
-print ("COUCOUCOUCOUCOUCUC\n");
+$cmd->event($cmd->calculSurveillance());
+
+exit (0);
