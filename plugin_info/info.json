@@ -1,9 +1,7 @@
 {
 	"id" : "panne",
 	"name" : "Panne",
-	"description" : {
-		fr-FR : "Surveillance de cohérence état/mesure",
-	},
+	"description" : "Surveillance de cohérence état/mesure",
 	"licence" : "AGPL",
 	"author" : "KTN01",
 	"require" : "4.1.20",

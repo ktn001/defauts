@@ -81,12 +81,19 @@ class panne extends eqLogic {
 
  // Fonction exécutée automatiquement avant la création de l'équipement
     public function preInsert() {
-
     }
 
  // Fonction exécutée automatiquement après la création de l'équipement
     public function postInsert() {
-
+	$cmd = new cmd();
+	$cmd->setEqLogic_id($this->getId());
+	$cmd->setLogicalId("panne");
+	$cmd->setName("panne");
+	$cmd->setType("info");
+	$cmd->setSubType("numeric");
+	$cmd->setConfiguration("minValue",0);
+	$cmd->setConfiguration("maxValue",2);
+	$cmd->save();
     }
 
  // Fonction exécutée automatiquement avant la mise à jour de l'équipement
@@ -248,6 +255,10 @@ class panneCmd extends cmd {
     }
 
     public function calculSurveillance () {
+	$this->getCache("alertTime", 0);
+	$cache = cache::byKey('cmdCacheAttr' . $this->getId());
+	log::add("panne","info","CACHE value  : " . print_r($cache->getValue(),true));
+	log::add("panne","info","CACHE options: " . print_r($cache->getOptions(),true));
 	$etat =jeedom::evaluateExpression($this->getConfiguration('etat'));
 	$mesure =jeedom::evaluateExpression($this->getConfiguration('mesure'));
 	$limite =jeedom::evaluateExpression($this->getConfiguration('limite'));
@@ -262,6 +273,7 @@ class panneCmd extends cmd {
 	} else {
 	    $return = $mesure < $limite ? 0 : 1;
 	}
+	$this->setCache("alertTime",time());
 	return $return;
     }
 

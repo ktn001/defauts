@@ -29,7 +29,7 @@ $("#bt_addSurveillance").on('click', function (event) {
 $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 
 /*
- * Affiche le popup pour la sélaction d'une info binaire
+ * Affiche le popup pour la sélection d'une info binaire
  */
 $("#table_cmd").delegate(".listEquipementInfoBinary", 'click', function () {
     var el = $(this);
@@ -40,7 +40,7 @@ $("#table_cmd").delegate(".listEquipementInfoBinary", 'click', function () {
 });
 
 /*
- * Affiche le popup pour la sélaction d'une info numerique
+ * Affiche le popup pour la sélection d'une info numerique
  */
 $("#table_cmd").delegate(".listEquipementInfoNumeric", 'click', function () {
     var el = $(this);
@@ -63,6 +63,27 @@ function addCmdToTable(_cmd) {
 	_cmd.configuration = {};
     }
 
+    if (_cmd.logicalId == "panne") {
+	var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
+	/* id  et type */
+	tr += '<td width="60px">';
+	tr += '<span class="cmdAttr" data-l1key="id"></span>';
+	tr += '<span class="cmdAttr" data-l1key="type" style="display : none">info</span>';
+	tr += '<span class="cmdAttr" data-l1key="subType" style="display : none">binary</span>';
+	tr += '<span class="cmdAttr" data-l1key="logicalId" style="display : none"></span>';
+	tr += '</td>';
+	/* NOM */
+	tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom surveillance}}"></td>';
+	tr += '<td/>';
+	tr += '<td/>';
+	tr += '<td/>';
+	tr += '<td/>';
+	tr += '<td/>';
+	tr += '<td>';
+	tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
+	tr += '</td>';
+	tr += '</tr>';
+    }
     if (_cmd.logicalId == 'surveillance') {
 	var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
 	/* id  et type */
@@ -102,7 +123,6 @@ function addCmdToTable(_cmd) {
 	/* TEMPORISATION */
 	tr += '<td>';
 	tr += '<input class="cmdAttr form-control input-sm tooltips" style="width:47%;display:inline" data-l1key="configuration" data-l2key="delais" title="{{Attente après changement d\'état}}" placeholder="{{secondes}}">';
-	tr += '<input class="cmdAttr form-control input-sm tooltips" style="width:47%;margin-left:4px;display:inline" data-l1key="configuration" data-l2key="repetition" title="{{Répetition de l\'alerte}}" placeholder="{{minutes}}">';
 	tr += '</td>';
 	/* OPTIONS */
 	tr += '<td>';

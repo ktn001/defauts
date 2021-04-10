@@ -149,6 +149,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
 	    <div role="tabpanel" class="tab-pane" id="commandtab">
 		<a class="btn btn-default btn-sm pull-right " id="bt_addSurveillance" style="margin-top:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une surveillance}}</a>
 		<br/><br/>
+		<div id="container_panne">
+		</div>
 		<div class="table-responsive">
 		    <table id="table_cmd" class="table table-bordered table-condensed">
 			<thead>
