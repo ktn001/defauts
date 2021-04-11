@@ -69,6 +69,7 @@ if ($dateEtat < $cmd->dateEtat()) {
 	exit (0);
 }
 
-$cmd->event($cmd->calculSurveillance());
+$eqLogic=$cmd->getEqLogic();
+$eqLogic->checkAndUpdateCmd($cmd,$cmd->calculSurveillance());
 
 exit (0);

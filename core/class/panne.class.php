@@ -20,281 +20,383 @@
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class panne extends eqLogic {
-    /*     * *************************Attributs****************************** */
+	/*     * *************************Attributs****************************** */
 
-  /*
-   * Permet de définir les possibilités de personnalisation du widget (en cas d'utilisation de la fonction 'toHtml' par exemple)
-   * Tableau multidimensionnel - exemple: array('custom' => true, 'custom::layout' => false)
+	/*
+	 * Permet de définir les possibilités de personnalisation du widget (en cas d'utilisation de la fonction 'toHtml' par exemple)
+	 * Tableau multidimensionnel - exemple: array('custom' => true, 'custom::layout' => false)
 	public static $_widgetPossibility = array();
-   */
+	 */
 
-    /*     * ***********************Methode static*************************** */
+	/*     * ***********************Methode static*************************** */
 
-    public static function event () {
-	log::add('panne','debug',"Début d event()");
-    }
-    /*
-     * Fonction exécutée automatiquement toutes les minutes par Jeedom
-      public static function cron() {
-      }
-     */
+	public static function event () {
+		log::add('panne','debug',"Début d event()");
+	}
 
-    /*
-     * Fonction exécutée automatiquement toutes les 5 minutes par Jeedom
-      public static function cron5() {
-      }
-     */
+	/*
+	 * Fonction exécutée automatiquement toutes les minutes par Jeedom
+	  public static function cron() {
+	  }
+	 */
 
-    /*
-     * Fonction exécutée automatiquement toutes les 10 minutes par Jeedom
-      public static function cron10() {
-      }
-     */
+	/*
+	 * Fonction exécutée automatiquement toutes les 5 minutes par Jeedom
+	  public static function cron5() {
+	  }
+	 */
 
-    /*
-     * Fonction exécutée automatiquement toutes les 15 minutes par Jeedom
-      public static function cron15() {
-      }
-     */
+	/*
+	 * Fonction exécutée automatiquement toutes les 10 minutes par Jeedom
+	  public static function cron10() {
+	  }
+	 */
 
-    /*
-     * Fonction exécutée automatiquement toutes les 30 minutes par Jeedom
-      public static function cron30() {
-      }
-     */
+	/*
+	 * Fonction exécutée automatiquement toutes les 15 minutes par Jeedom
+	  public static function cron15() {
+	  }
+	 */
 
-    /*
-     * Fonction exécutée automatiquement toutes les heures par Jeedom
-      public static function cronHourly() {
-      }
-     */
+	/*
+	 * Fonction exécutée automatiquement toutes les 30 minutes par Jeedom
+	  public static function cron30() {
+	  }
+	 */
 
-    /*
-     * Fonction exécutée automatiquement tous les jours par Jeedom
-      public static function cronDaily() {
-      }
-     */
+	/*
+	 * Fonction exécutée automatiquement toutes les heures par Jeedom
+	  public static function cronHourly() {
+	  }
+	 */
+
+	/*
+	 * Fonction exécutée automatiquement tous les jours par Jeedom
+	  public static function cronDaily() {
+	  }
+	 */
 
 
 
-    /*     * *********************Méthodes d'instance************************* */
+	/*     * *********************Méthodes d'instance************************* */
 
- // Fonction exécutée automatiquement avant la création de l'équipement
-    public function preInsert() {
-    }
+	// Fonction exécutée automatiquement avant la création de l'équipement
+	public function preInsert() {
+	}
 
- // Fonction exécutée automatiquement après la création de l'équipement
-    public function postInsert() {
-	$cmd = new cmd();
-	$cmd->setEqLogic_id($this->getId());
-	$cmd->setLogicalId("panne");
-	$cmd->setName("panne");
-	$cmd->setType("info");
-	$cmd->setSubType("numeric");
-	$cmd->setConfiguration("minValue",0);
-	$cmd->setConfiguration("maxValue",2);
-	$cmd->save();
-    }
+	// Fonction exécutée automatiquement après la création de l'équipement
+	public function postInsert() {
+		// Création de la cmd info "panne"
+		$cmd = new cmd();
+		$cmd->setEqLogic_id($this->getId());
+		$cmd->setLogicalId("panne");
+		$cmd->setName("panne");
+		$cmd->setType("info");
+		$cmd->setSubType("numeric");
+		$cmd->setConfiguration("minValue",0);
+		$cmd->setConfiguration("maxValue",2);
+		$cmd->save();
 
- // Fonction exécutée automatiquement avant la mise à jour de l'équipement
-    public function preUpdate() {
+		// Création de la commande action "Acquitter"
+		$cmd = new cmd();
+		$cmd->setEqLogic_id($this->getId());
+		$cmd->setLogicalId("acquitter");
+		$cmd->setName("acquitter");
+		$cmd->setType("action");
+		$cmd->setSubType("other");
+		$cmd->setOrder(1);
+		$cmd->save();
+	}
 
-    }
+	// Fonction exécutée automatiquement avant la mise à jour de l'équipement
+	public function preUpdate() {
+	}
 
- // Fonction exécutée automatiquement après la mise à jour de l'équipement
-    public function postUpdate() {
+	// Fonction exécutée automatiquement après la mise à jour de l'équipement
+	public function postUpdate() {
+	}
 
-    }
+	// Fonction exécutée automatiquement avant la sauvegarde (création ou mise à jour) de l'équipement
+	public function preSave() {
+		if ( $this->getConfiguration("autoAcquittement") == 1) {
+			if ( !ctype_digit(trim($this->getConfiguration("delaisAcquittement")))) {
+				throw new Exception (__('Le délais d\'acquittement doit être un entier positif ou nul!',__FILE__));
+			}
+		}
+	}
 
- // Fonction exécutée automatiquement avant la sauvegarde (création ou mise à jour) de l'équipement
-    public function preSave() {
-    }
+	// Fonction exécutée automatiquement après la sauvegarde (création ou mise à jour) de l'équipement
+	public function postSave() {
+	}
 
- // Fonction exécutée automatiquement après la sauvegarde (création ou mise à jour) de l'équipement
-    public function postSave() {
+	// Fonction exécutée automatiquement avant la suppression de l'équipement
+	public function preRemove() {
+	}
 
-    }
+	// Fonction exécutée automatiquement après la suppression de l'équipement
+	public function postRemove() {
+	}
 
- // Fonction exécutée automatiquement avant la suppression de l'équipement
-    public function preRemove() {
+	/*
+	 * Non obligatoire : permet de modifier l'affichage du widget (également utilisable par les commandes)
+	  public function toHtml($_version = 'dashboard') {
 
-    }
+	  }
+	 */
 
- // Fonction exécutée automatiquement après la suppression de l'équipement
-    public function postRemove() {
+	/*
+	 * Non obligatoire : permet de déclencher une action après modification de variable de configuration
+	public static function postConfig_<Variable>() {
+	}
+	 */
 
-    }
+	/*
+	 * Non obligatoire : permet de déclencher une action avant modification de variable de configuration
+	public static function preConfig_<Variable>() {
+	}
+	 */
 
-    /*
-     * Non obligatoire : permet de modifier l'affichage du widget (également utilisable par les commandes)
-      public function toHtml($_version = 'dashboard') {
-
-      }
-     */
-
-    /*
-     * Non obligatoire : permet de déclencher une action après modification de variable de configuration
-    public static function postConfig_<Variable>() {
-    }
-     */
-
-    /*
-     * Non obligatoire : permet de déclencher une action avant modification de variable de configuration
-    public static function preConfig_<Variable>() {
-    }
-     */
-
-    /*     * **********************Getteur Setteur*************************** */
+	/*     * **********************Getteur Setteur*************************** */
 }
 
 class panneCmd extends cmd {
-    /*     * *************************Attributs****************************** */
+	/*     * *************************Attributs****************************** */
 
-    /*
-      public static $_widgetPossibility = array();
-    */
+	/*
+	  public static $_widgetPossibility = array();
+	*/
 
-    /*     * ***********************Methode static*************************** */
+	/*     * ***********************Methode static*************************** */
 
 
-    /*     * *********************Methode d'instance************************* */
+	/*     * *********************Methode d'instance************************* */
 
-    /*
-     * Non obligatoire permet de demander de ne pas supprimer les commandes même si elles ne sont pas dans la nouvelle configuration de l'équipement envoyé en JS
-      public function dontRemoveCmd() {
-      return true;
-      }
-     */
+	/*
+	 * Non obligatoire permet de demander de ne pas supprimer les commandes même si elles ne sont pas dans la nouvelle configuration de l'équipement envoyé en JS
+	  public function dontRemoveCmd() {
+	  return true;
+	  }
+	 */
 
-    public function preSave () {
+	public function preSave () {
 
-	if ($this->getLogicalId() == 'surveillance') {
-
-	    // Vérification de la limite
-	    if ( !is_numeric($this->getConfiguration('limite'))) {
-		throw new Exception (__('La limite doit être un nombre entier!',__FILE__));
-	    }
-
-	    // Vérification du délais
-	    if ( !is_numeric($this->getConfiguration('delais'))) {
-		throw new Exception (__('Le délais doit être un nombre entier!',__FILE__));
-	    }
-
-	    // Vérification de la répétition
-	    if ( !is_numeric($this->getConfiguration('repetition'))) {
-		throw new Exception (__('Le temps d\'attente avant répétition doit être un nombre entier!',__FILE__));
-	    }
-
-	    // Vérification de l'état
-	    $etat = trim ($this->getConfiguration('etat'));
-	    if ( $etat == '' ) {
-		throw new Exception (__('L\'état doit être défini!',__FILE__));
-	    }
-	    if ( is_numeric (stripos ($etat,"#" . $this->getId() . "#"))) {
-		throw new Exception (__("Vous ne pouvez utiliser l'info elle même dans l'Etat",__FILE__));
-	    }
-	    if (! preg_match ("/^#[^#]+#$/", $etat)) {
-		throw new Exception (__("L'etat doit être une information simple",__FILE__));
-	    }
-
-	    // Vérification de la mesure
-	    $mesure = $this->getConfiguration('mesure');
-	    if ( $mesure == '' ) {
-		throw new Exception (__('La mesure doit être définie!',__FILE__));
-	    }
-
-	    // Renseignement du paramête "value" qui contient la liste des
-	    // commandes et variables qui influancent la valeur de $this
-	    $value = '';
-
-	    // recherche de commandes dans "etat"
-	    $etat = $this->getConfiguration('etat');
-	    preg_match_all("/#([0-9]+)#/", $etat, $matches);
-	    foreach ($matches[1] as $cmd_id) {
-		$cmd = self::byId($cmd_id);
-		if (is_object($cmd) && $cmd->getType() == 'info') {
-		    $value .= '#' . $cmd_id . '#';
+		if ($this->getLogicalId() == 'panne') {
+			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info",true);
+			$values = "";
+			foreach ($cmds as $cmd) {
+				if ($cmd->getLogicalId() == "surveillance") {
+					$values .= "#" . $cmd->getId() . "#";
+				}
+			}
+			$this->setValue($values);
 		}
-	    }
 
-	    // recherche de variables dans etat"
-	    preg_match_all("/variable\((.*?)\)/", $etat, $matches);
-	    foreach ($matches[1] as $variable) {
-		$value .= '#variable(' . $variable . ')#';
-	    }
+		if ($this->getLogicalId() == 'surveillance') {
 
-	    // recherche de commandes dans "mesure"
-	    $mesure = $this->getConfiguration('mesure');
-	    preg_match_all("/#([0-9]+)#/", $mesure, $matches);
-	    foreach ($matches[1] as $cmd_id) {
-		$cmd = self::byId($cmd_id);
-		if (is_object($cmd) && $cmd->getType() == 'info') {
-		    $value .= '#' . $cmd_id . '#';
+			// Vérification de la limite
+			if ( !ctype_digit(trim($this->getConfiguration("limite")))) {
+				throw new Exception (__('La limite doit être un nombre entier!',__FILE__));
+			}
+
+			// Vérification du délais
+			if ( !ctype_digit(trim($this->getConfiguration("delais")))) {
+				throw new Exception (__('Le délais doit être un nombre entier!',__FILE__));
+			}
+
+			// Vérification de l'état
+			$etat = trim ($this->getConfiguration('etat'));
+			if ( $etat == '' ) {
+				throw new Exception (__('L\'état doit être défini!',__FILE__));
+			}
+			if ( is_numeric (stripos ($etat,"#" . $this->getId() . "#"))) {
+				throw new Exception (__("Vous ne pouvez utiliser l'info elle même dans l'Etat",__FILE__));
+			}
+			if (! preg_match ("/^#[^#]+#$/", $etat)) {
+				throw new Exception (__("L'etat doit être une information simple",__FILE__));
+			}
+
+			// Vérification de la mesure
+			$mesure = $this->getConfiguration('mesure');
+			if ( $mesure == '' ) {
+				throw new Exception (__('La mesure doit être définie!',__FILE__));
+			}
+
+			// Renseignement du paramètre "value" qui contient la liste des
+			// commandes et variables qui influancent la valeur de $this
+			$value = '';
+
+			// recherche de commandes dans "etat"
+			$etat = $this->getConfiguration('etat');
+			preg_match_all("/#([0-9]+)#/", $etat, $matches);
+			foreach ($matches[1] as $cmd_id) {
+				$cmd = self::byId($cmd_id);
+				if (is_object($cmd) && $cmd->getType() == 'info') {
+					$value .= '#' . $cmd_id . '#';
+				}
+			}
+
+			// recherche de variables dans etat"
+			preg_match_all("/variable\((.*?)\)/", $etat, $matches);
+			foreach ($matches[1] as $variable) {
+				$value .= '#variable(' . $variable . ')#';
+			}
+
+			// recherche de commandes dans "mesure"
+			$mesure = $this->getConfiguration('mesure');
+			preg_match_all("/#([0-9]+)#/", $mesure, $matches);
+			foreach ($matches[1] as $cmd_id) {
+				$cmd = self::byId($cmd_id);
+				if (is_object($cmd) && $cmd->getType() == 'info') {
+					$value .= '#' . $cmd_id . '#';
+				}
+			}
+
+			// recherche de variables dans etat"
+			preg_match_all("/variable\((.*?)\)/", $mesure, $matches);
+			foreach ($matches[1] as $variable) {
+				$value .= '#variable(' . $variable . ')#';
+			}
+			$this->setValue($value);
 		}
-	    }
-
-	    // recherche de variables dans etat"
-	    preg_match_all("/variable\((.*?)\)/", $mesure, $matches);
-	    foreach ($matches[1] as $variable) {
-		$value .= '#variable(' . $variable . ')#';
-	    }
-	    $this->setValue($value);
-	}
-    }
-
-    public function dateEtat () {
-	$etat = $this->getConfiguration('etat');
-	preg_match_all('/#(\d+)#/',$this->getConfiguration('etat'),$matches);
-	$return = 0;
-	foreach ($matches[1] as $cmd_id) {
-	    $cmd = cmd::byId($cmd_id);
-	    $date = DateTime::createFromFormat("Y-m-d H:i:s",$cmd->getValueDate())->format("U");
-	    $return = $date > $return ? $date : $return;
-	}
-	return ($return);
-    }
-
-    public function calculSurveillance () {
-	$this->getCache("alertTime", 0);
-	$cache = cache::byKey('cmdCacheAttr' . $this->getId());
-	log::add("panne","info","CACHE value  : " . print_r($cache->getValue(),true));
-	log::add("panne","info","CACHE options: " . print_r($cache->getOptions(),true));
-	$etat =jeedom::evaluateExpression($this->getConfiguration('etat'));
-	$mesure =jeedom::evaluateExpression($this->getConfiguration('mesure'));
-	$limite =jeedom::evaluateExpression($this->getConfiguration('limite'));
-	$invert = jeedom::evaluateExpression($this->getConfiguration('invert'));
-
-	if ($invert == 1) {
-	    $etat = $etat==1 ? 0 : 1;
 	}
 
-	if ($etat == 1) {
-	    $return = $mesure > $limite ? 0 : 1;
-	} else {
-	    $return = $mesure < $limite ? 0 : 1;
+	public function dateEtat () {
+		$etat = $this->getConfiguration('etat');
+		preg_match_all('/#(\d+)#/',$this->getConfiguration('etat'),$matches);
+		$return = 0;
+		foreach ($matches[1] as $cmd_id) {
+			$cmd = cmd::byId($cmd_id);
+			$date = DateTime::createFromFormat("Y-m-d H:i:s",$cmd->getValueDate())->format("U");
+			$return = $date > $return ? $date : $return;
+		}
+		return ($return);
 	}
-	$this->setCache("alertTime",time());
-	return $return;
-    }
 
-  // Exécution d'une commande
-    public function execute($_options = array()) {
-	if ($this->getLogicalId() == 'surveillance') {
-	    $delais = jeedom::evaluateExpression($this->getConfiguration('delais'));
-	    $dateEtat = $this->dateEtat();
-	    if (($dateEtat + $delais) > time()) {
-		$cmd = __DIR__ . "/../php/executeCmd.php";
-		$cmd .= ' -c ' . $this->getId();
-		$cmd .= ' -t ' . $dateEtat;
-		log::add("panne","info",$cmd);
-		system::php($cmd . ' >> ' . log::getPathToLog('executeCmd.log') . ' 2>&1 &' );
-		return $this->execCmd();
-	    }
+	public function calculSurveillance () {
+		$this->getCache("alertTime", 0);
+		$etat =jeedom::evaluateExpression($this->getConfiguration('etat'));
+		$mesure =jeedom::evaluateExpression($this->getConfiguration('mesure'));
+		$limite =jeedom::evaluateExpression($this->getConfiguration('limite'));
+		$invert = jeedom::evaluateExpression($this->getConfiguration('invert'));
 
-	    return $this->calculSurveillance();
+		if ($invert == 1) {
+			$etat = $etat==1 ? 0 : 1;
+		}
+
+		if ($etat == 1) {
+			$return = $mesure > $limite ? 0 : 1;
+		} else {
+			$return = $mesure < $limite ? 0 : 1;
+		}
+		$this->setCache("alertTime",time());
+		return $return;
 	}
-    }
 
-    /*     * **********************Getteur Setteur*************************** */
+	// Exécution d'une commande
+	public function execute($_options = array()) {
+		$cmdsEnDefaut = [];
+		if ($this->getLogicalId() == 'acquitter') {
+			$cmdPanne = [];
+			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info",true);
+			foreach ($cmds as $cmd) {
+				if ($cmd->getLogicalId() == "panne") {
+					$cmdPanne = $cmd;
+					continue;
+				}
+				if ($cmd->getLogicalId() != "surveillance") {
+					continue;
+				}
+				if ($cmd->execCmd() == 1) {
+					$cmdsEnDefaut["cmd_" . $cmd->getId()] = 1;
+				}
+			}
+			$value = empty($cmdsEnDefaut)? 0 : 1;
+			$eqLogic=$this->getEqLogic();
+			$eqLogic->checkAndUpdateCmd($cmdPanne,$value);
+		}
+
+		if ($this->getLogicalId() == 'panne') {
+
+			// L'anciennei valeur de la commande
+			$oldValue=$this->execCmd();
+			if (! is_numeric($oldValue)) {
+				$oldValue = 0;
+			}
+
+			// L'ancienne liste des commandes en défaut
+			$oldCmdsEnDefaut = $this->getCache("cmdsEnDefaut");
+
+			// La liste des commandes actuellement en défaut
+			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info",true);
+			$cmdsEnDefaut = [];
+			foreach ($cmds as $cmd) {
+				if ($cmd->getLogicalId() != "surveillance") {
+					continue;
+				}
+				if ($cmd->execCmd() == 1) {
+					$cmdsEnDefaut["cmd_" . $cmd->getId()] = 1;
+				}
+			}
+
+			// Enrgistremet de la nouvelle liste des commandes en défaut
+			$this->setCache("cmdsEnDefaut", $cmdsEnDefaut);
+
+			// Calcul de la nouvelle valeur 
+			switch ($oldValue){
+			case 0:
+				if (empty($cmdsEnDefaut)) {
+					return 0;
+				}
+				$eqConfig=$this->getEqLogic()->getConfiguration();
+				if ($eqConfig['autoAcquittement'] == 1 && $eqConfig['delaisAcquittement'] == 0) {
+					return 1;
+				}
+				return 2;
+				break;
+			case 1:
+				if (empty($cmdsEnDefaut)) {
+					return 0;
+				}
+				$nouveauDefaut = false;
+				log::add("panne","info","old: " . print_r($oldCmdsEnDefaut,true));
+				log::add("panne","info","new: " . print_r($cmdsEnDefaut,true));
+				foreach ($cmdsEnDefaut as $key => $value) {
+					if (! array_key_exists($key, $oldCmdsEnDefaut)) {
+						$nouveauDefaut = true;
+						break;
+					}
+				}
+				if ($nouveauDefaut) {
+					$eqConfig=$this->getEqLogic()->getConfiguration();
+					if ($eqConfig['autoAcquittement'] == 1 && $eqConfig['delaisAcquittement'] == 0) {
+						return 1;
+					}
+					return 2;
+				}
+				return 1;
+				break;
+			case 2:
+				$newCmdsEnDefaut = array_merge($oldCmdsEnDefaut, $cmdsEnDefaut);
+				return 2;
+				break;
+			}
+		}
+
+		if ($this->getLogicalId() == 'surveillance') {
+			$delais = jeedom::evaluateExpression($this->getConfiguration('delais'));
+			$dateEtat = $this->dateEtat();
+			if (($delais > 0 ) && ($dateEtat + $delais) > time()) {
+				$cmd = __DIR__ . "/../php/executeCmd.php";
+				$cmd .= ' -c ' . $this->getId();
+				$cmd .= ' -t ' . $dateEtat;
+				log::add("panne","info",$cmd);
+				system::php($cmd . ' >> ' . log::getPathToLog('executeCmd.log') . ' 2>&1 &' );
+				return $this->execCmd();
+			}
+			return $this->calculSurveillance();
+		}
+	}
+
+	/*     * **********************Getteur Setteur*************************** */
 
 }

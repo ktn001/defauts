@@ -121,12 +121,14 @@ $eqLogics = eqLogic::byType($plugin->getId());
 
 			    <legend><i class="fas fa-cogs"></i> {{Paramètres}}</legend>
 			    <div class="form-group">
-				<label class="col-sm-3 control-label">{{Nom de l'event}}
-				   <sup><i class="fas fa-question-circle" tooltip="Nom de event emis en cas de panne.<br>Doit être utilisé comme déclencheur du scénarion"></i></sup>
-				</label>
+				<label class="col-sm-3 control-label">{{Auto acquittement}}</label>
 				<div class="col-sm-7">
-				    <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="event" placeholder="{{Event émis en cas le panne}}"/>
+				    <input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="autoAcquittement" />
 				</div>
+			    </div>
+			    <div class="form-group auto-acquittement-option">
+				<label class="col-sm-3 control-label">{{Délais}}</label>
+				<input type="text" class="eqLogicAttr" data-l1key="configuration" data-l2key="delaisAcquittement" />
 			    </div>
 			</div>
 

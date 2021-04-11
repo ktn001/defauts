@@ -16,6 +16,17 @@
  */
 
 /*
+ * Affichage des option d'auto-acquittement
+ */
+$('[data-l2key="autoAcquittement"]').on('change', function (event) {
+    if ($(this).is(':checked')) {
+	$(".auto-acquittement-option").show();
+    } else {
+	$(".auto-acquittement-option").hide();
+    }
+});
+	
+/*
  * Bouton pour la création d'une surveillance
  */
 $("#bt_addSurveillance").on('click', function (event) {
@@ -81,9 +92,33 @@ function addCmdToTable(_cmd) {
 	tr += '<td/>';
 	tr += '<td>';
 	tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
+	tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> {{Tester}}</a>';
 	tr += '</td>';
 	tr += '</tr>';
     }
+
+    if (_cmd.logicalId == "acquitter") {
+	var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
+	/* id  et type */
+	tr += '<td width="60px">';
+	tr += '<span class="cmdAttr" data-l1key="id"></span>';
+	tr += '<span class="cmdAttr" data-l1key="type" style="display : none">info</span>';
+	tr += '<span class="cmdAttr" data-l1key="subType" style="display : none">binary</span>';
+	tr += '<span class="cmdAttr" data-l1key="logicalId" value="surveillance" style="display : none"></span>';
+	tr += '</td>';
+	/* NOM */
+	tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom surveillance}}"></td>';
+	tr += '<td/>';
+	tr += '<td/>';
+	tr += '<td/>';
+	tr += '<td/>';
+	tr += '<td/>';
+	tr += '<td>';
+	tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
+	tr += '</td>';
+	tr += '</tr>';
+    }
+
     if (_cmd.logicalId == 'surveillance') {
 	var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
 	/* id  et type */
