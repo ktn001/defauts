@@ -89,8 +89,8 @@ class defauts extends eqLogic {
 		// Création de la cmd info "panne"
 		$cmd = new cmd();
 		$cmd->setEqLogic_id($this->getId());
-		$cmd->setLogicalId("defauts");
-		$cmd->setName("defauts");
+		$cmd->setLogicalId("defaut");
+		$cmd->setName("defaut");
 		$cmd->setType("info");
 		$cmd->setSubType("numeric");
 		$cmd->setConfiguration("minValue",0);
