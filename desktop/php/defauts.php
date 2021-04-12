@@ -151,7 +151,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 	    <div role="tabpanel" class="tab-pane" id="commandtab">
 		<a class="btn btn-default btn-sm pull-right " id="bt_addSurveillance" style="margin-top:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une surveillance}}</a>
 		<br/><br/>
-		<div id="container_panne">
+		<div id="container_defaut">
 		</div>
 		<div class="table-responsive">
 		    <table id="table_cmd" class="table table-bordered table-condensed">
@@ -178,7 +178,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 </div><!-- /.row row-overflow -->
 
 <!-- Inclusion du fichier javascript du plugin (dossier, nom_du_fichier, extension_du_fichier, id_du_plugin) -->
-<?php include_file('desktop', 'panne', 'js', 'panne');?>
-<?php include_file('desktop', 'panne', 'css', 'panne');?>
+<?php include_file('desktop', 'Defauts', 'js', 'Defauts');?>
+<?php include_file('desktop', 'Defauts', 'css', 'Defauts');?>
 <!-- Inclusion du fichier javascript du core - NE PAS MODIFIER NI SUPPRIMER -->
 <?php include_file('core', 'plugin.template', 'js');?>
