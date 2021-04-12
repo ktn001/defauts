@@ -74,7 +74,7 @@ function addCmdToTable(_cmd) {
 	_cmd.configuration = {};
     }
 
-    if (_cmd.logicalId == "panne") {
+    if (_cmd.logicalId == "defaut") {
 	var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
 	/* id  et type */
 	tr += '<td width="60px">';
@@ -104,7 +104,7 @@ function addCmdToTable(_cmd) {
 	tr += '<span class="cmdAttr" data-l1key="id"></span>';
 	tr += '<span class="cmdAttr" data-l1key="type" style="display : none">info</span>';
 	tr += '<span class="cmdAttr" data-l1key="subType" style="display : none">binary</span>';
-	tr += '<span class="cmdAttr" data-l1key="logicalId" value="surveillance" style="display : none"></span>';
+	tr += '<span class="cmdAttr" data-l1key="logicalId" style="display : none"></span>';
 	tr += '</td>';
 	/* NOM */
 	tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom surveillance}}"></td>';
