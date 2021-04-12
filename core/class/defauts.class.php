@@ -19,7 +19,7 @@
 /* * ***************************Includes********************************* */
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
-class panne extends eqLogic {
+class defauts extends eqLogic {
 	/*     * *************************Attributs****************************** */
 
 	/*
@@ -31,7 +31,7 @@ class panne extends eqLogic {
 	/*     * ***********************Methode static*************************** */
 
 	public static function event () {
-		log::add('panne','debug',"Début d event()");
+		log::add('defauts','debug',"Début d event()");
 	}
 
 	/*
@@ -89,8 +89,8 @@ class panne extends eqLogic {
 		// Création de la cmd info "panne"
 		$cmd = new cmd();
 		$cmd->setEqLogic_id($this->getId());
-		$cmd->setLogicalId("panne");
-		$cmd->setName("panne");
+		$cmd->setLogicalId("defauts");
+		$cmd->setName("defauts");
 		$cmd->setType("info");
 		$cmd->setSubType("numeric");
 		$cmd->setConfiguration("minValue",0);
@@ -180,7 +180,7 @@ class panneCmd extends cmd {
 
 	public function preSave () {
 
-		if ($this->getLogicalId() == 'panne') {
+		if ($this->getLogicalId() == 'defaut') {
 			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info",true);
 			$values = "";
 			foreach ($cmds as $cmd) {
@@ -299,25 +299,24 @@ class panneCmd extends cmd {
 			$cmdPanne = [];
 			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info",true);
 			foreach ($cmds as $cmd) {
-				if ($cmd->getLogicalId() == "panne") {
-					$cmdPanne = $cmd;
+				if ($cmd->getLogicalId() == "defaut") {
+					$cmdDefaut = $cmd
 					continue;
 				}
-				if ($cmd->getLogicalId() != "surveillance") {
-					continue;
-				}
-				if ($cmd->execCmd() == 1) {
-					$cmdsEnDefaut["cmd_" . $cmd->getId()] = 1;
+				if ($cmd->getLogicalId() == "surveillance") {
+					if ($cmd->execCmd() == 1) {
+						$cmdsEnDefaut["cmd_" . $cmd->getId()] = 1;
+					}
 				}
 			}
 			$value = empty($cmdsEnDefaut)? 0 : 1;
 			$eqLogic=$this->getEqLogic();
-			$eqLogic->checkAndUpdateCmd($cmdPanne,$value);
+			$eqLogic->checkAndUpdateCmd($cmdDefaut,$value);
 		}
 
-		if ($this->getLogicalId() == 'panne') {
+		if ($this->getLogicalId() == 'defaut') {
 
-			// L'anciennei valeur de la commande
+			// L'ancienne valeur de la commande
 			$oldValue=$this->execCmd();
 			if (! is_numeric($oldValue)) {
 				$oldValue = 0;
