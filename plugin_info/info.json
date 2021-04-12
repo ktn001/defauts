@@ -1,6 +1,6 @@
 {
-	"id" : "panne",
-	"name" : "Panne",
+	"id" : "defauts",
+	"name" : "Défauts",
 	"description" : "Surveillance de cohérence état/mesure",
 	"licence" : "AGPL",
 	"author" : "KTN01",
