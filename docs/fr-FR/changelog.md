@@ -1,3 +1,3 @@
-# Changelog Panne
+# Changelog Defauts
 
 ## Plougin pas encore publié

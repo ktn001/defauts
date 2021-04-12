@@ -17,7 +17,7 @@
 */
 
 require_once __DIR__ . '/../../../../core/php/core.inc.php';
-require_once __DIR__ . '/../class/panne.class.php';
+require_once __DIR__ . '/../class/defauts.class.php';
 
 log::add("defauts","debug", "Lancement de " . __FILE__ );
 
@@ -46,8 +46,8 @@ if (! is_object($cmd) ) {
 	exit (1);
 }
 
-if ($cmd->getEqType() != "panne") {
-	log::add("defauts","error","La commande " . $options['c'] . " n'est pas de type \"panne\"");
+if ($cmd->getEqType() != "defaut") {
+	log::add("defauts","error","La commande " . $options['c'] . " n'est pas de type \"defaut\"");
 	exit (1);
 }
 

@@ -86,7 +86,7 @@ class defauts extends eqLogic {
 
 	// Fonction exécutée automatiquement après la création de l'équipement
 	public function postInsert() {
-		// Création de la cmd info "panne"
+		// Création de la cmd info "defauts"
 		$cmd = new cmd();
 		$cmd->setEqLogic_id($this->getId());
 		$cmd->setLogicalId("defaut");
@@ -159,7 +159,7 @@ class defauts extends eqLogic {
 	/*     * **********************Getteur Setteur*************************** */
 }
 
-class panneCmd extends cmd {
+class defautsCmd extends cmd {
 	/*     * *************************Attributs****************************** */
 
 	/*
@@ -296,11 +296,11 @@ class panneCmd extends cmd {
 	public function execute($_options = array()) {
 		$cmdsEnDefaut = [];
 		if ($this->getLogicalId() == 'acquitter') {
-			$cmdPanne = [];
+			$cmdDefaut = [];
 			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info",true);
 			foreach ($cmds as $cmd) {
 				if ($cmd->getLogicalId() == "defaut") {
-					$cmdDefaut = $cmd
+					$cmdDefaut = $cmd;
 					continue;
 				}
 				if ($cmd->getLogicalId() == "surveillance") {
@@ -357,8 +357,8 @@ class panneCmd extends cmd {
 					return 0;
 				}
 				$nouveauDefaut = false;
-				log::add("panne","info","old: " . print_r($oldCmdsEnDefaut,true));
-				log::add("panne","info","new: " . print_r($cmdsEnDefaut,true));
+				log::add("defauts","info","old: " . print_r($oldCmdsEnDefaut,true));
+				log::add("defauts","info","new: " . print_r($cmdsEnDefaut,true));
 				foreach ($cmdsEnDefaut as $key => $value) {
 					if (! array_key_exists($key, $oldCmdsEnDefaut)) {
 						$nouveauDefaut = true;
@@ -388,7 +388,7 @@ class panneCmd extends cmd {
 				$cmd = __DIR__ . "/../php/executeCmd.php";
 				$cmd .= ' -c ' . $this->getId();
 				$cmd .= ' -t ' . $dateEtat;
-				log::add("panne","info",$cmd);
+				log::add("defauts","info",$cmd);
 				system::php($cmd . ' >> ' . log::getPathToLog('executeCmd.log') . ' 2>&1 &' );
 				return $this->execCmd();
 			}

@@ -1,3 +1,3 @@
-# plugin Panne pour Jeedom
+# plugin Defauts pour Jeedom
 
 Ce "plugin" sert a surveiller la cohérence entre des états et des mesures dans **Jeedom**.

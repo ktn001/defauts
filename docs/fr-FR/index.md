@@ -1,5 +1,5 @@
-# Docummentation du plugin Panne
-Le plugin "panne" permet de détecter des pannes en vérifiant la cohérence entre un état et une mesure.
+# Docummentation du plugin Defauts
+Le plugin "Défauts" permet de détecter des défauts en vérifiant la cohérence entre un état et une mesure.
 # quelques exemples:
 - une lampe allumée mais pas de consommation (ampoule défectueuse ou mauvais signal de retour).
 - Une lampe éteinte mais consomation de plus de 1 watt (mauvais état de retour).

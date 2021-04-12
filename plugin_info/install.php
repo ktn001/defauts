@@ -19,17 +19,17 @@
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 // Fonction exécutée automatiquement après l'installation du plugin
-  function panne_install() {
+  function defauts_install() {
 
   }
 
 // Fonction exécutée automatiquement après la mise à jour du plugin
-  function panne_update() {
+  function defauts_update() {
 
   }
 
 // Fonction exécutée automatiquement après la suppression du plugin
-  function panne_remove() {
+  function defauts_remove() {
 
   }
 
