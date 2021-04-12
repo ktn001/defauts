@@ -19,22 +19,22 @@
 require_once __DIR__ . '/../../../../core/php/core.inc.php';
 require_once __DIR__ . '/../class/panne.class.php';
 
-log::add("panne","debug", "Lancement de " . __FILE__ );
+log::add("defauts","debug", "Lancement de " . __FILE__ );
 
 $options = getopt ("c:t:");
 
 if ( ! $options ) {
-	log::add("panne","error", __FILE__ . " : option erronée");
+	log::add("defauts","error", __FILE__ . " : option erronée");
 	exit (1);
 }
 
 if (! array_key_exists("c", $options)) {
-	log::add("panne","error", __FILE__ . " : option -c manquante");
+	log::add("defauts","error", __FILE__ . " : option -c manquante");
 	exit (1);
 }
 
 if (! array_key_exists("t", $options)) {
-	log::add("panne","error", __FILE__ . " : option -t manquante");
+	log::add("defauts","error", __FILE__ . " : option -t manquante");
 	exit (1);
 }
 
@@ -42,17 +42,17 @@ $dateEtat = (int)$options["t"];
 $cmd = cmd::byId($options["c"]);
 
 if (! is_object($cmd) ) {
-	log::add("panne","error","Il n'existe pas de commande avec l'id " . $options['c'] );
+	log::add("defauts","error","Il n'existe pas de commande avec l'id " . $options['c'] );
 	exit (1);
 }
 
 if ($cmd->getEqType() != "panne") {
-	log::add("panne","error","La commande " . $options['c'] . " n'est pas de type \"panne\"");
+	log::add("defauts","error","La commande " . $options['c'] . " n'est pas de type \"panne\"");
 	exit (1);
 }
 
 if ($cmd->getLogicalId() != "surveillance") {
-	log::add("panne","error","Le logicalId de la commande " . $options['c'] . " n'est pas \"surveillance\"");
+	log::add("defauts","error","Le logicalId de la commande " . $options['c'] . " n'est pas \"surveillance\"");
 	exit (1);
 }
 
