@@ -89,7 +89,6 @@ function addCmdToTable(_cmd) {
 	tr += '<td/>';
 	tr += '<td/>';
 	tr += '<td/>';
-	tr += '<td/>';
 	tr += '<td>';
 	tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
 	tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> {{Tester}}</a>';
@@ -108,7 +107,6 @@ function addCmdToTable(_cmd) {
 	tr += '</td>';
 	/* NOM */
 	tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom surveillance}}"></td>';
-	tr += '<td/>';
 	tr += '<td/>';
 	tr += '<td/>';
 	tr += '<td/>';
@@ -150,14 +148,15 @@ function addCmdToTable(_cmd) {
 	tr += '</td>';
 	/* LIMITE */
 	tr += '<td>';
-	tr += '<span>';
-	tr += '<input class="cmdAttr form-control input-sm tooltips" style="width:47%;display:inline" data-l1key="configuration" data-l2key="limite" title="{{Valeur devant être atteinte après enclechement}}" placeholder="{{Limite}}">';
-	tr += '<label class="tooltips" style="width:47%;margin-left:4px" title="{{Inversion du test de la limite}}"><input type="checkbox" class="cmdAttr" data-l1key="configuration" data-l2key="invert"/>{{Inverser}}</label>';
-	tr += '</span>';
-	tr += '</td>';
-	/* TEMPORISATION */
-	tr += '<td>';
-	tr += '<input class="cmdAttr form-control input-sm tooltips" style="width:47%;display:inline" data-l1key="configuration" data-l2key="delais" title="{{Attente après changement d\'état}}" placeholder="{{secondes}}">';
+	tr += '<div">';
+	tr += '<input class="cmdAttr form-control input-sm tooltips" style="width:48%; float:left" data-l1key="configuration" data-l2key="limite" title="{{Valeur devant être atteinte après enclechement}}" placeholder="{{Limite}}">';
+	tr += '<input class="cmdAttr form-control input-sm tooltips" style="width:48%; float:right" data-l1key="configuration" data-l2key="delais" title="{{Attente après changement d\'état}}" placeholder="{{secondes}}">';
+	tr += '</div>';
+	tr += '<div>';
+	tr += '<label class="tooltips" style="width:44%" title="{{Inversion du test de la limite}}"><input type="checkbox" class="cmdAttr" data-l1key="configuration" data-l2key="invert"/>{{Inverser}}</label>';
+	tr += '<label class="tooltips" style="width:28%" title="{{Surveillance si etat =1}}"><input type="checkbox" class="cmdAttr" data-l1key="configuration" data-l2key="en"/>{{En}}</label>';
+	tr += '<label class="tooltips" style="width:28%" title="{{Surveillance si etat =0}}"><input type="checkbox" class="cmdAttr" data-l1key="configuration" data-l2key="hors"/>{{hors}}</label>';
+	tr += '</div>';
 	tr += '</td>';
 	/* OPTIONS */
 	tr += '<td>';

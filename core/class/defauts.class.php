@@ -36,9 +36,29 @@ class defauts extends eqLogic {
 
 	/*
 	 * Fonction exécutée automatiquement toutes les minutes par Jeedom
-	  public static function cron() {
-	  }
 	 */
+	public static function cron() {
+		$cmds = cmd::byLogicalId("defaut");
+		foreach ($cmds as $cmd) {
+			if ($cmd->getEqType() != "defauts") {
+				continue;
+			}
+			$eqLogic = $cmd->getEqLogic();
+			if ($eqLogic->getConfiguration("autoAcquittement",0) == 0) {
+				continue;
+			}
+			$delais = $eqLogic->getConfiguration("delaisAcquittement",0);
+			if ($delais == 0) {
+				continue;
+			}
+			if ($cmd->execCmd() != 2) {
+				continue;
+			}
+			if (($cmd->getCache("timeLevel2",0) + $delais*60) <= time()) {
+				$cmd->acquittement();
+			}
+		}
+	}
 
 	/*
 	 * Fonction exécutée automatiquement toutes les 5 minutes par Jeedom
@@ -292,10 +312,10 @@ class defautsCmd extends cmd {
 		return $return;
 	}
 
-	// Exécution d'une commande
-	public function execute($_options = array()) {
+	// Acquittement du défaut
+	public function acquittement () {
 		$cmdsEnDefaut = [];
-		if ($this->getLogicalId() == 'acquitter') {
+		if ($this->getLogicalId() == 'acquitter' || $this->getLogicalId() == 'defaut') {
 			$cmdDefaut = [];
 			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info",true);
 			foreach ($cmds as $cmd) {
@@ -312,6 +332,15 @@ class defautsCmd extends cmd {
 			$value = empty($cmdsEnDefaut)? 0 : 1;
 			$eqLogic=$this->getEqLogic();
 			$eqLogic->checkAndUpdateCmd($cmdDefaut,$value);
+		} else {
+			log::add("defaut","error","Function acquittement appelée pour une commande qui n'a pas le logicalId 'acquitter' ou 'defaut'");
+		}
+	}
+
+	// Exécution d'une commande
+	public function execute($_options = array()) {
+		if ($this->getLogicalId() == 'acquitter') {
+			$this->acquittement();
 		}
 
 		if ($this->getLogicalId() == 'defaut') {
@@ -350,6 +379,7 @@ class defautsCmd extends cmd {
 				if ($eqConfig['autoAcquittement'] == 1 && $eqConfig['delaisAcquittement'] == 0) {
 					return 1;
 				}
+				$this->setCache("timeLevel2", time());
 				return 2;
 				break;
 			case 1:
@@ -370,12 +400,14 @@ class defautsCmd extends cmd {
 					if ($eqConfig['autoAcquittement'] == 1 && $eqConfig['delaisAcquittement'] == 0) {
 						return 1;
 					}
+					$this->setCache("timeLevel2", time());
 					return 2;
 				}
 				return 1;
 				break;
 			case 2:
 				$newCmdsEnDefaut = array_merge($oldCmdsEnDefaut, $cmdsEnDefaut);
+				$this->setCache("timeLevel2", time());
 				return 2;
 				break;
 			}
