@@ -46,8 +46,8 @@ if (! is_object($cmd) ) {
 	exit (1);
 }
 
-if ($cmd->getEqType() != "defaut") {
-	log::add("defauts","error","La commande " . $options['c'] . " n'est pas de type \"defaut\"");
+if ($cmd->getEqType() != "defauts") {
+	log::add("defauts","error","La commande " . $options['c'] . " n'est pas de type \"defauts\"");
 	exit (1);
 }
 

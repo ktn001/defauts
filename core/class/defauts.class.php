@@ -293,8 +293,15 @@ class defautsCmd extends cmd {
 	}
 
 	public function calculSurveillance () {
-		$this->getCache("alertTime", 0);
 		$etat =jeedom::evaluateExpression($this->getConfiguration('etat'));
+
+		if ( $etat == 1 && $this->getConfiguration('en',1) == 0 )  {
+			return 0;
+		}
+		if ( $etat == 0 && $this->getConfiguration('hors',1) == 0 )  {
+			return 0;
+		}
+
 		$mesure =jeedom::evaluateExpression($this->getConfiguration('mesure'));
 		$limite =jeedom::evaluateExpression($this->getConfiguration('limite'));
 		$invert = jeedom::evaluateExpression($this->getConfiguration('invert'));
@@ -414,6 +421,15 @@ class defautsCmd extends cmd {
 		}
 
 		if ($this->getLogicalId() == 'surveillance') {
+			$etat =jeedom::evaluateExpression($this->getConfiguration('etat'));
+
+			if ( $etat == 1 && $this->getConfiguration('en',1) == 0 )  {
+				return 0;
+			}
+			if ( $etat == 0 && $this->getConfiguration('hors',1) == 0 )  {
+				return 0;
+			}
+
 			$delais = jeedom::evaluateExpression($this->getConfiguration('delais'));
 			$dateEtat = $this->dateEtat();
 			if (($delais > 0 ) && ($dateEtat + $delais) > time()) {
