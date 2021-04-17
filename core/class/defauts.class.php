@@ -209,6 +209,8 @@ class defautsCmd extends cmd {
 				}
 			}
 			$this->setValue($values);
+			$this->setTemplate('dashboard','defauts::defaut');
+			$this->setTemplate('mobile','defauts::defaut');
 		}
 
 		if ($this->getLogicalId() == 'surveillance') {

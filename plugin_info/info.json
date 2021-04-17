@@ -11,6 +11,6 @@
 	"hasOwnDeamon" : false,
 	"maxDependancyInstallTime" : 0,
 	"documentation" : "",
-	"language" : "fr_FR",
+	"language" : ["fr_FR","en-US"],
 	"compatibility" : ["miniplus","smart","rpi","docker","diy","v4"]
 }
