@@ -1,3 +1,3 @@
 # Changelog Defauts
 
-## Plougin pas encore publié
+## Plugin pas encore publié
