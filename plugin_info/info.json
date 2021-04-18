@@ -11,6 +11,6 @@
 	"hasOwnDeamon" : false,
 	"maxDependancyInstallTime" : 0,
 	"documentation" : "https://ktn001.github.io/defauts/fr-FR/index.html",
-	"language" : ["fr_FR","en-US"],
+	"language" : ["fr_FR","en_US"],
 	"compatibility" : ["miniplus","smart","rpi","docker","diy","v4"]
 }
