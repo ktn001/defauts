@@ -22,7 +22,7 @@ jusqu'à ce qu'elle soit acquittée même si l'incohérence disparaît.
 Les équipements **Défauts** sont créés sur la page du plugin qui est atteignable via le menu `plugins`==> `Monitoring` ==> `Défauts`.
 L'équipement est créé avec deux commandes:
 + Une commande **defaut**, de type info, qui inquique si une incohérence est ou a été détectée par une des surveillances de l'équipement.
-+ Une commande **Acuittement**, de type action, pour acquitter les défauts détectés.
++ Une commande **Acquittement**, de type action, pour acquitter les défauts détectés.
 
 ## Configuration
 ### De l'équipement
