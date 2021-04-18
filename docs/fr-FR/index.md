@@ -43,10 +43,15 @@ Les surveillances ont plusieurs paramêtres:
 * **Limite**  
   Valeur dant être atteinte pas le mesure lorsque l'état est à 1 (incohérence si cette valeur n'est pas atteinte.  
   Il y a aussi incohérence si cette valeur est atteinte alors que l'état est à 0.
-* **Temporisation**
+* **Temporisation**  
   Délais pour atteindre la limite après changement d'état.
-* **Inverser**
-* **En**
-* **Hors**
-* **Afficher**
-* **Historiser**
+* **Inverser**  
+  Inversion de la surveillance. Lamesure doit être supérieure à la limite lorsque l'état est à 0.
+* **En**  
+  Surveillance active lorsque l'état est à 1
+* **Hors**  
+  Surveillance active lorsque l'état est à 0
+* **Afficher**  
+  Affichage de l'info
+* **Historiser**  
+  Historisation de 'info
