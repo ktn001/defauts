@@ -6,11 +6,11 @@
 	"author" : "KTN01",
 	"require" : "4.1.20",
 	"category" : "monitoring",
-	"changelog" : "https://ktn001.github.io/defauts/fr-FR/changelog.html",
+	"changelog" : "https://ktn001.github.io/defauts/fr_FR/changelog.html",
 	"hasDependency" : false,
 	"hasOwnDeamon" : false,
 	"maxDependancyInstallTime" : 0,
-	"documentation" : "https://ktn001.github.io/defauts/fr-FR/index.html",
+	"documentation" : "https://ktn001.github.io/defauts/fr_FR/index.html",
 	"language" : ["fr_FR","en_US"],
 	"compatibility" : ["miniplus","smart","rpi","docker","diy","v4"]
 }
