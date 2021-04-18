@@ -85,11 +85,17 @@ function addCmdToTable(_cmd) {
 	tr += '</td>';
 	/* NOM */
 	tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom surveillance}}"></td>';
+	/* FONCTION */
+	tr += '<td>Défaut</td>';
 	tr += '<td/>';
 	tr += '<td/>';
 	tr += '<td/>';
 	tr += '<td/>';
 	tr += '<td/>';
+	tr += '<td>';
+	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label>';
+	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label>';
+	tr += '</td>';
 	tr += '<td>';
 	tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
 	tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> {{Tester}}</a>';
@@ -108,11 +114,16 @@ function addCmdToTable(_cmd) {
 	tr += '</td>';
 	/* NOM */
 	tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom surveillance}}"></td>';
+	/* FONCTION */
+	tr += '<td>Acquittement</td>';
 	tr += '<td/>';
 	tr += '<td/>';
 	tr += '<td/>';
 	tr += '<td/>';
 	tr += '<td/>';
+	tr += '<td>';
+	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label>';
+	tr += '</td>';
 	tr += '<td>';
 	tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
 	tr += '</td>';
@@ -130,6 +141,8 @@ function addCmdToTable(_cmd) {
 	tr += '</td>';
 	/* NOM */
 	tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom surveillance}}"></td>';
+	/* FONCTION */
+	tr += '<td>Surveillance</td>';
 	/* ETAT */
 	tr += '<td>';
 	tr += '<div class="input-group">';
@@ -156,11 +169,14 @@ function addCmdToTable(_cmd) {
 	tr += '<td>';
 	tr += '<input class="cmdAttr form-control input-sm tooltips" data-l1key="configuration" data-l2key="delais" title="{{Attente après changement d\'état}}" placeholder="{{secondes}}">';
 	tr += '</td>';
-	/* OPTIONS */
+	/* PARAMETRES */
 	tr += '<td>';
 	tr += '<label class="checkbox-inline tooltips" title="{{Inversion du test de la limite}}"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="invert"/>{{Inverser}}</label>';
 	tr += '<label class="checkbox-inline tooltips" title="{{Surveillance pour etat =1}}"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="en" checked/>{{En}}</label>';
 	tr += '<label class="checkbox-inline tooltips" title="{{Surveillance pour etat =0}}"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="hors" checked/>{{hors}}</label>';
+	tr += '</td>';
+	/* OPTIONS */
+	tr += '<td>';
 	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label>';
 	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label>';
 	tr += '<td>';
