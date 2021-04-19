@@ -9,6 +9,8 @@ Le plugin "Défauts" permet de détecter des défauts en vérifiant la cohérenc
 # Configuration du plugin
 Le plugin ne nécessite aucune configuration, il faut juste l’activer.
 
+![Page de configuration du plugin](../images/config_plugin.png)
+
 # Les équipements
 Un équipement **Défauts** permet de surveiller la cohérence de plusieurs combinaisons d'état et de valeur. Une info
 indique pour chacune de ces surveillances si la situation actuelle est cohérente ou non.
@@ -20,7 +22,7 @@ jusqu'à ce qu'elle soit acquittée même si l'incohérence disparaît.
 Les équipements **Défauts** sont créés sur la page du plugin qui est atteignable via le menu `plugins`==> `Monitoring` ==> `Défauts`.
 L'équipement est créé avec deux commandes:
 + Une commande **defaut**, de type info, qui inquique si une incohérence est ou a été détectée par une des surveillances de l'équipement.
-+ Une commande **Acuittement**, de type action, pour acquitter les défauts détectés.
++ Une commande **Acquittement**, de type action, pour acquitter les défauts détectés.
 
 ## Configuration
 ### De l'équipement
