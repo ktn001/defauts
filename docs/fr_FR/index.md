@@ -15,7 +15,7 @@ Le plugin ne nécessite aucune configuration, il faut juste l’activer.
 Un équipement **Défauts** permet de surveiller la cohérence de plusieurs combinaisons d'état et de valeur. Une info
 indique pour chacune de ces surveillances si la situation actuelle est cohérente ou non.
 
-De plus, une info **défaut** est activée lorsqu'une surveillance détecte une incohérence. Cet info reste activée
+De plus, une info **défaut** est activée lorsqu'une surveillance détecte une incohérence. Cette info reste activée
 jusqu'à ce qu'elle soit acquittée même si l'incohérence disparaît.
 
 ## Création
