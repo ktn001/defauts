@@ -140,7 +140,7 @@ class defauts extends eqLogic {
 	public function preSave() {
 		if ( $this->getConfiguration("autoAcquittement") == 1) {
 			if ( !ctype_digit(trim($this->getConfiguration("delaisAcquittement")))) {
-				throw new Exception (__('Le délais d\'acquittement doit être un entier positif ou nul!',__FILE__));
+				throw new Exception (__("Le délais d'acquittement doit être un entier positif ou nul!",__FILE__));
 			}
 		}
 	}
@@ -217,18 +217,18 @@ class defautsCmd extends cmd {
 
 			// Vérification de la limite
 			if ( !ctype_digit(trim($this->getConfiguration("limite")))) {
-				throw new Exception (__('La limite doit être un nombre entier!',__FILE__));
+				throw new Exception (__("La limite doit être un nombre entier!",__FILE__));
 			}
 
 			// Vérification du délais
 			if ( !ctype_digit(trim($this->getConfiguration("delais")))) {
-				throw new Exception (__('Le délais doit être un nombre entier!',__FILE__));
+				throw new Exception (__("Le délais doit être un nombre entier!",__FILE__));
 			}
 
 			// Vérification de l'état
 			$etat = trim ($this->getConfiguration('etat'));
 			if ( $etat == '' ) {
-				throw new Exception (__('L\'état doit être défini!',__FILE__));
+				throw new Exception (__("L'état doit être défini!",__FILE__));
 			}
 			if ( is_numeric (stripos ($etat,"#" . $this->getId() . "#"))) {
 				throw new Exception (__("Vous ne pouvez utiliser l'info elle même dans l'Etat",__FILE__));
@@ -240,7 +240,7 @@ class defautsCmd extends cmd {
 			// Vérification de la mesure
 			$mesure = $this->getConfiguration('mesure');
 			if ( $mesure == '' ) {
-				throw new Exception (__('La mesure doit être définie!',__FILE__));
+				throw new Exception (__("La mesure doit être définie!",__FILE__));
 			}
 
 			// Renseignement du paramètre "value" qui contient la liste des
