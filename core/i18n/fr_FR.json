@@ -1,0 +1,72 @@
+{
+    "plugins\/defauts\/core\/ajax\/defauts.ajax.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Aucune méthode correspondante à : ": "Aucune méthode correspondante à : "
+    },
+    "plugins\/defauts\/core\/class\/defauts.class.php": {
+        "L'etat doit être une information simple": "L'etat doit être une information simple",
+        "L'état doit être défini!": "L'état doit être défini!",
+        "La limite doit être un nombre entier!": "La limite doit être un nombre entier!",
+        "La mesure doit être définie!": "La mesure doit être définie!",
+        "Le délais d'acquittement doit être un entier positif ou nul!": "Le délais d'acquittement doit être un entier positif ou nul!",
+        "Le délais doit être un nombre entier!": "Le délais doit être un nombre entier!",
+        "Vous ne pouvez utiliser l'info elle même dans l'Etat": "Vous ne pouvez utiliser l'info elle même dans l'Etat"
+    },
+    "plugins\/defauts\/desktop\/js\/defauts.js": {
+        "Afficher": "Afficher",
+        "Attente après changement d\\'état": "Attente après changement d\\'état",
+        "En": "En",
+        "Etat": "Etat",
+        "Historiser": "Historiser",
+        "Inverser": "Inverser",
+        "Inversion du test de la limite": "Inversion du test de la limite",
+        "Limite": "Limite",
+        "Mesure": "Mesure",
+        "Nom l\\'etat": "Nom l\\'etat",
+        "Nom la mesure": "Nom la mesure",
+        "Nom surveillance": "Nom surveillance",
+        "Surveillance pour etat = 0": "Surveillance pour etat = 0",
+        "Surveillance pour etat = 1": "Surveillance pour etat = 1",
+        "Tester": "Tester",
+        "Valeur devant être atteinte après enclechement": "Valeur devant être atteinte après enclechement",
+        "hors": "hors",
+        "secondes": "secondes"
+    },
+    "plugins\/defauts\/desktop\/modal\/modal.defaut.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé"
+    },
+    "plugins\/defauts\/desktop\/php\/defauts.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Activer": "Activer",
+        "Ajouter": "Ajouter",
+        "Ajouter une surveillance": "Ajouter une surveillance",
+        "Aucun": "Aucun",
+        "Auto acquittement": "Auto acquittement",
+        "Catégorie": "Catégorie",
+        "Configuration": "Configuration",
+        "Configuration avancée": "Configuration avancée",
+        "Dupliquer": "Dupliquer",
+        "Délais": "Délais",
+        "Etat": "Etat",
+        "Fonction": "Fonction",
+        "Gestion": "Gestion",
+        "Général": "Général",
+        "Informations": "Informations",
+        "Limite": "Limite",
+        "Mes défauts": "Mes défauts",
+        "Mesure": "Mesure",
+        "Nom": "Nom",
+        "Nom de l'équipement": "Nom de l'équipement",
+        "Objet parent": "Objet parent",
+        "Options": "Options",
+        "Paramètres": "Paramètres",
+        "Rechercher": "Rechercher",
+        "Sauvegarder": "Sauvegarder",
+        "Supprimer": "Supprimer",
+        "Surveillances": "Surveillances",
+        "Temporisation": "Temporisation",
+        "Visible": "Visible",
+        "paramètres": "paramètres",
+        "Équipement": "Équipement"
+    }
+}

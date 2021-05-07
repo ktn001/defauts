@@ -213,6 +213,11 @@ class defautsCmd extends cmd {
 			$this->setTemplate('mobile','defauts::defaut');
 		}
 
+		if ($this->getLogicalId() == 'acquitter') {
+			$defautCmd = $this->byEqLogicIdAndLogicalId($this->getEqLogic_id(),"defaut");
+			$this->setValue($defautCmd->getId());
+		}
+
 		if ($this->getLogicalId() == 'surveillance') {
 
 			// Vérification de la limite
