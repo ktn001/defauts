@@ -1,0 +1,28 @@
+<div class="cmd cmd-widget reportModeHidden" data-type="action" data-subtype="other" data-template="acquittement" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#">
+    <div class="title #hide_name#"> 
+	<div class="cmdName">#valueName#</div>
+    </div>
+    <div class="content-sm">
+        <span class=iconCmd>XXXX</span>
+    </div>
+    <script>
+
+	jeedom.cmd.update['#id#'] = function(_options) {
+		console.log(_options);
+
+		var cmd = $('.cmd[data-cmd_id=#id#]');
+		if (_options.value == 0) {
+			cmd.find('.iconCmd').empty().append("0");
+		} else if (_options.value == 1) {
+			cmd.find('.iconCmd').empty().append("1");
+		} else if (_options.value == 2) {
+			cmd.find('.iconCmd').empty().append("2");
+		}
+	}
+	jeedom.cmd.update['#id#']({value:'#state#',display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'});
+        $('.cmd[data-cmd_uid=#uid#]').off('click').on('click', function () {
+       	    jeedom.cmd.execute({id: '#id#'});
+       	});
+    </script>
+
+</div>

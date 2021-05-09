@@ -125,6 +125,8 @@ class defauts extends eqLogic {
 		$cmd->setType("action");
 		$cmd->setSubType("other");
 		$cmd->setOrder(1);
+		$cmd->setTemplate("dashboard","defauts::acquittement");
+		$cmd->setTemplate("mobile","defauts::acquittement");
 		$cmd->save();
 	}
 
@@ -401,8 +403,6 @@ class defautsCmd extends cmd {
 					return 0;
 				}
 				$nouveauDefaut = false;
-				log::add("defauts","info","old: " . print_r($oldCmdsEnDefaut,true));
-				log::add("defauts","info","new: " . print_r($cmdsEnDefaut,true));
 				foreach ($cmdsEnDefaut as $key => $value) {
 					if (! array_key_exists($key, $oldCmdsEnDefaut)) {
 						$nouveauDefaut = true;
