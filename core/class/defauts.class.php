@@ -125,6 +125,8 @@ class defauts extends eqLogic {
 		$cmd->setType("action");
 		$cmd->setSubType("other");
 		$cmd->setOrder(1);
+		$cmd->setTemplate("dashboard","defauts::acquittement");
+		$cmd->setTemplate("mobile","defauts::acquittement");
 		$cmd->save();
 	}
 
@@ -140,7 +142,7 @@ class defauts extends eqLogic {
 	public function preSave() {
 		if ( $this->getConfiguration("autoAcquittement") == 1) {
 			if ( !ctype_digit(trim($this->getConfiguration("delaisAcquittement")))) {
-				throw new Exception (__('Le délais d\'acquittement doit être un entier positif ou nul!',__FILE__));
+				throw new Exception (__("Le délais d'acquittement doit être un entier positif ou nul!",__FILE__));
 			}
 		}
 	}
@@ -201,7 +203,7 @@ class defautsCmd extends cmd {
 	public function preSave () {
 
 		if ($this->getLogicalId() == 'defaut') {
-			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info",true);
+			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info");
 			$values = "";
 			foreach ($cmds as $cmd) {
 				if ($cmd->getLogicalId() == "surveillance") {
@@ -213,22 +215,27 @@ class defautsCmd extends cmd {
 			$this->setTemplate('mobile','defauts::defaut');
 		}
 
+		if ($this->getLogicalId() == 'acquitter') {
+			$defautCmd = $this->byEqLogicIdAndLogicalId($this->getEqLogic_id(),"defaut");
+			$this->setValue($defautCmd->getId());
+		}
+
 		if ($this->getLogicalId() == 'surveillance') {
 
 			// Vérification de la limite
 			if ( !ctype_digit(trim($this->getConfiguration("limite")))) {
-				throw new Exception (__('La limite doit être un nombre entier!',__FILE__));
+				throw new Exception (__("La limite doit être un nombre entier!",__FILE__));
 			}
 
 			// Vérification du délais
 			if ( !ctype_digit(trim($this->getConfiguration("delais")))) {
-				throw new Exception (__('Le délais doit être un nombre entier!',__FILE__));
+				throw new Exception (__("Le délais doit être un nombre entier!",__FILE__));
 			}
 
 			// Vérification de l'état
 			$etat = trim ($this->getConfiguration('etat'));
 			if ( $etat == '' ) {
-				throw new Exception (__('L\'état doit être défini!',__FILE__));
+				throw new Exception (__("L'état doit être défini!",__FILE__));
 			}
 			if ( is_numeric (stripos ($etat,"#" . $this->getId() . "#"))) {
 				throw new Exception (__("Vous ne pouvez utiliser l'info elle même dans l'Etat",__FILE__));
@@ -240,7 +247,7 @@ class defautsCmd extends cmd {
 			// Vérification de la mesure
 			$mesure = $this->getConfiguration('mesure');
 			if ( $mesure == '' ) {
-				throw new Exception (__('La mesure doit être définie!',__FILE__));
+				throw new Exception (__("La mesure doit être définie!",__FILE__));
 			}
 
 			// Renseignement du paramètre "value" qui contient la liste des
@@ -280,6 +287,24 @@ class defautsCmd extends cmd {
 			}
 			$this->setValue($value);
 		}
+	}
+
+	public function toHtml ($_version = 'dashboard', $_options = "") {
+		if ($this->getLogicalId() == "acquitter") {
+			if ($_options == "") {
+				$_options = array();
+			}
+			if (config::byKey('interface::advance::coloredIcons') == 1) {
+				$_options["icon_defauts_level_0"] = '<i class="icon icon_green jeedom-alerte2"/>';
+				$_options["icon_defauts_level_1"] = '<i class="icon icon_orange jeedom-alerte2"/>';
+				$_options["icon_defauts_level_2"] = '<i class="icon icon_red jeedom-alerte2"/>';
+			} else {
+				$_options["icon_defauts_level_0"] = '<i class="icon jeedom-alerte2" style="opacity:0.2"/>';
+				$_options["icon_defauts_level_1"] = '<i class="icon jeedom-alerte2" style="opacity:0.6"/>';
+				$_options["icon_defauts_level_2"] = '<i class="icon jeedom-alerte2" style="opacity:1i"/>';
+			}
+		}
+		return parent::toHtml($_version, $_options);
 	}
 
 	public function dateEtat () {
@@ -378,7 +403,7 @@ class defautsCmd extends cmd {
 			// Enrgistremet de la nouvelle liste des commandes en défaut
 			$this->setCache("cmdsEnDefaut", $cmdsEnDefaut);
 
-			// Calcul de la nouvelle valeur 
+			// Calcul de la nouvelle valeur
 			switch ($oldValue){
 			case 0:
 				if (empty($cmdsEnDefaut)) {
@@ -396,8 +421,6 @@ class defautsCmd extends cmd {
 					return 0;
 				}
 				$nouveauDefaut = false;
-				log::add("defauts","info","old: " . print_r($oldCmdsEnDefaut,true));
-				log::add("defauts","info","new: " . print_r($cmdsEnDefaut,true));
 				foreach ($cmdsEnDefaut as $key => $value) {
 					if (! array_key_exists($key, $oldCmdsEnDefaut)) {
 						$nouveauDefaut = true;
