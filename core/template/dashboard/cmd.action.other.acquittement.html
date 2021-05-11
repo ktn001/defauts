@@ -12,11 +12,11 @@
 
 		var cmd = $('.cmd[data-cmd_id=#id#]');
 		if (_options.value == 0) {
-			cmd.find('.iconCmd').empty().append("0");
+			cmd.find('.iconCmd').empty().append('#icon_defauts_level_0#');
 		} else if (_options.value == 1) {
-			cmd.find('.iconCmd').empty().append("1");
+			cmd.find('.iconCmd').empty().append('#icon_defauts_level_1#');
 		} else if (_options.value == 2) {
-			cmd.find('.iconCmd').empty().append("2");
+			cmd.find('.iconCmd').empty().append('#icon_defauts_level_2#');
 		}
 	}
 	jeedom.cmd.update['#id#']({value:'#state#',display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'});

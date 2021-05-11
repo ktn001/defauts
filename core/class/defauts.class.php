@@ -203,7 +203,7 @@ class defautsCmd extends cmd {
 	public function preSave () {
 
 		if ($this->getLogicalId() == 'defaut') {
-			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info",true);
+			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info");
 			$values = "";
 			foreach ($cmds as $cmd) {
 				if ($cmd->getLogicalId() == "surveillance") {
@@ -287,6 +287,24 @@ class defautsCmd extends cmd {
 			}
 			$this->setValue($value);
 		}
+	}
+
+	public function toHtml ($_version = 'dashboard', $_options = "") {
+		if ($this->getLogicalId() == "acquitter") {
+			if ($_options == "") {
+				$_options = array();
+			}
+			if (config::byKey('interface::advance::coloredIcons') == 1) {
+				$_options["icon_defauts_level_0"] = '<i class="icon icon_green jeedom-alerte2"/>';
+				$_options["icon_defauts_level_1"] = '<i class="icon icon_orange jeedom-alerte2"/>';
+				$_options["icon_defauts_level_2"] = '<i class="icon icon_red jeedom-alerte2"/>';
+			} else {
+				$_options["icon_defauts_level_0"] = '<i class="icon jeedom-alerte2" style="opacity:0.2"/>';
+				$_options["icon_defauts_level_1"] = '<i class="icon jeedom-alerte2" style="opacity:0.6"/>';
+				$_options["icon_defauts_level_2"] = '<i class="icon jeedom-alerte2" style="opacity:1i"/>';
+			}
+		}
+		return parent::toHtml($_version, $_options);
 	}
 
 	public function dateEtat () {
@@ -385,7 +403,7 @@ class defautsCmd extends cmd {
 			// Enrgistremet de la nouvelle liste des commandes en défaut
 			$this->setCache("cmdsEnDefaut", $cmdsEnDefaut);
 
-			// Calcul de la nouvelle valeur 
+			// Calcul de la nouvelle valeur
 			switch ($oldValue){
 			case 0:
 				if (empty($cmdsEnDefaut)) {
