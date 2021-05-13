@@ -24,9 +24,23 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
   }
 
 // Fonction exécutée automatiquement après la mise à jour du plugin
-  function defauts_update() {
-
-  }
+function defauts_update() {
+	$cmds = cmd::byLogicalId("defaut");
+	foreach ($cmds as $cmd) {
+		if ($cmd->getEqType() == "defauts") {
+			$cmd->setIsVisible(true);
+			$cmd->save();
+		}
+	}
+	$cmds = cmd::byLogicalId("acquitter");
+	foreach ($cmds as $cmd) {
+		if ($cmd->getEqType() == "defauts") {
+			$cmd->setTemplate("dashboard","defauts::acquittement");
+			$cmd->setTemplate("mobile","defauts::acquittement");
+			$cmd->save();
+		}
+	}
+}
 
 // Fonction exécutée automatiquement après la suppression du plugin
   function defauts_remove() {
