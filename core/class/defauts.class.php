@@ -200,6 +200,20 @@ class defautsCmd extends cmd {
 	  }
 	 */
 
+	public function widgetPossibility($_key = '', $_default = true){
+		if ($this->getLogicalId() == "defaut") {
+			return false;
+		}
+		if ($this->getLogicalId() == "acquitter") {
+			if ($_key == "custom::widget") {
+				return false;
+			}
+			return true;
+		}
+
+		return true;
+	}
+	
 	public function preSave () {
 
 		if ($this->getLogicalId() == 'defaut') {
