@@ -30,7 +30,7 @@ function defauts_update() {
 	foreach ($cmds as $cmd) {
 		if ($cmd->getEqType() == "defauts") {
 			log::add("update","info","  Mise à jour de la commande " . $cmd->getId());
-			$cmd->setIsVisible(true);
+			$cmd->setIsVisible(false);
 			$cmd->save();
 		}
 	}
