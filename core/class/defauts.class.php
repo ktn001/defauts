@@ -200,6 +200,20 @@ class defautsCmd extends cmd {
 	  }
 	 */
 
+	public function widgetPossibility($_key = '', $_default = true){
+		if ($this->getLogicalId() == "defaut") {
+			return false;
+		}
+		if ($this->getLogicalId() == "acquitter") {
+			if ($_key == "custom::widget") {
+				return false;
+			}
+			return true;
+		}
+
+		return true;
+	}
+	
 	public function preSave () {
 
 		if ($this->getLogicalId() == 'defaut') {
@@ -351,7 +365,7 @@ class defautsCmd extends cmd {
 		$cmdsEnDefaut = [];
 		if ($this->getLogicalId() == 'acquitter' || $this->getLogicalId() == 'defaut') {
 			$cmdDefaut = [];
-			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info",true);
+			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info");
 			foreach ($cmds as $cmd) {
 				if ($cmd->getLogicalId() == "defaut") {
 					$cmdDefaut = $cmd;
@@ -389,7 +403,7 @@ class defautsCmd extends cmd {
 			$oldCmdsEnDefaut = $this->getCache("cmdsEnDefaut");
 
 			// La liste des commandes actuellement en défaut
-			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info",true);
+			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info");
 			$cmdsEnDefaut = [];
 			foreach ($cmds as $cmd) {
 				if ($cmd->getLogicalId() != "surveillance") {
