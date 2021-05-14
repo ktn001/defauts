@@ -40,6 +40,7 @@ function defauts_update() {
 			log::add("defauts","info","  Mise à jour de la commande " . $cmd->getId());
 			$cmd->setTemplate("dashboard","defauts::acquittement");
 			$cmd->setTemplate("mobile","defauts::acquittement");
+			$cmd->setDisplay("forceReturnLineAfter",1);
 			$cmd->save();
 		}
 	}

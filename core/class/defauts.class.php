@@ -127,6 +127,7 @@ class defauts extends eqLogic {
 		$cmd->setOrder(1);
 		$cmd->setTemplate("dashboard","defauts::acquittement");
 		$cmd->setTemplate("mobile","defauts::acquittement");
+		$cmd->setDisplay("forceReturnLineAfter",1);
 		$cmd->save();
 	}
 
