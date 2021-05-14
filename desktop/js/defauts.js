@@ -173,7 +173,7 @@ function addCmdToTable(_cmd) {
 	tr += '<td>';
 	tr += '<label class="checkbox-inline tooltips" title="{{Inversion du test de la limite}}"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="invert"/>{{Inverser}}</label>';
 	tr += '<label class="checkbox-inline tooltips" title="{{Surveillance pour etat = 1}}"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="en" checked/>{{En}}</label>';
-	tr += '<label class="checkbox-inline tooltips" title="{{Surveillance pour etat = 0}}"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="hors" checked/>{{hors}}</label>';
+	tr += '<label class="checkbox-inline tooltips" title="{{Surveillance pour etat = 0}}"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="hors" checked/>{{Hors}}</label>';
 	tr += '</td>';
 	/* OPTIONS */
 	tr += '<td>';
