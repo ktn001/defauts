@@ -25,19 +25,19 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 // Fonction exécutée automatiquement après la mise à jour du plugin
 function defauts_update() {
-	log::add("update","info","Mise à jours de commandes pour le pugin defauts");
+	log::add("defauts","info","Mise à jours de commandes pour le pugin defauts");
 	$cmds = cmd::byLogicalId("defaut");
 	foreach ($cmds as $cmd) {
 		if ($cmd->getEqType() == "defauts") {
-			log::add("update","info","  Mise à jour de la commande " . $cmd->getId());
-			$cmd->setIsVisible(true);
+			log::add("defauts","info","  Mise à jour de la commande " . $cmd->getId());
+			$cmd->setIsVisible(0);
 			$cmd->save();
 		}
 	}
 	$cmds = cmd::byLogicalId("acquitter");
 	foreach ($cmds as $cmd) {
 		if ($cmd->getEqType() == "defauts") {
-			log::add("update","info","  Mise à jour de la commande " . $cmd->getId());
+			log::add("defauts","info","  Mise à jour de la commande " . $cmd->getId());
 			$cmd->setTemplate("dashboard","defauts::acquittement");
 			$cmd->setTemplate("mobile","defauts::acquittement");
 			$cmd->save();
