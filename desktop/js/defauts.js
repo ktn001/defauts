@@ -170,7 +170,7 @@ function addCmdToTable(_cmd) {
 	tr += '<div style="margin-bottom:10px">';
 	tr += '<label class="checkbox-inline tooltips" title="{{Inversion du test de la limite}}"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="invert"/>{{Inverser}}</label>';
 	tr += '</div>';
-	tr += '<div style="margin-bottom:2px">';
+	tr += '<div style="margin-bottom:3px">';
 	tr += '<label class="checkbox-inline tooltips" title="{{Surveillance pour etat = 1}}"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="en" checked/>{{En}}</label>';
 	tr += '<label class="checkbox-inline tooltips" title="{{Surveillance pour etat = 0}}"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="hors" checked/>{{Hors}}</label>';
 	tr += '</div>';
@@ -181,7 +181,7 @@ function addCmdToTable(_cmd) {
 	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label>';
 	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label>';
 	tr += '</div>';
-	tr += '<div style="margin-bottom:2px">';
+	tr += '<div style="margin-bottom:3px">';
 	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="display" data-l2key="invertBinary" checked/>{{Affichage inversé}}</label>';
 	tr += '</div>';
 	tr += '<td>';
