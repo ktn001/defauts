@@ -115,6 +115,7 @@ class defauts extends eqLogic {
 		$cmd->setSubType("numeric");
 		$cmd->setConfiguration("minValue",0);
 		$cmd->setConfiguration("maxValue",2);
+		$cmd->setIsVisible(0);
 		$cmd->save();
 
 		// Création de la commande action "Acquitter"
