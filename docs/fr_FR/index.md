@@ -1,6 +1,6 @@
 # Documentation du plugin Défauts
 
-Le plugin "Défauts" permet de détecter des défauts en vérifiant la cohérence entre un état et une mesure.
+Le plugin **Défauts** permet de détecter des défauts en vérifiant la cohérence entre un état et une mesure.
 # Quelques exemples:
 - une lampe allumée mais pas de consommation (ampoule défectueuse ou mauvais signal de retour).
 - Une lampe éteinte mais consomation de plus de 1 watt (mauvais état de retour).
