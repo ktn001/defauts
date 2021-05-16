@@ -44,6 +44,12 @@ function defauts_update() {
 			$cmd->save();
 		}
 	}
+	$cmds = cmd::byLogicalId("surveillance");
+	foreach ($cmds as $cmd) {
+		if ($cmd->getEqType() == "defauts") {
+			$cmd->setDisplay("invertBinary",1);
+		}
+	}
 }
 
 // Fonction exécutée automatiquement après la suppression du plugin
