@@ -60,7 +60,7 @@ Les surveillances ont plusieurs paramêtres:
 * **Historiser**  
   Historisation de 'info
 
-## Expemple
+## Exemple
 
 | Etape | widget de léquipement couleur | widget de léquipement noirblanc | Observations |
 
