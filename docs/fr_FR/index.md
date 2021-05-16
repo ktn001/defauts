@@ -1,6 +1,6 @@
-# Documentation du plugin Défauts
+#  Documentation du plugin Défauts ![icon](../images/defauts_icon.png)
 
-Le plugin "Défauts" permet de détecter des défauts en vérifiant la cohérence entre un état et une mesure.
+Le plugin **Défauts** permet de détecter des défauts en vérifiant la cohérence entre un état et une mesure.
 # Quelques exemples:
 - une lampe allumée mais pas de consommation (ampoule défectueuse ou mauvais signal de retour).
 - Une lampe éteinte mais consomation de plus de 1 watt (mauvais état de retour).
@@ -55,5 +55,18 @@ Les surveillances ont plusieurs paramêtres:
   Surveillance active lorsque l'état est à 0
 * **Afficher**  
   Affichage de l'info
+* **Affichage inversé**
+  In versionde la valeur pour l'affichage (permet d'avoir une icône verte si tout va bien et rouge en cas de défaut).
 * **Historiser**  
   Historisation de 'info
+
+## Exemple
+
+| Etape | Widget de l'équipement (couleur) | Widget de l'équipement (noir/blanc) | Observations |
+| :---- | :----:  | :----: | :---- |
+| Situation de départ: | ![](../images/defauts_initial.png "Etat initial") | ![](../images/defauts_initial_bw.png "Etat initial") | Pas de défaut, Les surveillances sont en état normal. |
+| 1<sup>ière</sup> surveillance en en état anormal | ![](../images/defauts_premier_defaut.png) | ![](../images/defauts_premier_defaut_bw.png) | L'icône de défaut indique qu'il y a eu une anomalie qui n'a pas été acquittée. |
+| Acquittement du défaut | ![](../images/defauts_acquitte.png) | ![](../images/defauts_acquitte_bw.png) | Le défaut a été acquitté pas un clic sur l'icône (ou par l'auto-acquittement). L'Icône de défaut indique que l'anomalie est toujours présente. |
+| 2<sup>ième</sup> anomalie |![](../images/defauts_deuxieme_defaut.png) | ![](../images/defauts_deuxieme_defaut_bw.png) | L'icône de défaut indqieu qu'il y a une nonvelle anomalie. |
+| Disparition des anomalies |![](../images/defauts_plus_de_defaut_pas_acquitte.png) | ![](../images/defauts_plus_de_defaut_pas_acquitte_bw.png) | L'icône de défaut indqieu qu'il y a eu au mois uneanolalie qui n'a pas été acquittée. |
+| Retour à la normale: | ![](../images/defauts_initial.png "Etat initial") | ![](../images/defauts_initial_bw.png "Etat initial") | Les anomalies ont été aquittées et ont disparues. |
