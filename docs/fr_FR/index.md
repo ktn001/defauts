@@ -1,4 +1,4 @@
-# Documentation du plugin Défauts
+#  Documentation du plugin Défauts ![icon](../images/defauts_icon.png)
 
 Le plugin **Défauts** permet de détecter des défauts en vérifiant la cohérence entre un état et une mesure.
 # Quelques exemples:
@@ -55,5 +55,7 @@ Les surveillances ont plusieurs paramêtres:
   Surveillance active lorsque l'état est à 0
 * **Afficher**  
   Affichage de l'info
+* **Affichage inversé**
+  In versionde la valeur pour l'affichage (permet d'avoir une icône verte si tout va bien et rouge en cas de défaut).
 * **Historiser**  
   Historisation de 'info
