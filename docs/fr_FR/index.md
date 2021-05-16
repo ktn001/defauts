@@ -65,7 +65,7 @@ Les surveillances ont plusieurs paramêtres:
 | :---- | :------: | :------: | :---- |
 | Situation de départ: | ![](/docs/images/defauts_initial.png "Etat initial") | ![](/docs/images/defauts_initial_bw.png "Etat initial") | Pas de défaut, Les surveillances sont en état normal. |
 | 1<sup>ière</sup> surveillance en en état anormal | ![](/docs/images/defauts_premier_defaut.png) | ![](/docs/images/defauts_premier_defaut_bw.png) | L'icône de défaut indique qu'il y a eu une anomalie qui n'a pas été acquittée. |
-| Acquittement du défaut | ![](/docs/images/defauts_acquitte.png) | ![](/docs/images/defauts_acquitte_bw.png) | Le défaut a été acquitté pas un clic sur l'icône. L'Icône de défaut indique que l'anomalie est toujours présente. |
+| Acquittement du défaut | ![](/docs/images/defauts_acquitte.png) | ![](/docs/images/defauts_acquitte_bw.png) | Le défaut a été acquitté pas un clic sur l'icône (ou par l'auto-acquittement). L'Icône de défaut indique que l'anomalie est toujours présente. |
 | 2<sup>ième</sup> anomalie |![](/docs/images/defauts_deuxieme_defaut.png) | ![](/docs/images/defauts_deuxieme_defaut_bw.png) | L'icône de défaut indqieu qu'il y a une nonvelle anomalie. |
 | Disparition des anomalies |![](/docs/images/defauts_plus_de_defaut_pas_acquitte.png) | ![](/docs/images/defauts_plus_de_defaut_pas_acquitte_bw.png) | L'icône de défaut indqieu qu'il y a eu au mois uneanolalie qui n'a pas été acquittée. |
 | Retour à la normale: | ![](/docs/images/defauts_initial.png "Etat initial") | ![](/docs/images/defauts_initial_bw.png "Etat initial") | Les anomalies ont été aquittées et ont disparues. |
