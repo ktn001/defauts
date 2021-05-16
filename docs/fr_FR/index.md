@@ -61,6 +61,7 @@ Les surveillances ont plusieurs paramêtres:
   Historisation de 'info
 
 ## Expemple
+
 | Etape | widget de léquipement couleur | widget de léquipement noirblanc | Observations |
 
 | Situation de départ: | ![](../images/defauts_initial.png "Etat initial") | ![](../images/defauts_initial_bw.png "Etat initial") | Pas de défaut, Les surveillances sont en état normal. |
