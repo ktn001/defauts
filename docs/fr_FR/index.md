@@ -62,7 +62,6 @@ Les surveillances ont plusieurs paramêtres:
 
 ## Expemple
 | Etape | widget de l'équipement couleur | widget de l'équipement noir/blanc | Observations |
-
 | Situation de départ: | ![](../images/defauts_initial.png "Etat initial") | ![](../images/defauts_initial_bw.png "Etat initial") | Pas de défaut, Les surveillances sont en état normal. |
 
 | 1<sup>ière</sup> surveillance en en état anormal | ![](../images/defauts_premier_defaut.png) | ![](../images/defauts_premier_defaut_bw.png) | L'icône de défaut indique qu'il y a eu une anomalie qui n'a pas été acquittée. |
