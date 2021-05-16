@@ -1,4 +1,4 @@
-# Documentation du plugin Défauts
+#  Documentation du plugin Défauts ![icon](/docs/images/defauts_icon.png)
 
 Le plugin **Défauts** permet de détecter des défauts en vérifiant la cohérence entre un état et une mesure.
 # Quelques exemples:
@@ -9,7 +9,7 @@ Le plugin **Défauts** permet de détecter des défauts en vérifiant la cohére
 # Configuration du plugin
 Le plugin ne nécessite aucune configuration, il faut juste l’activer.
 
-![Page de configuration du plugin](../images/config_plugin.png)
+![Page de configuration du plugin](/docs/images/config_plugin.png)
 
 # Les équipements
 Un équipement **Défauts** permet de surveiller la cohérence de plusieurs combinaisons d'état et de valeur. Une info
@@ -55,5 +55,17 @@ Les surveillances ont plusieurs paramêtres:
   Surveillance active lorsque l'état est à 0
 * **Afficher**  
   Affichage de l'info
+* **Affichage inversé**
+  In versionde la valeur pour l'affichage (permet d'avoir une icône verte si tout va bien et rouge en cas de défaut).
 * **Historiser**  
   Historisation de 'info
+
+## Expemple
+| Etape | widget de l'équipement (couleur) | widget de l'équipement (noir/blanc) | Observations |
+| :---- | :------: | :------: | :---- |
+| Situation de départ: | ![](/docs/images/defauts_initial.png "Etat initial") | ![](/docs/images/defauts_initial_bw.png "Etat initial") | Pas de défaut, Les surveillances sont en état normal. |
+| 1<sup>ière</sup> surveillance en en état anormal | ![](/docs/images/defauts_premier_defaut.png) | ![](/docs/images/defauts_premier_defaut_bw.png) | L'icône de défaut indique qu'il y a eu une anomalie qui n'a pas été acquittée. |
+| Acquittement du défaut | ![](/docs/images/defauts_acquitte.png) | ![](/docs/images/defauts_acquitte_bw.png) | Le défaut a été acquitté pas un clic sur l'icône (ou par l'auto-acquittement). L'Icône de défaut indique que l'anomalie est toujours présente. |
+| 2<sup>ième</sup> anomalie |![](/docs/images/defauts_deuxieme_defaut.png) | ![](/docs/images/defauts_deuxieme_defaut_bw.png) | L'icône de défaut indqieu qu'il y a une nonvelle anomalie. |
+| Disparition des anomalies |![](/docs/images/defauts_plus_de_defaut_pas_acquitte.png) | ![](/docs/images/defauts_plus_de_defaut_pas_acquitte_bw.png) | L'icône de défaut indqieu qu'il y a eu au mois uneanolalie qui n'a pas été acquittée. |
+| Retour à la normale: | ![](/docs/images/defauts_initial.png "Etat initial") | ![](/docs/images/defauts_initial_bw.png "Etat initial") | Les anomalies ont été aquittées et ont disparues. |
