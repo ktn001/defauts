@@ -90,8 +90,6 @@ function addCmdToTable(_cmd) {
 	tr += '<td/>';
 	tr += '<td/>';
 	tr += '<td/>';
-	tr += '<td/>';
-	tr += '<td/>';
 	tr += '<td>';
 	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label>';
 	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label>';
@@ -119,8 +117,6 @@ function addCmdToTable(_cmd) {
 	tr += '<td/>';
 	tr += '<td/>';
 	tr += '<td/>';
-	tr += '<td/>';
-	tr += '<td/>';
 	tr += '<td>';
 	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label>';
 	tr += '</td>';
@@ -145,15 +141,13 @@ function addCmdToTable(_cmd) {
 	tr += '<td>Surveillance</td>';
 	/* ETAT */
 	tr += '<td>';
-	tr += '<div class="input-group">';
+	tr += '<div class="input-group" style="margin-bottom:5px">';
 	tr += '<input class="cmdAttr form-control input-sm roundedLeft tooltips" data-l1key="configuration" data-l2key="etat" title="{{Etat}}" placeholder="{{Nom l\'etat}}"/>';
 	tr += '<span class="input-group-btn">';
 	tr += '<a class="btn btn-default btn-sm cursor listEquipementInfoBinary roundedRight" data-input="etat"><i class="fas fa-list-alt "></i></a>';
 	tr += '</span>';
 	tr += '</div>';
-	tr += '</td>';
 	/* MESURE */
-	tr += '<td>';
 	tr += '<div class="input-group">';
 	tr += '<input class="cmdAttr form-control input-sm roundedLeft tooltips" data-l1key="configuration" data-l2key="mesure" title="{{Mesure}}" placeholder="{{Nom la mesure}}"/>';
 	tr += '<span class="input-group-btn">';
@@ -163,22 +157,33 @@ function addCmdToTable(_cmd) {
 	tr += '</td>';
 	/* LIMITE */
 	tr += '<td>';
+	tr += '<div style="margin-bottom:5px">';
 	tr += '<input class="cmdAttr form-control input-sm tooltips" data-l1key="configuration" data-l2key="limite" title="{{Valeur devant être atteinte après enclechement}}" placeholder="{{Limite}}">';
-	tr += '</td>';
+	tr += '</div>';
 	/* TEMPORISATION */
-	tr += '<td>';
+	tr += '<div>';
 	tr += '<input class="cmdAttr form-control input-sm tooltips" data-l1key="configuration" data-l2key="delais" title="{{Attente après changement d\'état}}" placeholder="{{secondes}}">';
+	tr += '</div>';
 	tr += '</td>';
 	/* PARAMETRES */
 	tr += '<td>';
+	tr += '<div style="margin-bottom:10px">';
 	tr += '<label class="checkbox-inline tooltips" title="{{Inversion du test de la limite}}"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="invert"/>{{Inverser}}</label>';
+	tr += '</div>';
+	tr += '<div style="margin-bottom:3px">';
 	tr += '<label class="checkbox-inline tooltips" title="{{Surveillance pour etat = 1}}"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="en" checked/>{{En}}</label>';
-	tr += '<label class="checkbox-inline tooltips" title="{{Surveillance pour etat = 0}}"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="hors" checked/>{{hors}}</label>';
+	tr += '<label class="checkbox-inline tooltips" title="{{Surveillance pour etat = 0}}"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="hors" checked/>{{Hors}}</label>';
+	tr += '</div>';
 	tr += '</td>';
 	/* OPTIONS */
 	tr += '<td>';
+	tr += '<div style="margin-bottom:10px">';
 	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label>';
 	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label>';
+	tr += '</div>';
+	tr += '<div style="margin-bottom:3px">';
+	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="display" data-l2key="invertBinary" checked/>{{Affichage inversé}}</label>';
+	tr += '</div>';
 	tr += '<td>';
 	if (is_numeric(_cmd.id)) {
 	    tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
