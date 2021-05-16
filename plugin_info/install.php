@@ -48,6 +48,7 @@ function defauts_update() {
 	foreach ($cmds as $cmd) {
 		if ($cmd->getEqType() == "defauts") {
 			$cmd->setDisplay("invertBinary",1);
+			$cmd->save();
 		}
 	}
 }
