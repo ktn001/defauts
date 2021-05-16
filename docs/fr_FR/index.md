@@ -1,4 +1,4 @@
-#  Documentation du plugin Défauts ![icon](/docs/images/defauts_icon.png)
+#  Documentation du plugin Défauts ![icon](../images/defauts_icon.png)
 
 Le plugin **Défauts** permet de détecter des défauts en vérifiant la cohérence entre un état et une mesure.
 # Quelques exemples:
@@ -9,7 +9,7 @@ Le plugin **Défauts** permet de détecter des défauts en vérifiant la cohére
 # Configuration du plugin
 Le plugin ne nécessite aucune configuration, il faut juste l’activer.
 
-![Page de configuration du plugin](/docs/images/config_plugin.png)
+![Page de configuration du plugin](../images/config_plugin.png)
 
 # Les équipements
 Un équipement **Défauts** permet de surveiller la cohérence de plusieurs combinaisons d'état et de valeur. Une info
