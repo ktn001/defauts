@@ -33,7 +33,7 @@ Outre les configurations habituelles, l'équipement a deux paramêtres permettan
    Le délais d'attente
    
 ### Des surveillances
-Le panneau `surveillances` permet de géger les surveillances de l'équipement. Le bouton "Ajouter une surveillance" ajoute une surveillance à l'équipement.
+Le panneau `surveillances` permet de géger les surveillances de l'équipement. Le bouton `Ajouter une surveillance` ajoute une surveillance à l'équipement.
 
 Les surveillances ont plusieurs paramêtres:
 * **nom**  
