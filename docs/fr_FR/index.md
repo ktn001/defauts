@@ -37,11 +37,11 @@ Le panneau `surveillances` permet de géger les surveillances de l'équipement. 
 
 Les surveillances ont plusieurs paramêtres:
 * **nom**  
-  Nom de la surveillance
+  Nom de la surveillance.
 * **Etat**  
-  Info binaire à surveiller
-* **Mesure**
-  Info numérique à surveiller
+  Info binaire à surveiller.
+* **Mesure**   
+  Info numérique à surveiller.
 * **Limite**  
   Valeur dant être atteinte pas le mesure lorsque l'état est à 1 (incohérence si cette valeur n'est pas atteinte.  
   Il y a aussi incohérence si cette valeur est atteinte alors que l'état est à 0.
@@ -50,15 +50,15 @@ Les surveillances ont plusieurs paramêtres:
 * **Inverser**  
   Inversion de la surveillance. Lamesure doit être supérieure à la limite lorsque l'état est à 0.
 * **En**  
-  Surveillance active lorsque l'état est à 1
+  Surveillance active lorsque l'état est à 1.
 * **Hors**  
-  Surveillance active lorsque l'état est à 0
+  Surveillance active lorsque l'état est à 0.
 * **Afficher**  
-  Affichage de l'info
-* **Affichage inversé**
-  In versionde la valeur pour l'affichage (permet d'avoir une icône verte si tout va bien et rouge en cas de défaut).
+  Affichage de l'info.
+* **Affichage inversé**  
+  Inversion de la valeur pour l'affichage (permet d'avoir une icône verte si tout va bien et rouge en cas de défaut).
 * **Historiser**  
-  Historisation de l'info
+  Historisation de l'info.
 
 ## Exemple
 
