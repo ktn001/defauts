@@ -26,10 +26,10 @@ L'équipement est créé avec deux commandes:
 
 ## Configuration
 ### De l'équipement
-Outre les configurations habituelles, l'équipement a deux paramêtres permettant de définir le fonctionnement de l'*Auto acquittement*:
-* *Auto Acquittement*   
+Outre les configurations habituelles, l'équipement a deux paramêtres permettant de définir le fonctionnement de l'**Auto acquittement**:
+* **Auto Acquittement**   
    indique si les défauts doivent être acquittés automatiqeuement ou non.
-* *Délais* *(visible uniquement su l'auto acquittement est activé)*  
+* **Délais** *(visible uniquement si l'auto acquittement est activé)*  
    Le délais d'attente
    
 ### Des surveillances
