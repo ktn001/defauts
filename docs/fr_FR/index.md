@@ -58,7 +58,7 @@ Les surveillances ont plusieurs paramêtres:
 * **Affichage inversé**
   In versionde la valeur pour l'affichage (permet d'avoir une icône verte si tout va bien et rouge en cas de défaut).
 * **Historiser**  
-  Historisation de 'info
+  Historisation de l'info
 
 ## Exemple
 
