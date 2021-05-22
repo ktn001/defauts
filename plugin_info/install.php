@@ -51,6 +51,7 @@ function defauts_update() {
 			$cmd->save();
 		}
 	}
+	defauts::clearCacheWidget();
 }
 
 // Fonction exécutée automatiquement après la suppression du plugin
