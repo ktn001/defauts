@@ -30,9 +30,9 @@ class defauts extends eqLogic {
 
 	/*     * ***********************Methode static*************************** */
 
-	public static function event () {
-		log::add('defauts','debug',"Début d event()");
-	}
+//	public static function event () {
+//		log::add('defauts','debug',"Début d event()");
+//	}
 
 	/*
 	 * Fonction exécutée automatiquement toutes les minutes par Jeedom
@@ -55,6 +55,7 @@ class defauts extends eqLogic {
 				continue;
 			}
 			if (($cmd->getCache("timeLevel2",0) + $delais*60) <= time()) {
+				log::add("defauts","info",$cmd->getEqLogic()->getName() . ": Autoacquittement");
 				$cmd->acquittement();
 			}
 		}
@@ -481,7 +482,13 @@ class defautsCmd extends cmd {
 				system::php($cmd . ' >> ' . log::getPathToLog('executeCmd.log') . ' 2>&1 &' );
 				return $this->execCmd();
 			}
-			return $this->calculSurveillance();
+			$newValue = $this->calculSurveillance();
+			$actuValue = $this->execCmd();
+			$eqName = $this->getEqLogic()->getName();
+			$cmdName = $this->getName();
+			$level = $newValue == $actuValue ? "debug" : "info";
+			log::add("defauts",$level,"$eqName: $cmdName: $actuValue => $newValue");
+			return $newValue;
 		}
 	}
 
