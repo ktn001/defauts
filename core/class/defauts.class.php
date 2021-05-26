@@ -114,6 +114,7 @@ class defauts extends eqLogic {
 		$cmd->setName("defaut");
 		$cmd->setType("info");
 		$cmd->setSubType("numeric");
+		$cmd->setOrder(0);
 		$cmd->setConfiguration("minValue",0);
 		$cmd->setConfiguration("maxValue",2);
 		$cmd->setIsVisible(0);
@@ -131,6 +132,18 @@ class defauts extends eqLogic {
 		$cmd->setTemplate("mobile","defauts::acquittement");
 		$cmd->setDisplay("forceReturnLineAfter",1);
 		$cmd->save();
+
+		// Création de la commande info "historique"
+		$cmd = new cmd();
+		$cmd->setEqLogic_id($this->getId());
+		$cmd->setLogicalId("historique");
+		$cmd->setName("historitque");
+		$cmd->setType("info");
+		$cmd->setSubType("other");
+		$cmd->setOrder(2);
+		$cmd->setConfiguration("size",3);
+		$cmd->save();
+
 	}
 
 	// Fonction exécutée automatiquement avant la mise à jour de l'équipement
@@ -152,6 +165,32 @@ class defauts extends eqLogic {
 
 	// Fonction exécutée automatiquement après la sauvegarde (création ou mise à jour) de l'équipement
 	public function postSave() {
+		log::add("defauts","debug","postSave eq: " . $this->getName() . " id:" . $this->getId());
+		$surveillances = cmd::byEqLogicIdAndLogicalId($this->getId(),"surveillance",true);
+		$values = "";
+		foreach ($surveillances as $surveillance) {
+			$values .= "#" . $surveillance->getId() . "#";
+			log::add("defauts","debug","values : $values");
+		}
+		$defauts = cmd::byEqLogicIdAndLogicalId($this->getId(),"defaut",true);
+		$aquitterValues = "";
+		foreach ($defauts as $defaut) {
+			$defaut->setValue($values);
+			$defaut->save();
+			$acquitterValues .= "#" . $defaut->getId() . "#";
+		}
+		$historiques = cmd::byEqLogicIdAndLogicalId($this->getId(),"historique",true);
+		foreach ($historiques as $historique) {
+			$historique->setValue($values);
+			$historique->save();
+		}
+
+		$acquitters = cmd::byEqLogicIdAndLogicalId($this->getId(),"acquitter",true);
+		foreach ($acquitters as $acquitter) {
+			$acquitter->setValue($acquitterValues);
+			$acquitter->save();
+		}
+
 	}
 
 	// Fonction exécutée automatiquement avant la suppression de l'équipement
@@ -220,35 +259,19 @@ class defautsCmd extends cmd {
 	public function preSave () {
 
 		if ($this->getLogicalId() == 'defaut') {
-			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info");
-			$values = "";
-			foreach ($cmds as $cmd) {
-				if ($cmd->getLogicalId() == "surveillance") {
-					$values .= "#" . $cmd->getId() . "#";
-				}
-			}
-			$this->setValue($values);
 			$this->setTemplate('dashboard','defauts::defaut');
 			$this->setTemplate('mobile','defauts::defaut');
 		}
 
-		if ($this->getLogicalId() == 'acquitter') {
-			$defautCmd = $this->byEqLogicIdAndLogicalId($this->getEqLogic_id(),"defaut");
-			$this->setValue($defautCmd->getId());
-		}
-
 		if ($this->getLogicalId() == 'surveillance') {
-
 			// Vérification de la limite
 			if ( !ctype_digit(trim($this->getConfiguration("limite")))) {
 				throw new Exception (__("La limite doit être un nombre entier!",__FILE__));
 			}
-
 			// Vérification du délais
 			if ( !ctype_digit(trim($this->getConfiguration("delais")))) {
 				throw new Exception (__("Le délais doit être un nombre entier!",__FILE__));
 			}
-
 			// Vérification de l'état
 			$etat = trim ($this->getConfiguration('etat'));
 			if ( $etat == '' ) {
@@ -260,17 +283,14 @@ class defautsCmd extends cmd {
 			if (! preg_match ("/^#[^#]+#$/", $etat)) {
 				throw new Exception (__("L'etat doit être une information simple",__FILE__));
 			}
-
 			// Vérification de la mesure
 			$mesure = $this->getConfiguration('mesure');
 			if ( $mesure == '' ) {
 				throw new Exception (__("La mesure doit être définie!",__FILE__));
 			}
-
 			// Renseignement du paramètre "value" qui contient la liste des
 			// commandes et variables qui influancent la valeur de $this
 			$value = '';
-
 			// recherche de commandes dans "etat"
 			$etat = $this->getConfiguration('etat');
 			preg_match_all("/#([0-9]+)#/", $etat, $matches);
@@ -280,13 +300,11 @@ class defautsCmd extends cmd {
 					$value .= '#' . $cmd_id . '#';
 				}
 			}
-
 			// recherche de variables dans etat"
 			preg_match_all("/variable\((.*?)\)/", $etat, $matches);
 			foreach ($matches[1] as $variable) {
 				$value .= '#variable(' . $variable . ')#';
 			}
-
 			// recherche de commandes dans "mesure"
 			$mesure = $this->getConfiguration('mesure');
 			preg_match_all("/#([0-9]+)#/", $mesure, $matches);
@@ -296,7 +314,6 @@ class defautsCmd extends cmd {
 					$value .= '#' . $cmd_id . '#';
 				}
 			}
-
 			// recherche de variables dans etat"
 			preg_match_all("/variable\((.*?)\)/", $mesure, $matches);
 			foreach ($matches[1] as $variable) {
@@ -432,7 +449,6 @@ class defautsCmd extends cmd {
 				}
 				$this->setCache("timeLevel2", time());
 				return 2;
-				break;
 			case 1:
 				if (empty($cmdsEnDefaut)) {
 					return 0;
@@ -453,13 +469,16 @@ class defautsCmd extends cmd {
 					return 2;
 				}
 				return 1;
-				break;
 			case 2:
 				$newCmdsEnDefaut = array_merge($oldCmdsEnDefaut, $cmdsEnDefaut);
 				$this->setCache("timeLevel2", time());
 				return 2;
-				break;
 			}
+		}
+
+		if ($this->getLogicalId() == "historique") {
+			log::add("defauts","info","historique");
+			return 1;
 		}
 
 		if ($this->getLogicalId() == 'surveillance') {

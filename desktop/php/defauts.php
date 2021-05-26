@@ -168,6 +168,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				    <div>{{Limite}}</div>
 				    <div>{{Temporisation}}</div>
 				</th>
+				<th style="width:40px">{{Taille}}</th>
 				<th>{{paramètres}}</th>
 				<th width="200px">{{Options}}</th>
 				<th width="150px"></th>

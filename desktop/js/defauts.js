@@ -79,21 +79,28 @@ function addCmdToTable(_cmd) {
 	/* id  et type */
 	tr += '<td width="60px">';
 	tr += '<span class="cmdAttr" data-l1key="id"></span>';
-	tr += '<span class="cmdAttr" data-l1key="type" style="display : none">info</span>';
-	tr += '<span class="cmdAttr" data-l1key="subType" style="display : none">binary</span>';
+	tr += '<span class="cmdAttr" data-l1key="type" style="display : none"></span>';
+	tr += '<span class="cmdAttr" data-l1key="subType" style="display : none"></span>';
 	tr += '<span class="cmdAttr" data-l1key="logicalId" style="display : none"></span>';
 	tr += '</td>';
 	/* NOM */
-	tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom surveillance}}"></td>';
+	tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom}}"></td>';
 	/* FONCTION */
 	tr += '<td>Défaut</td>';
+	/* ETAT */
 	tr += '<td/>';
+	/* LIMITE ET TEMPORISATION */
 	tr += '<td/>';
+	/* TAILLE */
 	tr += '<td/>';
+	/* PARAMETRES */
+	tr += '<td/>';
+	/* OPTIONS */
 	tr += '<td>';
 	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label>';
 	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label>';
 	tr += '</td>';
+	/* GESTION */
 	tr += '<td>';
 	tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
 	tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> {{Tester}}</a>';
@@ -106,22 +113,65 @@ function addCmdToTable(_cmd) {
 	/* id  et type */
 	tr += '<td width="60px">';
 	tr += '<span class="cmdAttr" data-l1key="id"></span>';
-	tr += '<span class="cmdAttr" data-l1key="type" style="display : none">info</span>';
-	tr += '<span class="cmdAttr" data-l1key="subType" style="display : none">binary</span>';
+	tr += '<span class="cmdAttr" data-l1key="type" style="display : none"></span>';
+	tr += '<span class="cmdAttr" data-l1key="subType" style="display : none"></span>';
 	tr += '<span class="cmdAttr" data-l1key="logicalId" style="display : none"></span>';
 	tr += '</td>';
 	/* NOM */
-	tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom surveillance}}"></td>';
+	tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom}}"></td>';
 	/* FONCTION */
-	tr += '<td>Acquittement</td>';
+	tr += '<td>{{Acquittement}}</td>';
+	/* ETAT */
 	tr += '<td/>';
+	/* LIMITE ET TEMPORISATION */
 	tr += '<td/>';
+	/* TAILLE */
 	tr += '<td/>';
+	/* PARAMETRES */
+	tr += '<td/>';
+	/* OPTIONS */
 	tr += '<td>';
 	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label>';
 	tr += '</td>';
+	/* GESTION */
 	tr += '<td>';
 	tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
+	tr += '</td>';
+	tr += '</tr>';
+    }
+
+    if (_cmd.logicalId == 'historique'){
+	var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
+	/* id  et type */
+	tr += '<td width="60px">';
+	tr += '<span class="cmdAttr" data-l1key="id"></span>';
+	tr += '<span class="cmdAttr" data-l1key="type" style="display : none"></span>';
+	tr += '<span class="cmdAttr" data-l1key="subType" style="display : none"></span>';
+	tr += '<span class="cmdAttr" data-l1key="logicalId" style="display : none"></span>';
+	tr += '</td>';
+	/* NOM */
+	tr += '<td>';
+	tr += '<input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom}}"></td>';
+	/* FONCTION */
+	tr += '<td>{{Historique}}</td>';
+	/* ETAT */
+	tr += '<td/>';
+	/* LIMITE ET TEMPORISATION */
+	tr += '<td/>';
+	/* TAILLE */
+	tr += '<td>';
+	tr += '<input class="cmdAttr form-control input-sm tooltips" data-l1key="configuration" data-l2key="size" placeholder="{{Taille}}"i title="Nombre de défauts dans la liste"/>';
+	tr += '</td>';
+	/* PARAMETRES */
+	tr += '<td/>';
+	/* OPTIONS */
+	tr += '<td>';
+	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label>';
+	tr += '</td>';
+	/* GESTION */
+	tr += '<td>';
+	tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
+	tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> {{Tester}}</a>';
 	tr += '</td>';
 	tr += '</tr>';
     }
@@ -133,16 +183,16 @@ function addCmdToTable(_cmd) {
 	tr += '<span class="cmdAttr" data-l1key="id"></span>';
 	tr += '<span class="cmdAttr" data-l1key="type" style="display : none">info</span>';
 	tr += '<span class="cmdAttr" data-l1key="subType" style="display : none">binary</span>';
-	tr += '<span class="cmdAttr" data-l1key="logicalId" value="surveillance" style="display : none"></span>';
+	tr += '<span class="cmdAttr" data-l1key="logicalId" style="display : none">surveillance</span>';
 	tr += '</td>';
 	/* NOM */
 	tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom surveillance}}"></td>';
 	/* FONCTION */
-	tr += '<td>Surveillance</td>';
+	tr += '<td>{{Surveillance}}</td>';
 	/* ETAT */
 	tr += '<td>';
 	tr += '<div class="input-group" style="margin-bottom:5px">';
-	tr += '<input class="cmdAttr form-control input-sm roundedLeft tooltips" data-l1key="configuration" data-l2key="etat" title="{{Etat}}" placeholder="{{Nom l\'etat}}"/>';
+	tr += '<input class="cmdAttr form-control input-sm tooltips" data-l1key="configuration" data-l2key="etat" title="{{Etat}}" placeholder="{{Nom l\'etat}}"/>';
 	tr += '<span class="input-group-btn">';
 	tr += '<a class="btn btn-default btn-sm cursor listEquipementInfoBinary roundedRight" data-input="etat"><i class="fas fa-list-alt "></i></a>';
 	tr += '</span>';
@@ -165,6 +215,8 @@ function addCmdToTable(_cmd) {
 	tr += '<input class="cmdAttr form-control input-sm tooltips" data-l1key="configuration" data-l2key="delais" title="{{Attente après changement d\'état}}" placeholder="{{secondes}}">';
 	tr += '</div>';
 	tr += '</td>';
+	/* TAILLE */
+	tr += '<td/>';
 	/* PARAMETRES */
 	tr += '<td>';
 	tr += '<div style="margin-bottom:10px">';
