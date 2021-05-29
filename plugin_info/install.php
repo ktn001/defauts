@@ -26,31 +26,7 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 // Fonction exécutée automatiquement après la mise à jour du plugin
 function defauts_update() {
 	log::add("defauts","info","Mise à jours des commandes pour le pugin defauts");
-	$eqLogics = eqLogic// Création de la commande info "historique"
-                $cmd = new cmd();
-                $cmd->setEqLogic_id($this->getId());
-                $cmd->setLogicalId("historique");
-                $cmd->setName("historique");
-                $cmd->setType("info");
-                $cmd->setSubType("string");
-                $cmd->setOrder(2);
-                $cmd->setConfiguration("histosize",3);
-                $cmd->setConfiguration("historetention",7);
-                $cmd->setConfiguration("histounite","j");
-                $cmd->save();
-// Création de la commande info "historique"
-                $cmd = new cmd();
-                $cmd->setEqLogic_id($this->getId());
-                $cmd->setLogicalId("historique");
-                $cmd->setName("historique");
-                $cmd->setType("info");
-                $cmd->setSubType("string");
-                $cmd->setOrder(2);
-                $cmd->setConfiguration("histosize",3);
-                $cmd->setConfiguration("historetention",7);
-                $cmd->setConfiguration("histounite","j");
-                $cmd->save();
-::byType("defauts");
+	$eqLogics = eqLogic::byType("defauts");
 	foreach ($eqLogics as $eqLogic) {
 		$eqLogic_id = $eqLogic->getId();
 		$eqLogiq_name = $eqLogic->getName();
