@@ -25,31 +25,58 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 // Fonction exécutée automatiquement après la mise à jour du plugin
 function defauts_update() {
-	log::add("defauts","info","Mise à jours de commandes pour le pugin defauts");
-	$cmds = cmd::byLogicalId("defaut");
-	foreach ($cmds as $cmd) {
-		if ($cmd->getEqType() == "defauts") {
-			log::add("defauts","info","  Mise à jour de la commande " . $cmd->getId());
-			$cmd->setIsVisible(0);
-			$cmd->save();
+	log::add("defauts","info","Mise à jours des commandes pour le pugin defauts");
+	$eqLogics = eqLogiq::byType("defauts");
+	foreach ($eqLogics as $eqLogic) {
+		$eqLogic_id = $eqLogic->getId();
+		$eqLogiq_name = $eqLogic->getName();
+		$eqLogic_version = $eqLogic->getConfiguration("version");
+		log::add("defauts","info","eqLogic $eqLogic_id - $eqLogic_name (version $eqlogic_version)");
+		switch ($eqLogic_version) {
+		case 0:
+			$cmds = cmd::byEqLogicId($eqLogic_id);
+			foreach ($cmds as $cmd) {
+				if ($cmd->getLogicalId() == "defaut") {
+					log::add("defauts","info","  Mise à jour de la commande " . $cmd->getId());
+					$cmd->setIsVisible(0);
+					$cmd->save();
+				}
+				if ($cmd->getLogicalId() == "acquitter") {
+					log::add("defauts","info","  Mise à jour de la commande " . $cmd->getId());
+					$cmd->setTemplate("dashboard","defauts::acquittement");
+					$cmd->setTemplate("mobile","defauts::acquittement");
+					$cmd->setDisplay("forceReturnLineAfter",1);
+					$cmd->save();
+				}
+				if ($cmd->getLogicalId() == "surveillance") {
+					$cmd->setDisplay("invertBinary",1);
+					$cmd->save();
+				}
+			}
+			$cmds = cmd::byEqLogicIdAndLogicalId($eqLogic_id,"historique",true);
+			if (count($cmds) > 0) {
+				$cmds = cmd::byEqLogicId($eqLogic_id);
+				foreach ($cmds as $cmd) {
+					$order = $cmd->getOrder();
+					if ($order > 1) {
+						$cmd->setOrder($order+1);
+					}
+				}
+				// Création de la commande info "historique"
+				$cmd = new cmd();
+				$cmd->setEqLogic_id($this->getId());
+				$cmd->setLogicalId("historique");
+				$cmd->setName("historique");
+				$cmd->setType("info");
+				$cmd->setSubType("string");
+				$cmd->setOrder(2);
+				$cmd->setConfiguration("histosize",3);
+				$cmd->setConfiguration("historetention",7);
+				$cmd->setConfiguration("histounite","j");
+				$cmd->save();
+			}
 		}
-	}
-	$cmds = cmd::byLogicalId("acquitter");
-	foreach ($cmds as $cmd) {
-		if ($cmd->getEqType() == "defauts") {
-			log::add("defauts","info","  Mise à jour de la commande " . $cmd->getId());
-			$cmd->setTemplate("dashboard","defauts::acquittement");
-			$cmd->setTemplate("mobile","defauts::acquittement");
-			$cmd->setDisplay("forceReturnLineAfter",1);
-			$cmd->save();
-		}
-	}
-	$cmds = cmd::byLogicalId("surveillance");
-	foreach ($cmds as $cmd) {
-		if ($cmd->getEqType() == "defauts") {
-			$cmd->setDisplay("invertBinary",1);
-			$cmd->save();
-		}
+		$eqLogic->setConfiguration("version",1);
 	}
 	defauts::clearCacheWidget();
 }
