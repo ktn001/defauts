@@ -30,33 +30,33 @@ class defauts extends eqLogic {
 
 	/*     * ***********************Methode static*************************** */
 
-//	public static function event () {
-//		log::add('defauts','debug',"Début d event()");
-//	}
-
 	/*
 	 * Fonction exécutée automatiquement toutes les minutes par Jeedom
 	 */
 	public static function cron() {
-		$cmds = cmd::byLogicalId("defaut");
-		foreach ($cmds as $cmd) {
-			if ($cmd->getEqType() != "defauts") {
-				continue;
-			}
-			$eqLogic = $cmd->getEqLogic();
-			if ($eqLogic->getConfiguration("autoAcquittement",0) == 0) {
-				continue;
-			}
-			$delais = $eqLogic->getConfiguration("delaisAcquittement",0);
-			if ($delais == 0) {
-				continue;
-			}
-			if ($cmd->execCmd() != 2) {
-				continue;
-			}
-			if (($cmd->getCache("timeLevel2",0) + $delais*60) <= time()) {
-				log::add("defauts","info",$cmd->getEqLogic()->getName() . ": Autoacquittement");
-				$cmd->acquittement();
+		$eqLogics = eqLogic::byType("defauts", "true");
+		foreach ($eqLogics as $eqLogic) {
+			$cmds = cmd::byEqLogicId($eqLogic->getId());
+			foreach ($cmds as $cmd) {
+				if ($cmd->getLogicalId() == "defaut") {
+					if ($eqLogic->getConfiguration("autoAcquittement",0) == 0) {
+						continue;
+					}
+					$delais = $eqLogic->getConfiguration("delaisAcquittement",0);
+					if ($delais == 0) {
+						continue;
+					}
+					if ($cmd->execCmd() != 2) {
+						continue;
+					}
+					if (($cmd->getCache("timeLevel2",0) + $delais*60) <= time()) {
+						log::add("defauts","info",$cmd->getEqLogic()->getName() . ": Autoacquittement");
+						$cmd->acquittement();
+					}
+				}
+				if ($cmd->getLogicalId() == "historique") {
+					$cmd->purgeHisto();
+				}
 			}
 		}
 	}
@@ -137,11 +137,13 @@ class defauts extends eqLogic {
 		$cmd = new cmd();
 		$cmd->setEqLogic_id($this->getId());
 		$cmd->setLogicalId("historique");
-		$cmd->setName("historitque");
+		$cmd->setName("historique");
 		$cmd->setType("info");
-		$cmd->setSubType("other");
+		$cmd->setSubType("string");
 		$cmd->setOrder(2);
-		$cmd->setConfiguration("size",3);
+		$cmd->setConfiguration("histosize",3);
+		$cmd->setConfiguration("historetention",7);
+		$cmd->setConfiguration("histounite","j");
 		$cmd->save();
 
 	}
@@ -165,12 +167,10 @@ class defauts extends eqLogic {
 
 	// Fonction exécutée automatiquement après la sauvegarde (création ou mise à jour) de l'équipement
 	public function postSave() {
-		log::add("defauts","debug","postSave eq: " . $this->getName() . " id:" . $this->getId());
 		$surveillances = cmd::byEqLogicIdAndLogicalId($this->getId(),"surveillance",true);
 		$values = "";
 		foreach ($surveillances as $surveillance) {
 			$values .= "#" . $surveillance->getId() . "#";
-			log::add("defauts","debug","values : $values");
 		}
 		$defauts = cmd::byEqLogicIdAndLogicalId($this->getId(),"defaut",true);
 		$aquitterValues = "";
@@ -204,7 +204,6 @@ class defauts extends eqLogic {
 	/*
 	 * Non obligatoire : permet de modifier l'affichage du widget (également utilisable par les commandes)
 	  public function toHtml($_version = 'dashboard') {
-
 	  }
 	 */
 
@@ -261,6 +260,16 @@ class defautsCmd extends cmd {
 		if ($this->getLogicalId() == 'defaut') {
 			$this->setTemplate('dashboard','defauts::defaut');
 			$this->setTemplate('mobile','defauts::defaut');
+		}
+
+		if ($this->getLogicalId() == 'historique') {
+			// Vérification de la taille
+			if ( !ctype_digit(trim($this->getConfiguration("histosize")))) {
+				throw new Exception (__("La taille de l'historique doit être un nombre entier positif!",__FILE__));
+			}
+			if ($this->getConfiguration("histosize") > 5) {
+				throw new Exception (__("La taille de l'historique ne peut pas être supérieure à 5",__FILE__));
+			}
 		}
 
 		if ($this->getLogicalId() == 'surveillance') {
@@ -324,7 +333,7 @@ class defautsCmd extends cmd {
 	}
 
 	public function toHtml ($_version = 'dashboard', $_options = "") {
-		if ($this->getLogicalId() == "acquitter") {
+		if ($this->getLogicalId() == "acquitter" || $this->getLogicalId() == "defaut") {
 			if ($_options == "") {
 				$_options = array();
 			}
@@ -382,36 +391,78 @@ class defautsCmd extends cmd {
 
 	// Acquittement du défaut
 	public function acquittement () {
-		$cmdsEnDefaut = [];
 		if ($this->getLogicalId() == 'acquitter' || $this->getLogicalId() == 'defaut') {
-			$cmdDefaut = [];
-			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info");
-			foreach ($cmds as $cmd) {
-				if ($cmd->getLogicalId() == "defaut") {
-					$cmdDefaut = $cmd;
-					continue;
-				}
-				if ($cmd->getLogicalId() == "surveillance") {
-					if ($cmd->execCmd() == 1) {
-						$cmdsEnDefaut["cmd_" . $cmd->getId()] = 1;
-					}
+		$value = 0;
+		$surveillances = cmd::byEqLogicIdAndLogicalId($this->getEqLogic_id(), "surveillance", true);
+		foreach ($surveillances as $surveillance) {
+			if ($surveillance->execCmd() == 1) {
+				$value = 1;
+			}
+		}
+		$defauts = cmd::byEqLogicIdAndLogicalId($this->getEqLogic_id(), "defaut", true);
+		foreach ($defauts as $defaut) {
+			$defaut->event($value);
+		}
+		} else {
+			log::add("defauts","error","Function acquittement appelée pour une commande qui n'a pas le logicalId 'acquitter' ou 'defaut'");
+		}
+	}
+
+	// Mise à jour de l'historique sur la base d'une nouvelle liste
+	public function actualiseHistorique($liste) {
+		$this->setCache("liste", json_encode($liste));
+		$value = "";
+		$nbLignes = $this->getConfiguration("histosize");
+		for ($i = 0; $i < $nbLignes; $i++) {
+			$value .= "<br/>";
+			if (array_key_exists($i,$liste)) {
+				$value .= date("d-m H:i:s",$liste[$i]["time"]) . " : " . $liste[$i]["nom"];
+			}
+		}
+		$value .= "<br/><br/>";
+		return $value;
+	}
+
+	// Purge des éléments expirés de l'historique
+	public function purgeHisto () {
+		if ($this->getLogicalId() == 'historique') {
+			log::add("defauts","debug","Lancement de purgeHisto");
+			$retention = $this->getConfiguration("historetention");
+			if ($retention == 0) {
+				log::add("defauts","debug","Pas de retention");
+			}
+			switch ( $this->getConfiguration("histounite")){
+			case "m":
+				$retention *= 60;
+				break;
+			case "h":
+				$retention *= 60*60;
+				break;
+			case "j":
+				$retention *= 60*60*24;
+			}
+			$retention = date("U") - $retention;
+			$liste = json_decode($this->getCache("liste"), true);
+			for ($i = count($liste); $i > 0; $i--) {
+				if ($liste[$i-1]['time'] < $retention) {
+					array_splice($liste,$i-1,1);
 				}
 			}
-			$value = empty($cmdsEnDefaut)? 0 : 1;
-			$eqLogic=$this->getEqLogic();
-			$eqLogic->checkAndUpdateCmd($cmdDefaut,$value);
+			$this->event($this->actualiseHistorique($liste));
 		} else {
-			log::add("defaut","error","Function acquittement appelée pour une commande qui n'a pas le logicalId 'acquitter' ou 'defaut'");
+			log::add("defauts","erreur","purgeHisto appelé pour une commande erronée");
 		}
 	}
 
 	// Exécution d'une commande
-	public function execute($_options = array()) {
+	public function execute ($_options = array()) {
 		if ($this->getLogicalId() == 'acquitter') {
+			log::add("defauts","debug","execute acquitter" );
 			$this->acquittement();
 		}
 
 		if ($this->getLogicalId() == 'defaut') {
+			log::add("defauts","debug","execute defaut" );
 
 			// L'ancienne valeur de la commande
 			$oldValue=$this->execCmd();
@@ -477,11 +528,37 @@ class defautsCmd extends cmd {
 		}
 
 		if ($this->getLogicalId() == "historique") {
-			log::add("defauts","info","historique");
-			return 1;
+			log::add("defauts","debug","execute historique" );
+			$liste = json_decode($this->getCache("liste"), true);
+			$derniereDate = 0;
+			if ( ! is_array($liste)) {
+				$liste = array();
+			}
+			if (count($liste) > 0) {
+				$entry = $liste[0];
+				$dernierDate = $liste[0]["time"];
+			}
+			$surveillances = cmd::byEqLogicIdAndLogicalId($this->getEqLogic_id(),"surveillance",true);
+			foreach ($surveillances as $surveillance) {
+				if ($surveillance->execCmd() == 1) {
+					$date = strtotime($surveillance->getValueDate());
+					if ($date > $dernierDate) {
+						$entry=array("time"=>$date,"nom"=>$surveillance->getName());
+						$liste[]=$entry;
+					}
+				}
+			}
+			usort ($liste, function($a,$b) {
+				return $b["time"]<=>$a["time"];
+			});
+			while (count($liste) > 5) {
+				array_pop($liste);
+			}
+			return $this->actualiseHistorique($liste);
 		}
 
 		if ($this->getLogicalId() == 'surveillance') {
+			log::add("defauts","debug","execute surveillance" );
 			$etat =jeedom::evaluateExpression($this->getConfiguration('etat'));
 
 			if ( $etat == 1 && $this->getConfiguration('en',1) == 0 )  {

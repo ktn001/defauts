@@ -91,8 +91,6 @@ function addCmdToTable(_cmd) {
 	tr += '<td/>';
 	/* LIMITE ET TEMPORISATION */
 	tr += '<td/>';
-	/* TAILLE */
-	tr += '<td/>';
 	/* PARAMETRES */
 	tr += '<td/>';
 	/* OPTIONS */
@@ -125,8 +123,6 @@ function addCmdToTable(_cmd) {
 	tr += '<td/>';
 	/* LIMITE ET TEMPORISATION */
 	tr += '<td/>';
-	/* TAILLE */
-	tr += '<td/>';
 	/* PARAMETRES */
 	tr += '<td/>';
 	/* OPTIONS */
@@ -158,12 +154,20 @@ function addCmdToTable(_cmd) {
 	tr += '<td/>';
 	/* LIMITE ET TEMPORISATION */
 	tr += '<td/>';
-	/* TAILLE */
-	tr += '<td>';
-	tr += '<input class="cmdAttr form-control input-sm tooltips" data-l1key="configuration" data-l2key="size" placeholder="{{Taille}}"i title="Nombre de défauts dans la liste"/>';
-	tr += '</td>';
 	/* PARAMETRES */
 	tr += '<td/>';
+	tr += '<label>{{Taille}}: <input class="cmdAttr form-control input-sm" style="width:60px; margin-right:10px" data-l1key="configuration" data-l2key="histosize"/></label>';
+	tr += '<label>';
+	tr += '{{Rétention}}: ';
+	tr += '<div>';
+	tr += '<input class="cmdAttr form-control input-sm" style="display:inline; width:40px" data-l1key="configuration" data-l2key="historetention"/>';
+	tr += '<select class="cmdAttr form-select input-sm" style="display:inline; width:100px" data-l1key="configuration" data-l2key="histounite">';
+	tr += '<option value="m">{{minutes}}</options>';
+	tr += '<option value="h">{{heures}}</options>';
+	tr += '<option value="j">{{jours}}</options>';
+	tr += '</select>';
+	tr += '</div>';
+	tr += '</td>';
 	/* OPTIONS */
 	tr += '<td>';
 	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label>';
@@ -215,8 +219,6 @@ function addCmdToTable(_cmd) {
 	tr += '<input class="cmdAttr form-control input-sm tooltips" data-l1key="configuration" data-l2key="delais" title="{{Attente après changement d\'état}}" placeholder="{{secondes}}">';
 	tr += '</div>';
 	tr += '</td>';
-	/* TAILLE */
-	tr += '<td/>';
 	/* PARAMETRES */
 	tr += '<td>';
 	tr += '<div style="margin-bottom:10px">';
