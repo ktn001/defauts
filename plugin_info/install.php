@@ -53,6 +53,28 @@ function defauts_update() {
 					$cmd->save();
 				}
 			}
+			$cmds = cmd::byEqLogicIdAndLogicalId($eqLogic_id,"historique",true);
+			if (count($cmds) > 0) {
+				$cmds = cmd::byEqLogicId($eqLogic_id);
+				foreach ($cmds as $cmd) {
+					$order = $cmd->getOrder();
+					if ($order > 1) {
+						$cmd->setOrder($order+1);
+					}
+				}
+				// Création de la commande info "historique"
+				$cmd = new cmd();
+				$cmd->setEqLogic_id($this->getId());
+				$cmd->setLogicalId("historique");
+				$cmd->setName("historique");
+				$cmd->setType("info");
+				$cmd->setSubType("string");
+				$cmd->setOrder(2);
+				$cmd->setConfiguration("histosize",3);
+				$cmd->setConfiguration("historetention",7);
+				$cmd->setConfiguration("histounite","j");
+				$cmd->save();
+			}
 		}
 		$eqLogic->setConfiguration("version",1);
 	}
