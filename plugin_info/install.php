@@ -37,24 +37,26 @@ function defauts_update() {
 			$cmds = cmd::byEqLogicId($eqLogic_id);
 			foreach ($cmds as $cmd) {
 				if ($cmd->getLogicalId() == "defaut") {
-					log::add("defauts","info","  Mise à jour de la commande " . $cmd->getId());
+					log::add("defauts","info","  Mise à jour de la commande " . $cmd->getId() . " - " . $cmd->getName());
 					$cmd->setIsVisible(0);
 					$cmd->save();
 				}
 				if ($cmd->getLogicalId() == "acquitter") {
-					log::add("defauts","info","  Mise à jour de la commande " . $cmd->getId());
+					log::add("defauts","info","  Mise à jour de la commande " . $cmd->getId() . " - " . $cmd->getName());
 					$cmd->setTemplate("dashboard","defauts::acquittement");
 					$cmd->setTemplate("mobile","defauts::acquittement");
 					$cmd->setDisplay("forceReturnLineAfter",1);
 					$cmd->save();
 				}
 				if ($cmd->getLogicalId() == "surveillance") {
+					log::add("defauts","info","  Mise à jour de la commande " . $cmd->getId() . " - " . $cmd->getName());
 					$cmd->setDisplay("invertBinary",1);
 					$cmd->save();
 				}
 			}
 			$cmds = cmd::byEqLogicIdAndLogicalId($eqLogic_id,"historique",true);
 			if (count($cmds) == 0) {
+				log::add("defauts","info","Création de la commande pour l'historique");
 				$cmds = cmd::byEqLogicId($eqLogic_id);
 				foreach ($cmds as $cmd) {
 					$order = $cmd->getOrder();
