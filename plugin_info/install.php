@@ -54,7 +54,7 @@ function defauts_update() {
 				}
 			}
 			$cmds = cmd::byEqLogicIdAndLogicalId($eqLogic_id,"historique",true);
-			if (count($cmds) > 0) {
+			if (count($cmds) == 0) {
 				$cmds = cmd::byEqLogicId($eqLogic_id);
 				foreach ($cmds as $cmd) {
 					$order = $cmd->getOrder();
