@@ -408,28 +408,13 @@ class defautsCmd extends cmd {
 		}
 	}
 
-	// Mise à jour de l'historique sur la base d'une nouvelle liste
-	public function actualiseHistorique($liste) {
-		$this->setCache("liste", json_encode($liste));
-		$value = "";
-		$nbLignes = $this->getConfiguration("histosize");
-		for ($i = 0; $i < $nbLignes; $i++) {
-			$value .= "<br/>";
-			if (array_key_exists($i,$liste)) {
-				$value .= date("d-m H:i:s",$liste[$i]["time"]) . " : " . $liste[$i]["nom"];
-			}
-		}
-		$value .= "<br/><br/>";
-		return $value;
-	}
-
-	// Purge des éléments expirés de l'historique
-	public function purgeHisto () {
+	// Date de retention de l'historique
+	public function dateHistoRetention () {
 		if ($this->getLogicalId() == 'historique') {
-			log::add("defauts","debug","Lancement de purgeHisto");
 			$retention = $this->getConfiguration("historetention");
 			if ($retention == 0) {
 				log::add("defauts","debug","Pas de retention");
+				return 0;
 			}
 			switch ( $this->getConfiguration("histounite")){
 			case "m":
@@ -441,7 +426,39 @@ class defautsCmd extends cmd {
 			case "j":
 				$retention *= 60*60*24;
 			}
-			$retention = date("U") - $retention;
+			return date("U") - $retention;
+
+		} else {
+			log::add("defauts","erreur","dateHistoRetention  appelé pour une commande erronée");
+			return NULL;
+		}
+	}
+
+	// Mise à jour de l'historique sur la base d'une nouvelle liste
+	public function actualiseHistorique($liste) {
+		if ($this->getLogicalId() == 'historique') {
+			$this->setCache("liste", json_encode($liste));
+			$value = "";
+			$nbLignes = $this->getConfiguration("histosize");
+			for ($i = 0; $i < $nbLignes; $i++) {
+				$value .= "<br/>";
+				if (array_key_exists($i,$liste)) {
+					$value .= date("d-m H:i:s",$liste[$i]["time"]) . " : " . $liste[$i]["nom"];
+				}
+			}
+			$value .= "<br/><br/>";
+			return $value;
+		} else {
+			log::add("defauts","erreur","actualiseHistorique  appelé pour une commande erronée");
+			return NULL;
+		}
+	}
+
+	// Purge des éléments expirés de l'historique
+	public function purgeHisto () {
+		if ($this->getLogicalId() == 'historique') {
+			log::add("defauts","debug","Lancement de purgeHisto");
+			$retention = $this->dateHistoRetention();
 			$liste = json_decode($this->getCache("liste"), true);
 			for ($i = count($liste); $i > 0; $i--) {
 				if ($liste[$i-1]['time'] < $retention) {
@@ -530,7 +547,7 @@ class defautsCmd extends cmd {
 		if ($this->getLogicalId() == "historique") {
 			log::add("defauts","debug","execute historique" );
 			$liste = json_decode($this->getCache("liste"), true);
-			$derniereDate = 0;
+			$dernierDate = $this->dateHistoRetention();
 			if ( ! is_array($liste)) {
 				$liste = array();
 			}
