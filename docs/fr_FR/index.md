@@ -53,6 +53,7 @@ Le panneau `surveillances` permet de géger les surveillances de l'équipement. 
 ![historique](../images/historique.png)
 
 La commande *historique* et son widget permettent de voir les cinq derniers défauts qui se sont produits. Le nombre d'événements listés est configurable.
+
 Une durée rétention de events listé peut-être configurée. Le events qui se sont produit avant la durée de rétention sont retiré de la liste. Ainsi les event qui se sont produit il y a plus de 2 jours sont retirés de la liste si la rétention est de 2 jours.
 
 #### L'historique a plusieurs paramètres:
