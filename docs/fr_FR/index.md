@@ -1,4 +1,4 @@
-#  Documentation du plugin Défauts ![icon](../images/defauts_icon.png)
+# ![icon](../images/defauts_icon.png) Documentation du plugin Défauts 
 
 Le plugin **Défauts** permet de détecter des défauts en vérifiant la cohérence entre un état et une mesure.
 # Quelques exemples:
@@ -35,7 +35,7 @@ Outre les configurations habituelles, l'équipement a deux paramêtres permettan
 ### Des surveillances
 Le panneau `surveillances` permet de géger les surveillances de l'équipement. Le bouton `Ajouter une surveillance` ajoute une surveillance à l'équipement.
 
-Les surveillances ont plusieurs paramêtres:
+Les surveillances ont plusieurs paramètres:
 * **nom**  
   Nom de la surveillance.
 * **Etat**  
@@ -59,6 +59,15 @@ Les surveillances ont plusieurs paramêtres:
   Inversion de la valeur pour l'affichage (permet d'avoir une icône verte si tout va bien et rouge en cas de défaut).
 * **Historiser**  
   Historisation de l'info.
+
+### De l'historique
+
+La commande *historique* et son widget permettent de voir les cinq derniers défauts qui se sont produits. Le nombre d'événements listés est configurable.
+
+Une durée rétention de events listé peut-être configurée. Le events qui se sont produit avant la durée de rétention sont retiré de la liste. Ainsi les event qui se sont produit il y a plus de 2 jours sont retirés de la liste si la rétention est de 2 jours.
+
+l'historique a plusieurs paramètres
+![configuration de l'historique](../images/config_histo.png)
 
 ## Exemple
 
