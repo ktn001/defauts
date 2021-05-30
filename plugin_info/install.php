@@ -80,6 +80,7 @@ function defauts_update() {
 			}
 		}
 		$eqLogic->setConfiguration("version",1);
+		$eqLogic->save();
 	}
 	defauts::clearCacheWidget();
 }
