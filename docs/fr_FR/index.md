@@ -35,30 +35,19 @@ Outre les configurations habituelles, l'équipement a deux paramêtres permettan
 ### Des surveillances
 Le panneau `surveillances` permet de géger les surveillances de l'équipement. Le bouton `Ajouter une surveillance` ajoute une surveillance à l'équipement.
 
-Les surveillances ont plusieurs paramètres:
-* **nom**  
-  Nom de la surveillance.
-* **Etat**  
-  Info binaire à surveiller.
-* **Mesure**   
-  Info numérique à surveiller.
-* **Limite**  
-  Valeur dant être atteinte pas le mesure lorsque l'état est à 1 (incohérence si cette valeur n'est pas atteinte.  
-  Il y a aussi incohérence si cette valeur est atteinte alors que l'état est à 0.
-* **Temporisation**  
-  Délais pour atteindre la limite après changement d'état.
-* **Inverser**  
-  Inversion de la surveillance. Lamesure doit être supérieure à la limite lorsque l'état est à 0.
-* **En**  
-  Surveillance active lorsque l'état est à 1.
-* **Hors**  
-  Surveillance active lorsque l'état est à 0.
-* **Afficher**  
-  Affichage de l'info.
-* **Affichage inversé**  
-  Inversion de la valeur pour l'affichage (permet d'avoir une icône verte si tout va bien et rouge en cas de défaut).
-* **Historiser**  
-  Historisation de l'info.
+#### Les surveillances ont plusieurs paramètres:
+![configuration d'une surveillance](../images/config_surveillance.png)
+* ***Nom :*** Nom de la surveillance.
+* ***Etat :*** Info binaire à surveiller.
+* ***Mesure :*** Info numérique à surveiller.
+* ***Limite :*** Valeur dant être atteinte pas le mesure lorsque l'état est à 1 (incohérence si cette valeur n'est pas atteinte. Il y a aussi incohérence si cette valeur est atteinte alors que l'état est à 0.
+* ***Temporisation :*** Délais pour atteindre la limite après changement d'état.
+* ***Inverser :*** Inversion de la surveillance. Lamesure doit être supérieure à la limite lorsque l'état est à 0.
+* ***En :*** Surveillance active lorsque l'état est à 1.
+* ***Hors :*** Surveillance active lorsque l'état est à 0.
+* ***Afficher :*** Affichage de l'info.
+* ***Affichage inversé :*** Inversion de la valeur pour l'affichage (permet d'avoir une icône verte si tout va bien et rouge en cas de défaut).
+* ***Historiser :*** Historisation de l'info.
 
 ### De l'historique
 
@@ -66,8 +55,12 @@ La commande *historique* et son widget permettent de voir les cinq derniers déf
 
 Une durée rétention de events listé peut-être configurée. Le events qui se sont produit avant la durée de rétention sont retiré de la liste. Ainsi les event qui se sont produit il y a plus de 2 jours sont retirés de la liste si la rétention est de 2 jours.
 
-l'historique a plusieurs paramètres
+#### L'historique a plusieurs paramètres:
 ![configuration de l'historique](../images/config_histo.png)
+* ***Nom :*** Nom de lĥistorique.
+* ***Taille :***  Nombre d'entrées de l'historique affichées dans le widget (5 au maximum)
+* ***Rétention :*** Durée de rétention d'une entrée dans l'historique. Cette durée peut être exprimée en minutes, heures ou jours
+* ***Afficher :*** Indique su le widget doit être afficjé ou non.
 
 ## Exemple
 
