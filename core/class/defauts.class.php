@@ -458,7 +458,7 @@ class defautsCmd extends cmd {
 	public function purgeHisto () {
 		if ($this->getLogicalId() == 'historique') {
 			log::add("defauts","debug","Lancement de purgeHisto");
-			$retention = dateHistoRetention();
+			$retention = $this->dateHistoRetention();
 			$liste = json_decode($this->getCache("liste"), true);
 			for ($i = count($liste); $i > 0; $i--) {
 				if ($liste[$i-1]['time'] < $retention) {
@@ -547,7 +547,7 @@ class defautsCmd extends cmd {
 		if ($this->getLogicalId() == "historique") {
 			log::add("defauts","debug","execute historique" );
 			$liste = json_decode($this->getCache("liste"), true);
-			$derniereDate = dateHistoRetention();
+			$dernierDate = $this->dateHistoRetention();
 			if ( ! is_array($liste)) {
 				$liste = array();
 			}
