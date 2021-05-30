@@ -1,4 +1,4 @@
-<span class="cmd cmd-widget #history#" data-type="info" data-subtype="numeric" data-template="light" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#">
+<div class="cmd cmd-widget #history#" data-type="info" data-subtype="numeric" data-template="light" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#">
   <div class="title #hide_name#">
     <div  class="cmdName">#name_display#</div>
   </div>
@@ -8,14 +8,15 @@
   <script>
     jeedom.cmd.update['#id#'] = function(_options){
       $('.cmd[data-cmd_id=#id#]').attr('title','{{Date de valeur}} : '+_options.valueDate+'<br/>{{Date de collecte}} : '+_options.collectDate)
-      if (parseFloat(_options.display_value) > 1) {
-        $('.cmd[data-cmd_id=#id#] .iconCmd').empty().append('<i class="icon icon_red jeedom-alerte2"></i>');
-      } else if (parseFloat(_options.display_value) == 1) {
-        $('.cmd[data-cmd_id=#id#] .iconCmd').empty().append('<i class="icon icon_orange jeedom-alerte2" style="opacity:0.6"></i>');
-      } else {
-        $('.cmd[data-cmd_id=#id#] .iconCmd').empty().append('<i class="icon icon_green jeedom-alerte2" style="opacity:0.2"></i>');
+      var cmd = $('.cmd[data-cmd_id=#id#]');
+      if (_options.display_value == "0") {
+        cmd.find('.iconCmd').empty().append('#icon_defauts_level_0#');
+      } else if (_options.display_value == "1") {
+        cmd.find('.iconCmd').empty().append('#icon_defauts_level_1#');
+      } else if (_options.display_value == "2") {
+        cmd.find('.iconCmd').empty().append('#icon_defauts_level_2#');
       }
     }
     jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'});
   </script>
-</span>
+</div>
