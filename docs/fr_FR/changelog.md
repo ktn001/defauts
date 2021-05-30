@@ -4,6 +4,9 @@
 
 Pour rappel s’il n’y a pas d’information sur la mise à jour, c’est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
+## V1.2.0 (30/05/21)
++ Ajout d'une commande et de son widget pour afficher l'historique de dernières anomalies.
+
 ## v1.1.0 ##
 + Ammélioration des messages de log
 
