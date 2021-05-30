@@ -69,7 +69,13 @@ if ($dateEtat < $cmd->dateEtat()) {
 	exit (0);
 }
 
-$eqLogic=$cmd->getEqLogic();
-$eqLogic->checkAndUpdateCmd($cmd,$cmd->calculSurveillance());
+$eqLogic = $cmd->getEqLogic();
+$actuValue = $cmd->execCmd(); 
+$newValue = $cmd->calculSurveillance();
+$eqName = $cmd->getEqLogic()->getName();
+$cmdName = $cmd->getName();
+$level = $newValue == $actuValue ? "debug" : "info";
+log::add("defauts",$level,"$eqName: $cmdName: $actuValue => $newValue (temporisé)");
+$eqLogic->checkAndUpdateCmd($cmd,$newValue);
 
 exit (0);
