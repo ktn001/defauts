@@ -62,11 +62,12 @@ function defauts_update() {
 					$order = $cmd->getOrder();
 					if ($order > 1) {
 						$cmd->setOrder($order+1);
+						$cmd->save();
 					}
 				}
 				// Création de la commande info "historique"
 				$cmd = new cmd();
-				$cmd->setEqLogic_id($this->getId());
+				$cmd->setEqLogic_id($eqLogic_id);
 				$cmd->setLogicalId("historique");
 				$cmd->setName("historique");
 				$cmd->setType("info");
