@@ -78,9 +78,18 @@ function defauts_update() {
 				$cmd->setConfiguration("histounite","j");
 				$cmd->save();
 			}
-		}
-		$eqLogic->setConfiguration("version",1);
-		$eqLogic->save();
+			$eqLogic->setConfiguration("version",1);
+			$eqLogic->save();
+	        case 1:
+			$cmds = cmd::byEqLogicIdAndLogicalId($eqLogic_id,"historique",true);
+			if (count($cmds) == 0) {
+				$cmd->setConfiguration("formatdate","d-m H:i:s");
+				$cmd->save();
+			}
+			$eqLogic->setConfiguration("version",2);
+			$eqLogic->save();
+	        }
+
 	}
 	defauts::clearCacheWidget();
 }
