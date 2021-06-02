@@ -156,26 +156,37 @@ function addCmdToTable(_cmd) {
 	tr += '<td/>';
 	/* PARAMETRES */
 	tr += '<td/>';
-	tr += '<label>{{Taille}}: <input class="cmdAttr form-control input-sm" style="width:60px; margin-right:10px" data-l1key="configuration" data-l2key="histosize"/></label>';
-	tr += '<label>';
-	tr += '{{Rétention}}: ';
-	tr += '<div>';
-	tr += '<input class="cmdAttr form-control input-sm" style="display:inline; width:40px" data-l1key="configuration" data-l2key="historetention"/>';
-	tr += '<select class="cmdAttr form-select input-sm" style="display:inline; width:100px" data-l1key="configuration" data-l2key="histounite">';
-	tr += '<option value="m">{{minutes}}</options>';
-	tr += '<option value="h">{{heures}}</options>';
-	tr += '<option value="j">{{jours}}</options>';
-	tr += '</select>';
-	tr += '</div>';
+	tr +=   '<label>';
+	tr +=     '<div style="padding-left:5px">{{Taille}}:</div>';
+	tr +=     '<input class="cmdAttr form-control input-sm" style="width:60px; margin-right:10px" data-l1key="configuration" data-l2key="histosize"/>';
+	tr +=   '</label>';
+	tr +=   '<label style="margin-right:10px">';
+	tr +=     '<div style="padding-left:5px">{{Rétention}}:</div>';
+	tr +=     '<input class="cmdAttr form-control input-sm" style="display:inline; width:40px" data-l1key="configuration" data-l2key="historetention"/>';
+	tr +=     '<select class="cmdAttr form-select input-sm" style="display:inline; width:100px" data-l1key="configuration" data-l2key="histounite">';
+	tr +=       '<option value="m">{{minutes}}</options>';
+	tr +=       '<option value="h">{{heures}}</options>';
+	tr +=       '<option value="j">{{jours}}</options>';
+	tr +=     '</select>';
+	tr +=   '</label>';
+	tr +=   '<label>';
+	tr +=     '<div style="padding-left:5px">{{Format date}}:</div>';
+	tr +=     '<select class="cmdAttr form-select input-sm" style="display:inline; width:180px" data-l1key="configuration" data-l2key="formatdate">';
+	tr +=       '<option value="d-m H:i:s">jj-mm HH:MM:SS</options>';
+	tr +=       '<option value="d/m H:i:s">jj/mm HH:MM:SS</options>';
+	tr +=       '<option value="d/m/y H:i:s">jj/mm/aa HH:MM:SS</options>';
+	tr +=       '<option value="d M Y H:i:s">jj mmm aaaa HH:MM:SS</options>';
+	tr +=     '</select>';
+	tr +=   '</label>';
 	tr += '</td>';
 	/* OPTIONS */
 	tr += '<td>';
-	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label>';
+	tr +=   '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label>';
 	tr += '</td>';
 	/* GESTION */
 	tr += '<td>';
-	tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
-	tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> {{Tester}}</a>';
+	tr +=   '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
+	tr +=   '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> {{Tester}}</a>';
 	tr += '</td>';
 	tr += '</tr>';
     }
