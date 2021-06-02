@@ -438,15 +438,16 @@ class defautsCmd extends cmd {
 	public function actualiseHistorique($liste) {
 		if ($this->getLogicalId() == 'historique') {
 			$this->setCache("liste", json_encode($liste));
-			$value = "";
+			$value .= "<div style='text-align:left'>";
 			$nbLignes = $this->getConfiguration("histosize");
+			$formatDate = $this->getConfiguration('formatdate');
 			for ($i = 0; $i < $nbLignes; $i++) {
 				$value .= "<br/>";
 				if (array_key_exists($i,$liste)) {
-					$value .= date("d-m H:i:s",$liste[$i]["time"]) . " : " . $liste[$i]["nom"];
+					$value .= date($formatDate,$liste[$i]["time"]) . " : " . $liste[$i]["nom"];
 				}
 			}
-			$value .= "<br/><br/>";
+			$value .= "<br/><br/></div>";
 			return $value;
 		} else {
 			log::add("defauts","erreur","actualiseHistorique  appelé pour une commande erronée");

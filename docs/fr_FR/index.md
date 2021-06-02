@@ -50,17 +50,30 @@ Le panneau `surveillances` permet de géger les surveillances de l'équipement. 
 * ***Historiser :*** Historisation de l'info.
 
 ### De l'historique
+![historique](../images/historique.png)
 
 La commande *historique* et son widget permettent de voir les cinq derniers défauts qui se sont produits. Le nombre d'événements listés est configurable.
 
 Une durée rétention de events listé peut-être configurée. Le events qui se sont produit avant la durée de rétention sont retiré de la liste. Ainsi les event qui se sont produit il y a plus de 2 jours sont retirés de la liste si la rétention est de 2 jours.
 
 #### L'historique a plusieurs paramètres:
+
 ![configuration de l'historique](../images/config_histo.png)
+
 * ***Nom :*** Nom de lĥistorique.
 * ***Taille :***  Nombre d'entrées de l'historique affichées dans le widget (5 au maximum)
 * ***Rétention :*** Durée de rétention d'une entrée dans l'historique. Cette durée peut être exprimée en minutes, heures ou jours
-* ***Afficher :*** Indique su le widget doit être afficjé ou non.
+* ***Format date :*** Format de la date dans l'historique.    
+     les formats suivants sont possibles (Faites une demande via le forum de Jeedom pour l'ajout d'autres formats):
+
+    | format | exemple |
+    | ------ | ------- |
+    | jj-mm HH:MM:SS | 02-06 17:35:40 |
+    | jj/mm HH:MM:SS | 02/06 17:35:40 |
+    | jj/mm/aa HH:MM:SS | 02/06/21 17:35:40 |
+    | jj mmm aaaa HH:MM:SS | 02 Jun 2021 17:35:40 |
+
+* ***Afficher :*** Indique si le widget doit être affiché ou non.
 
 ## Exemple
 

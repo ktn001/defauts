@@ -34,6 +34,7 @@ function defauts_update() {
 		log::add("defauts","info","eqLogic $eqLogic_id - $eqLogic_name (version $eqlogic_version)");
 		switch ($eqLogic_version) {
 		case 0:
+			log::add ("defauts","info","upgrade de l'eqLogic version 0 => 1");
 			$cmds = cmd::byEqLogicId($eqLogic_id);
 			foreach ($cmds as $cmd) {
 				if ($cmd->getLogicalId() == "defaut") {
@@ -78,9 +79,20 @@ function defauts_update() {
 				$cmd->setConfiguration("histounite","j");
 				$cmd->save();
 			}
-		}
-		$eqLogic->setConfiguration("version",1);
-		$eqLogic->save();
+			$eqLogic->setConfiguration("version",1);
+			$eqLogic->save();
+	        case 1:
+			log::add ("defauts","info","upgrade de l'eqLogic version 1 => 2");
+			$cmds = cmd::byEqLogicIdAndLogicalId($eqLogic_id,"historique",true);
+			foreach ($cmds as $cmd) {
+				log::add("defauts","info","Création de format de la date  pour l'historique");
+				$cmd->setConfiguration("formatdate","d-m H:i:s");
+				$cmd->save();
+			}
+			$eqLogic->setConfiguration("version",2);
+			$eqLogic->save();
+	        }
+
 	}
 	defauts::clearCacheWidget();
 }
