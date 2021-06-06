@@ -34,6 +34,14 @@ $("#bt_addSurveillance").on('click', function (event) {
   modifyWithoutSave = true;
 });
 
+/*
+ * Bouton pour le création de suveillance de condigne
+ */
+$("#bt_addSurvConsigne").on('click', function (event) {
+  addCmdToTable({type: 'info', logicalId: 'survConsigne'});
+  modifyWithoutSave = true;
+});
+
 /* 
  * Permet la réorganisation des commandes dans l'équipement
  */
@@ -266,6 +274,80 @@ function addCmdToTable(_cmd) {
 	tr += '</tr>';
     }
 
+    if (_cmd.logicalId == 'survConsigne') {
+	var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
+	/* id  et type */
+	tr += '<td>';
+	tr += '<span class="cmdAttr" data-l1key="id"></span>';
+	tr += '<span class="cmdAttr" data-l1key="type" style="display : none">info</span>';
+	tr += '<span class="cmdAttr" data-l1key="subType" style="display : none">binary</span>';
+	tr += '<span class="cmdAttr" data-l1key="logicalId" style="display : none">survConsigne</span>';
+	tr += '</td>';
+	/* NOM */
+	tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom}}"></td>';
+	/* FONCTION */
+	tr += '<td>{{Consigne}}</td>';
+	/* ETAT */
+	tr += '<td>';
+	tr +=   '<div class="input-group" style="margin-bottom:5px">';
+	tr +=     '<input class="cmdAttr form-control input-sm tooltips" data-l1key="configuration" data-l2key="etat" title="{{Etat}}" placeholder="{{Nom l\'etat}}"/>';
+	tr +=     '<span class="input-group-btn">';
+	tr +=       '<a class="btn btn-default btn-sm cursor listEquipementInfoBinary roundedRight" data-input="etat"><i class="fas fa-list-alt "></i></a>';
+	tr +=     '</span>';
+	tr +=   '</div>';
+	/* MESURE */
+	tr +=   '<div class="input-group">';
+	tr +=     '<input class="cmdAttr form-control input-sm roundedLeft tooltips" data-l1key="configuration" data-l2key="mesure" title="{{Mesure}}" placeholder="{{Nom la mesure}}"/>';
+	tr +=     '<span class="input-group-btn">';
+	tr +=       '<a class="btn btn-default btn-sm cursor listEquipementInfoNumeric roundedRight" data-input="mesure"><i class="fas fa-list-alt "></i></a>';
+	tr +=     '</span>';
+	tr +=   '</div>';
+	tr += '</td>';
+	/* CONSIGNE */
+	tr += '<td>';
+	tr +=   '<div class="input-group">';
+	tr +=     '<input class="cmdAttr form-control input-sm roundedLeft tooltips" data-l1key="configuration" data-l2key="consigne" title="{{Consigne}}" placeholder="{{Nom la consigne}}"/>';
+	tr +=     '<span class="input-group-btn">';
+	tr +=       '<a class="btn btn-default btn-sm cursor listEquipementInfoNumeric roundedRight" data-input="mesure"><i class="fas fa-list-alt "></i></a>';
+	tr +=     '</span>';
+	tr +=   '</div>';
+	/* LIMITE */
+	tr +=   '<div class="input-group">';
+	tr +=     '<span style="width:80px; display:inline-block">';
+	tr +=       '<input class="cmdAttr form-control input-sm tooltips" data-l1key="configuration" data-l2key="limite" title="{{Valeur devant être atteinte après enclechement}}" placeholder="{{Limite}}">';
+	tr +=     '</span>';
+	/* LIMITE ET TEMPORISATION */
+	tr +=     '<span style="width:60px; display:inline-block">';
+	tr +=       '<input class="cmdAttr form-control input-sm tooltips" style="margin-left:2px" data-l1key="configuration" data-l2key="delais" title="{{Attente après changement d\'état}}" placeholder="{{secondes}}">';
+	tr +=     '</span>';
+	tr +=   '</div>';
+	tr += '</td>';
+	/* PARAMETRES */
+	tr += '<td>';
+	tr += '<div style="margin-bottom:10px">';
+	tr += '</div>';
+	tr += '<div style="margin-bottom:3px">';
+	tr += '<label class="checkbox-inline tooltips" title="{{Surveillance pour etat = 1}}"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="en" checked/>{{En}}</label>';
+	tr += '<label class="checkbox-inline tooltips" title="{{Surveillance pour etat = 0}}"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="configuration" data-l2key="hors" checked/>{{Hors}}</label>';
+	tr += '</div>';
+	tr += '</td>';
+	/* OPTIONS */
+	tr += '<td>';
+	tr += '<div style="margin-bottom:10px">';
+	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label>';
+	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label>';
+	tr += '</div>';
+	tr += '<div style="margin-bottom:3px">';
+	tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="display" data-l2key="invertBinary" checked/>{{Affichage inversé}}</label>';
+	tr += '</div>';
+	tr += '<td>';
+	if (is_numeric(_cmd.id)) {
+	    tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
+	    tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> {{Tester}}</a>';
+	}
+	tr += '<i class="fas fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i></td>';
+	tr += '</tr>';
+    }
 
     $('#table_cmd tbody').append(tr);
 

@@ -152,7 +152,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 		<div class="input-group" style="text-align:right">
 		    <span class="input-group-btn">
 			<a class="btn btn-default btn-sm roundedLeft" id="bt_addSurveillance" style="margin-top:5px;"><i class="fas fa-plus-circle"></i><span class="hidden-xs"> {{Ajouter une surveillance}}</span>
-			</a><a class="btn btn-default btn-sm roundedRight" id="bt_addSurvconsigne" style="margin-top:5px;"><i class="fas fa-plus-circle"></i><span class="hidden-xs"> {{Ajouter une surveillance de consigne}}</span></a>
+			</a><a class="btn btn-default btn-sm roundedRight" id="bt_addSurvConsigne" style="margin-top:5px;"><i class="fas fa-plus-circle"></i><span class="hidden-xs"> {{Ajouter une surveillance de consigne}}</span></a>
 		    </span>
 		</div>
 		<div class="table-responsive">
