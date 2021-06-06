@@ -149,24 +149,26 @@ $eqLogics = eqLogic::byType($plugin->getId());
 
 	    <!-- Onglet des commandes de l'équipement -->
 	    <div role="tabpanel" class="tab-pane" id="commandtab">
-		<a class="btn btn-default btn-sm pull-right " id="bt_addSurveillance" style="margin-top:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une surveillance}}</a>
-		<br/><br/>
-		<div id="container_defaut">
+		<div class="input-group" style="text-align:right">
+		    <span class="input-group-btn">
+			<a class="btn btn-default btn-sm roundedLeft" id="bt_addSurveillance" style="margin-top:5px;"><i class="fas fa-plus-circle"></i><span class="hidden-xs"> {{Ajouter une surveillance}}</span>
+			</a><a class="btn btn-default btn-sm roundedRight" id="bt_addSurvconsigne" style="margin-top:5px;"><i class="fas fa-plus-circle"></i><span class="hidden-xs"> {{Ajouter une surveillance de consigne}}</span></a>
+		    </span>
 		</div>
 		<div class="table-responsive">
 		    <table id="table_cmd" class="table table-bordered table-condensed">
 			<thead>
 			    <tr>
-				<th style="width:50px">ID</th>
+				<th width="50px">ID</th>
 				<th style="width:130px">{{Nom}}</th>
 				<th style="width:130px">{{Fonction}}</th>
 				<th style="width:400px">
 				    <div>{{Etat}}</div>
 				    <div>{{Mesure}}</div>
 				</th>
-				<th style="width:40px">
-				    <div>{{Limite}}</div>
-				    <div>{{Temporisation}}</div>
+				<th style="width:400px">
+				    <div>{{Consigne}}</div>
+				    <div><span style="width:80px; display:inline-block">{{Limite}}</span><span>{{Temporisation}}</span></div>
 				</th>
 				<th>{{paramètres}}</th>
 				<th width="200px">{{Options}}</th>

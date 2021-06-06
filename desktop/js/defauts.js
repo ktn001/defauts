@@ -77,7 +77,7 @@ function addCmdToTable(_cmd) {
     if (_cmd.logicalId == "defaut") {
 	var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
 	/* id  et type */
-	tr += '<td width="60px">';
+	tr += '<td>';
 	tr += '<span class="cmdAttr" data-l1key="id"></span>';
 	tr += '<span class="cmdAttr" data-l1key="type" style="display : none"></span>';
 	tr += '<span class="cmdAttr" data-l1key="subType" style="display : none"></span>';
@@ -109,7 +109,7 @@ function addCmdToTable(_cmd) {
     if (_cmd.logicalId == "acquitter") {
 	var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
 	/* id  et type */
-	tr += '<td width="60px">';
+	tr += '<td>';
 	tr += '<span class="cmdAttr" data-l1key="id"></span>';
 	tr += '<span class="cmdAttr" data-l1key="type" style="display : none"></span>';
 	tr += '<span class="cmdAttr" data-l1key="subType" style="display : none"></span>';
@@ -139,7 +139,7 @@ function addCmdToTable(_cmd) {
     if (_cmd.logicalId == 'historique'){
 	var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
 	/* id  et type */
-	tr += '<td width="60px">';
+	tr += '<td>';
 	tr += '<span class="cmdAttr" data-l1key="id"></span>';
 	tr += '<span class="cmdAttr" data-l1key="type" style="display : none"></span>';
 	tr += '<span class="cmdAttr" data-l1key="subType" style="display : none"></span>';
@@ -156,28 +156,32 @@ function addCmdToTable(_cmd) {
 	tr += '<td/>';
 	/* PARAMETRES */
 	tr += '<td/>';
-	tr +=   '<label>';
-	tr +=     '<div style="padding-left:5px">{{Taille}}:</div>';
-	tr +=     '<input class="cmdAttr form-control input-sm" style="width:60px; margin-right:10px" data-l1key="configuration" data-l2key="histosize"/>';
-	tr +=   '</label>';
-	tr +=   '<label style="margin-right:10px">';
-	tr +=     '<div style="padding-left:5px">{{Rétention}}:</div>';
-	tr +=     '<input class="cmdAttr form-control input-sm" style="display:inline; width:40px" data-l1key="configuration" data-l2key="historetention"/>';
-	tr +=     '<select class="cmdAttr form-select input-sm" style="display:inline; width:100px" data-l1key="configuration" data-l2key="histounite">';
-	tr +=       '<option value="m">{{minutes}}</options>';
-	tr +=       '<option value="h">{{heures}}</options>';
-	tr +=       '<option value="j">{{jours}}</options>';
-	tr +=     '</select>';
-	tr +=   '</label>';
-	tr +=   '<label>';
-	tr +=     '<div style="padding-left:5px">{{Format date}}:</div>';
-	tr +=     '<select class="cmdAttr form-select input-sm" style="display:inline; width:180px" data-l1key="configuration" data-l2key="formatdate">';
-	tr +=       '<option value="d-m H:i:s">jj-mm HH:MM:SS</options>';
-	tr +=       '<option value="d/m H:i:s">jj/mm HH:MM:SS</options>';
-	tr +=       '<option value="d/m/y H:i:s">jj/mm/aa HH:MM:SS</options>';
-	tr +=       '<option value="d M Y H:i:s">jj mmm aaaa HH:MM:SS</options>';
-	tr +=     '</select>';
-	tr +=   '</label>';
+	tr +=   '<div class="input-group" style="margin-bottom:5px">';
+	tr +=     '<label txpe="text">';
+	tr +=       '{{Taille}}: ';
+	tr +=       '<input class="cmdAttr form-control input-sm" style="width:60px; float:unset" data-l1key="configuration" data-l2key="histosize"/>';
+	tr +=     '</label>';
+	tr +=     '<label style="margin-left:5px">';
+	tr +=       '{{Rétention}}: ';
+	tr +=       '<input class="cmdAttr form-control input-sm" style="float:unset; width:40px; padding-right:0; text-align:right" data-l1key="configuration" data-l2key="historetention"/>';
+	tr +=       '<select class="cmdAttr form-select input-sm" style="float:unset; width:100px" data-l1key="configuration" data-l2key="histounite">';
+	tr +=         '<option value="m">{{minutes}}</options>';
+	tr +=         '<option value="h">{{heures}}</options>';
+	tr +=         '<option value="j">{{jours}}</options>';
+	tr +=       '</select>';
+	tr +=     '</label>';
+	tr +=   '</div>';
+	tr +=   '<div class="input-group" >';
+	tr +=     '<label>';
+	tr +=       '{{Format date}}: ';
+	tr +=       '<select class="cmdAttr form-select input-sm" style="display:inline-block; width:180px" data-l1key="configuration" data-l2key="formatdate">';
+	tr +=         '<option class="input-sm" value="d-m H:i:s">jj-mm HH:MM:SS</options>';
+	tr +=         '<option class="input-sm" value="d/m H:i:s">jj/mm HH:MM:SS</options>';
+	tr +=         '<option class="input-sm" value="d/m/y H:i:s">jj/mm/aa HH:MM:SS</options>';
+	tr +=         '<option class="input-sm" value="d M Y H:i:s">jj mmm aaaa HH:MM:SS</options>';
+	tr +=       '</select>';
+	tr +=     '</label>';
+	tr +=   '</div>';
 	tr += '</td>';
 	/* OPTIONS */
 	tr += '<td>';
@@ -194,7 +198,7 @@ function addCmdToTable(_cmd) {
     if (_cmd.logicalId == 'surveillance') {
 	var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
 	/* id  et type */
-	tr += '<td width="60px">';
+	tr += '<td>';
 	tr += '<span class="cmdAttr" data-l1key="id"></span>';
 	tr += '<span class="cmdAttr" data-l1key="type" style="display : none">info</span>';
 	tr += '<span class="cmdAttr" data-l1key="subType" style="display : none">binary</span>';
@@ -220,15 +224,19 @@ function addCmdToTable(_cmd) {
 	tr += '</span>';
 	tr += '</div>';
 	tr += '</td>';
-	/* LIMITE */
+	/* CONSIGNE */
 	tr += '<td>';
-	tr += '<div style="margin-bottom:5px">';
-	tr += '<input class="cmdAttr form-control input-sm tooltips" data-l1key="configuration" data-l2key="limite" title="{{Valeur devant être atteinte après enclechement}}" placeholder="{{Limite}}">';
-	tr += '</div>';
-	/* TEMPORISATION */
-	tr += '<div>';
-	tr += '<input class="cmdAttr form-control input-sm tooltips" data-l1key="configuration" data-l2key="delais" title="{{Attente après changement d\'état}}" placeholder="{{secondes}}">';
-	tr += '</div>';
+	tr +=   '<div class="input-sm" style="margin-bottom:5px"></div>';
+	/* LIMITE */
+	tr +=   '<div class="input-group">';
+	tr +=     '<span style="width:80px; display:inline-block">';
+	tr +=       '<input class="cmdAttr form-control input-sm tooltips" data-l1key="configuration" data-l2key="limite" title="{{Valeur devant être atteinte après enclechement}}" placeholder="{{Limite}}">';
+	tr +=     '</span>';
+	/* LIMITE ET TEMPORISATION */
+	tr +=     '<span style="width:60px; display:inline-block">';
+	tr +=       '<input class="cmdAttr form-control input-sm tooltips" style="margin-left:2px" data-l1key="configuration" data-l2key="delais" title="{{Attente après changement d\'état}}" placeholder="{{secondes}}">';
+	tr +=     '</span>';
+	tr +=   '</div>';
 	tr += '</td>';
 	/* PARAMETRES */
 	tr += '<td>';
