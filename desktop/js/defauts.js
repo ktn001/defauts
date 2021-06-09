@@ -232,8 +232,9 @@ function _celParametre(_cmd) {
 			    +  formatDate
 			    +  '</div>';
 			break;
-		case 'surveillance':
 		case 'survConsigne':
+			inverser = "";
+		case 'surveillance':
 			cel += '<div calss="input-group" style="margin-bottom:10px">'
 			    +  inverser
 			    +  '</div>'
