@@ -54,6 +54,15 @@ Le panneau `surveillances` permet de géger les surveillances de l'équipement. 
 
 ### Des surveillances de consigne
 ![configuration d'une surveillance de consigne](../images/config_consigne.png)
+* ***Nom :*** Nom de la surveillance.
+* ***Etat :*** Info binaire utilisée pour controler le fonctonnement de lasurveillance.
+* ***Mesure :*** Info numérique, un defaut sera signalé si la valeur de cette mesure est trop distante de la valeur de la consigne.
+* ***Consigne :*** Info numérique, valeur que la masure doit atteindre.
+* ***Limite :*** Un défaut est remonté si la valeur absolue de la différence entre la cngne et la mesure est supérieur à cette limite.
+* ***Temposiration :*** Période, en secondes, durant laquelle la surveillance est désactivée après un changement de l'***état***.
+* ***En :*** La surveillance est activée lorsque l'***état*** est à 1 si cette option est activée.
+* ***Hors :*** La surveillance est activée lorsque l'***état*** est à 0 si cette option est activée.
+* ***Historiser :*** Historisation de l'info.
 
 ### De l'historique
 ![historique](../images/historique.png)
