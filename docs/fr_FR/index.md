@@ -6,6 +6,8 @@ Le plugin **Défauts** permet de détecter des défauts en vérifiant la cohére
 - Une lampe éteinte mais consomation de plus de 1 watt (mauvais état de retour).
 - Une pompe enclenchée mais pas de débit.
 
+Le lugin peut aussi des deéfaut lorsque la valuer d'une mesure s'écarte trop d'une consigne.
+
 # Configuration du plugin
 Le plugin ne nécessite aucune configuration, il faut juste l’activer.
 
@@ -33,11 +35,11 @@ Outre les configurations habituelles, l'équipement a deux paramêtres permettan
 * **Délais** *(visible uniquement si l'auto acquittement est activé)*  
    Le délais d'attente
    
-### Des surveillances
-Le panneau `surveillances` permet de géger les surveillances de l'équipement. Le bouton `Ajouter une surveillance` ajoute une surveillance à l'équipement.
+### Des surveillances de cohérence
+Le panneau `surveillances` permet de géger les surveillances de l'équipement. Le bouton `Ajouter une surveillance` ajoute une surveillance de cohérence à l'équipement.
 
-#### Les surveillances ont plusieurs paramètres:
-![configuration d'une surveillance](../images/config_surveillance.png)
+#### Les surveillances de cohérence ont plusieurs paramètres:
+![configuration d'une surveillance de cohérence](../images/config_surveillance.png)
 * ***Nom :*** Nom de la surveillance.
 * ***Etat :*** Info binaire à surveiller.
 * ***Mesure :*** Info numérique à surveiller.
@@ -49,6 +51,9 @@ Le panneau `surveillances` permet de géger les surveillances de l'équipement. 
 * ***Afficher :*** Affichage de l'info.
 * ***Affichage inversé :*** Inversion de la valeur pour l'affichage (permet d'avoir une icône verte si tout va bien et rouge en cas de défaut).
 * ***Historiser :*** Historisation de l'info.
+
+### Des surveillances de consigne
+![configuration d'une surveillance de consigne](../images/config_consigne.png)
 
 ### De l'historique
 ![historique](../images/historique.png)
