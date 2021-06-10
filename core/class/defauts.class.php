@@ -97,8 +97,6 @@ class defauts extends eqLogic {
 	  }
 	 */
 
-
-
 	/*     * *********************Méthodes d'instance************************* */
 
 	// Fonction exécutée automatiquement avant la création de l'équipement
@@ -167,10 +165,14 @@ class defauts extends eqLogic {
 
 	// Fonction exécutée automatiquement après la sauvegarde (création ou mise à jour) de l'équipement
 	public function postSave() {
-		$surveillances = cmd::byEqLogicIdAndLogicalId($this->getId(),"surveillance",true);
 		$values = "";
+		$surveillances = cmd::byEqLogicIdAndLogicalId($this->getId(),"surveillance",true);
 		foreach ($surveillances as $surveillance) {
 			$values .= "#" . $surveillance->getId() . "#";
+		}
+		$survConsignes = cmd::byEqLogicIdAndLogicalId($this->getId(),"survConsigne",true);
+		foreach ($survConsignes as $survConsigne) {
+			$values .= "#" . $survConsigne->getId() . "#";
 		}
 		$defauts = cmd::byEqLogicIdAndLogicalId($this->getId(),"defaut",true);
 		$aquitterValues = "";
@@ -231,6 +233,25 @@ class defautsCmd extends cmd {
 
 	/*     * ***********************Methode static*************************** */
 
+	private static function chercheCmds ($string = ''){
+		preg_match_all("/#([0-9]+)#/", $string, $matches);
+		$return = "";
+		foreach ($matches[1] as $cmd_id) {
+			$cmd = self::byId($cmd_id);
+			if (is_object($cmd) && $cmd->getType() == 'info') {
+				$return .= '#' . $cmd_id . '#';
+			}
+		}
+		return $return;
+	}
+
+	private static function chercheVariables ($string = '') {
+		preg_match_all("/variable\((.*?)\)/", $string, $matches);
+		foreach ($matches[1] as $variable) {
+			$value .= '#variable(' . $variable . ')#';
+		}
+	}
+
 
 	/*     * *********************Methode d'instance************************* */
 
@@ -272,62 +293,54 @@ class defautsCmd extends cmd {
 			}
 		}
 
-		if ($this->getLogicalId() == 'surveillance') {
+		if (($this->getLogicalId() == 'surveillance') || ($this->getLogicalId() == 'survConsigne')) {
+			$value = '';
+
 			// Vérification de la limite
 			if ( !ctype_digit(trim($this->getConfiguration("limite")))) {
 				throw new Exception (__("La limite doit être un nombre entier!",__FILE__));
 			}
+
 			// Vérification du délais
 			if ( !ctype_digit(trim($this->getConfiguration("delais")))) {
 				throw new Exception (__("Le délais doit être un nombre entier!",__FILE__));
 			}
+
 			// Vérification de l'état
 			$etat = trim ($this->getConfiguration('etat'));
 			if ( $etat == '' ) {
-				throw new Exception (__("L'état doit être défini!",__FILE__));
+				if ($this->getLogicalId() == 'survConsigne') {
+					throw new Exception (__("L'état doit être défini!",__FILE__));
+				}
+			} else {
+				if ( is_numeric (stripos ($etat,"#" . $this->getId() . "#"))) {
+					throw new Exception (__("Vous ne pouvez utiliser l'info elle même dans l'Etat",__FILE__));
+				}
+				if (! preg_match ("/^#[^#]+#$/", $etat)) {
+					throw new Exception (__("L'etat doit être une information simple",__FILE__));
+				}
+				$value .= $this->chercheCmds($etat);
+				$value .= $this->chercheVariables($etat);
 			}
-			if ( is_numeric (stripos ($etat,"#" . $this->getId() . "#"))) {
-				throw new Exception (__("Vous ne pouvez utiliser l'info elle même dans l'Etat",__FILE__));
-			}
-			if (! preg_match ("/^#[^#]+#$/", $etat)) {
-				throw new Exception (__("L'etat doit être une information simple",__FILE__));
-			}
+
 			// Vérification de la mesure
 			$mesure = $this->getConfiguration('mesure');
-			if ( $mesure == '' ) {
+			if ($mesure == '') {
 				throw new Exception (__("La mesure doit être définie!",__FILE__));
 			}
-			// Renseignement du paramètre "value" qui contient la liste des
-			// commandes et variables qui influancent la valeur de $this
-			$value = '';
-			// recherche de commandes dans "etat"
-			$etat = $this->getConfiguration('etat');
-			preg_match_all("/#([0-9]+)#/", $etat, $matches);
-			foreach ($matches[1] as $cmd_id) {
-				$cmd = self::byId($cmd_id);
-				if (is_object($cmd) && $cmd->getType() == 'info') {
-					$value .= '#' . $cmd_id . '#';
+
+			// Vérification de la consigne
+			if ($this->getLogicalId() == 'survConsigne') {
+				$consigne = trim ($this->getConfiguration('consigne'));
+				if ($consigne == '') {
+					throw new Exception (__("La consigne doit être définie!",__FILE__));
 				}
+				$value .= $this->chercheCmds($consigne);
+				$value .= $this->chercheVariables($consigne);
 			}
-			// recherche de variables dans etat"
-			preg_match_all("/variable\((.*?)\)/", $etat, $matches);
-			foreach ($matches[1] as $variable) {
-				$value .= '#variable(' . $variable . ')#';
-			}
-			// recherche de commandes dans "mesure"
-			$mesure = $this->getConfiguration('mesure');
-			preg_match_all("/#([0-9]+)#/", $mesure, $matches);
-			foreach ($matches[1] as $cmd_id) {
-				$cmd = self::byId($cmd_id);
-				if (is_object($cmd) && $cmd->getType() == 'info') {
-					$value .= '#' . $cmd_id . '#';
-				}
-			}
-			// recherche de variables dans etat"
-			preg_match_all("/variable\((.*?)\)/", $mesure, $matches);
-			foreach ($matches[1] as $variable) {
-				$value .= '#variable(' . $variable . ')#';
-			}
+
+			$value .= $this->chercheCmds($mesure);
+			$value .= $this->chercheVariables($mesure);
 			$this->setValue($value);
 		}
 	}
@@ -363,27 +376,29 @@ class defautsCmd extends cmd {
 	}
 
 	public function calculSurveillance () {
-		$etat =jeedom::evaluateExpression($this->getConfiguration('etat'));
-
-		if ( $etat == 1 && $this->getConfiguration('en',1) == 0 )  {
-			return 0;
-		}
-		if ( $etat == 0 && $this->getConfiguration('hors',1) == 0 )  {
-			return 0;
-		}
-
 		$mesure =jeedom::evaluateExpression($this->getConfiguration('mesure'));
 		$limite =jeedom::evaluateExpression($this->getConfiguration('limite'));
-		$invert = jeedom::evaluateExpression($this->getConfiguration('invert'));
-
-		if ($invert == 1) {
-			$etat = $etat==1 ? 0 : 1;
-		}
-
-		if ($etat == 1) {
-			$return = $mesure > $limite ? 0 : 1;
-		} else {
-			$return = $mesure < $limite ? 0 : 1;
+		switch ($this->getLogicalId()) {
+		case 'surveillance':
+			$etat =jeedom::evaluateExpression($this->getConfiguration('etat'));
+			$invert = jeedom::evaluateExpression($this->getConfiguration('invert'));
+			if ($invert == 1) {
+				$etat = $etat==1 ? 0 : 1;
+			}
+			if ($etat == 1) {
+				$return = $mesure > $limite ? 0 : 1;
+			} else {
+				$return = $mesure < $limite ? 0 : 1;
+			}
+			break;
+		case 'survConsigne':
+			$consigne =jeedom::evaluateExpression($this->getConfiguration('consigne'));
+			log::add("defauts","debug","Consigne : " . $consigne);
+			log::add("defauts","debug","Mesure   : " . $mesure);
+			log::add("defauts","debug","Limite   : " . $limite);
+			log::add("defauts","debug","Diff     : " . abs($consigne - $mesure));
+			$return = abs($consigne - $mesure) > $limite ? 1 : 0;
+			break;
 		}
 		$this->setCache("alertTime",time());
 		return $return;
@@ -436,6 +451,7 @@ class defautsCmd extends cmd {
 
 	// Mise à jour de l'historique sur la base d'une nouvelle liste
 	public function actualiseHistorique($liste) {
+		$value = "";
 		if ($this->getLogicalId() == 'historique') {
 			$this->setCache("liste", json_encode($liste));
 			$value .= "<div style='text-align:left'>";
@@ -458,7 +474,7 @@ class defautsCmd extends cmd {
 	// Purge des éléments expirés de l'historique
 	public function purgeHisto () {
 		if ($this->getLogicalId() == 'historique') {
-			log::add("defauts","debug","Lancement de purgeHisto");
+			log::add("defauts","debug",$this->getEqLogic()->getName() . ": Lancement de purgeHisto");
 			$retention = $this->dateHistoRetention();
 			$liste = json_decode($this->getCache("liste"), true);
 			for ($i = count($liste); $i > 0; $i--) {
@@ -475,12 +491,12 @@ class defautsCmd extends cmd {
 	// Exécution d'une commande
 	public function execute ($_options = array()) {
 		if ($this->getLogicalId() == 'acquitter') {
-			log::add("defauts","debug","execute acquitter" );
+			log::add("defauts","debug",$this->getEqLogic()->getName() . ": execute acquitter" );
 			$this->acquittement();
 		}
 
 		if ($this->getLogicalId() == 'defaut') {
-			log::add("defauts","debug","execute defaut" );
+			log::add("defauts","debug",$this->getEqLogic()->getName() . ": execute defaut" );
 
 			// L'ancienne valeur de la commande
 			$oldValue=$this->execCmd();
@@ -495,7 +511,7 @@ class defautsCmd extends cmd {
 			$cmds = cmd::byEqLogicId($this->getEqLogic_id(),"info");
 			$cmdsEnDefaut = [];
 			foreach ($cmds as $cmd) {
-				if ($cmd->getLogicalId() != "surveillance") {
+				if (($cmd->getLogicalId() != "surveillance") && ($cmd->getLogicalId() != "survConsigne")) {
 					continue;
 				}
 				if ($cmd->execCmd() == 1) {
@@ -503,7 +519,7 @@ class defautsCmd extends cmd {
 				}
 			}
 
-			// Enrgistremet de la nouvelle liste des commandes en défaut
+			// Enregistremet de la nouvelle liste des commandes en défaut
 			$this->setCache("cmdsEnDefaut", $cmdsEnDefaut);
 
 			// Calcul de la nouvelle valeur
@@ -546,7 +562,7 @@ class defautsCmd extends cmd {
 		}
 
 		if ($this->getLogicalId() == "historique") {
-			log::add("defauts","debug","execute historique" );
+			log::add("defauts","debug",$this->getEqLogic()->getName() . ": execute historique" );
 			$liste = json_decode($this->getCache("liste"), true);
 			$dernierDate = $this->dateHistoRetention();
 			if ( ! is_array($liste)) {
@@ -557,11 +573,13 @@ class defautsCmd extends cmd {
 				$dernierDate = $liste[0]["time"];
 			}
 			$surveillances = cmd::byEqLogicIdAndLogicalId($this->getEqLogic_id(),"surveillance",true);
-			foreach ($surveillances as $surveillance) {
-				if ($surveillance->execCmd() == 1) {
-					$date = strtotime($surveillance->getValueDate());
+			$survConsignes = cmd::byEqLogicIdAndLogicalId($this->getEqLogic_id(),"survConsigne",true);
+			$survs = array_merge($surveillances,$survConsignes);
+			foreach ($survs as $surv) {
+				if ($surv->execCmd() == 1) {
+					$date = strtotime($surv->getValueDate());
 					if ($date > $dernierDate) {
-						$entry=array("time"=>$date,"nom"=>$surveillance->getName());
+						$entry=array("time"=>$date,"nom"=>$surv->getName());
 						$liste[]=$entry;
 					}
 				}
@@ -575,8 +593,8 @@ class defautsCmd extends cmd {
 			return $this->actualiseHistorique($liste);
 		}
 
-		if ($this->getLogicalId() == 'surveillance') {
-			log::add("defauts","debug","execute surveillance" );
+		if ($this->getLogicalId() == 'surveillance' || $this->getLogicalId() == 'survConsigne') {
+			log::add("defauts","debug",$this->getEqLogic()->getName() . ": execute " . $this->getName() );
 			$etat =jeedom::evaluateExpression($this->getConfiguration('etat'));
 
 			if ( $etat == 1 && $this->getConfiguration('en',1) == 0 )  {
@@ -604,6 +622,7 @@ class defautsCmd extends cmd {
 			log::add("defauts",$level,"$eqName: $cmdName: $actuValue => $newValue");
 			return $newValue;
 		}
+
 	}
 
 	/*     * **********************Getteur Setteur*************************** */

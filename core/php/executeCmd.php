@@ -51,8 +51,8 @@ if ($cmd->getEqType() != "defauts") {
 	exit (1);
 }
 
-if ($cmd->getLogicalId() != "surveillance") {
-	log::add("defauts","error","Le logicalId de la commande " . $options['c'] . " n'est pas \"surveillance\"");
+if (($cmd->getLogicalId() != "surveillance") && ($cmd->getLogicalId() != "survConsigne")) {
+	log::add("defauts","error","Le logicalId de la commande " . $options['c'] . " n'est pas celui d'une surveillance");
 	exit (1);
 }
 

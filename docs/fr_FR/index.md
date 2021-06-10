@@ -6,6 +6,8 @@ Le plugin **Défauts** permet de détecter des défauts en vérifiant la cohére
 - Une lampe éteinte mais consomation de plus de 1 watt (mauvais état de retour).
 - Une pompe enclenchée mais pas de débit.
 
+Le lugin peut aussi des deéfaut lorsque la valuer d'une mesure s'écarte trop d'une consigne.
+
 # Configuration du plugin
 Le plugin ne nécessite aucune configuration, il faut juste l’activer.
 
@@ -20,9 +22,10 @@ jusqu'à ce qu'elle soit acquittée même si l'incohérence disparaît.
 
 ## Création
 Les équipements **Défauts** sont créés sur la page du plugin qui est atteignable via le menu `plugins`==> `Monitoring` ==> `Défauts`.
-L'équipement est créé avec deux commandes:
-+ Une commande **defaut**, de type info, qui inquique si une incohérence est ou a été détectée par une des surveillances de l'équipement.
+L'équipement est créé avec trois commandes:
++ Une commande **defaut**, de type info, qui indique si une incohérence est ou a été détectée par une des surveillances de l'équipement.
 + Une commande **Acquittement**, de type action, pour acquitter les défauts détectés.
++ Une commande **historique**, de type info, qui permet d'afficher les dernières anomalies détectées.
 
 ## Configuration
 ### De l'équipement
@@ -32,11 +35,11 @@ Outre les configurations habituelles, l'équipement a deux paramêtres permettan
 * **Délais** *(visible uniquement si l'auto acquittement est activé)*  
    Le délais d'attente
    
-### Des surveillances
-Le panneau `surveillances` permet de géger les surveillances de l'équipement. Le bouton `Ajouter une surveillance` ajoute une surveillance à l'équipement.
+### Des surveillances de cohérence
+Le panneau `surveillances` permet de géger les surveillances de l'équipement. Le bouton `Ajouter une surveillance` ajoute une surveillance de cohérence à l'équipement.
 
-#### Les surveillances ont plusieurs paramètres:
-![configuration d'une surveillance](../images/config_surveillance.png)
+#### Les surveillances de cohérence ont plusieurs paramètres:
+![configuration d'une surveillance de cohérence](../images/config_surveillance.png)
 * ***Nom :*** Nom de la surveillance.
 * ***Etat :*** Info binaire à surveiller.
 * ***Mesure :*** Info numérique à surveiller.
@@ -47,6 +50,18 @@ Le panneau `surveillances` permet de géger les surveillances de l'équipement. 
 * ***Hors :*** Surveillance active lorsque l'état est à 0.
 * ***Afficher :*** Affichage de l'info.
 * ***Affichage inversé :*** Inversion de la valeur pour l'affichage (permet d'avoir une icône verte si tout va bien et rouge en cas de défaut).
+* ***Historiser :*** Historisation de l'info.
+
+### Des surveillances de consigne
+![configuration d'une surveillance de consigne](../images/config_consigne.png)
+* ***Nom :*** Nom de la surveillance.
+* ***Etat :*** Info binaire utilisée pour controler le fonctonnement de lasurveillance.
+* ***Mesure :*** Info numérique, un defaut sera signalé si la valeur de cette mesure est trop distante de la valeur de la consigne.
+* ***Consigne :*** Info numérique, valeur que la masure doit atteindre.
+* ***Limite :*** Un défaut est remonté si la valeur absolue de la différence entre la cngne et la mesure est supérieur à cette limite.
+* ***Temposiration :*** Période, en secondes, durant laquelle la surveillance est désactivée après un changement de l'***état***.
+* ***En :*** La surveillance est activée lorsque l'***état*** est à 1 si cette option est activée.
+* ***Hors :*** La surveillance est activée lorsque l'***état*** est à 0 si cette option est activée.
 * ***Historiser :*** Historisation de l'info.
 
 ### De l'historique
