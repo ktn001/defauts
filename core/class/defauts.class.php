@@ -255,12 +255,12 @@ class defautsCmd extends cmd {
 
 	/*     * *********************Methode d'instance************************* */
 
-	/*
-	 * Non obligatoire permet de demander de ne pas supprimer les commandes même si elles ne sont pas dans la nouvelle configuration de l'équipement envoyé en JS
-	  public function dontRemoveCmd() {
-	  return true;
-	  }
-	 */
+	public function dontRemoveCmd() {
+		if ($this.getLogicalId() in_array ("defaut","acquitter","historique")) {
+			return true;
+		}
+		return false;
+	}
 
 	public function widgetPossibility($_key = '', $_default = true){
 		if ($this->getLogicalId() == "defaut") {
