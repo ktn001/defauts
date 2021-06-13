@@ -256,7 +256,7 @@ class defautsCmd extends cmd {
 	/*     * *********************Methode d'instance************************* */
 
 	public function dontRemoveCmd() {
-		if ($this.getLogicalId() in_array ("defaut","acquitter","historique")) {
+		if (in_array ($this->getLogicalId(), array("defaut","acquitter","historique"))) {
 			return true;
 		}
 		return false;
