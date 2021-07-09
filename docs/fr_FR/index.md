@@ -6,7 +6,7 @@ Le plugin **Défauts** permet de détecter des défauts en vérifiant la cohére
 - Une lampe éteinte mais consomation de plus de 1 watt (mauvais état de retour).
 - Une pompe enclenchée mais pas de débit.
 
-Le plugin peut aussi des défaut lorsque la valeur d'une mesure s'écarte trop d'une consigne.
+Le plugin peut aussi remonter des défaut lorsque la valeur d'une mesure s'écarte trop d'une consigne.
 
 # Configuration du plugin
 Le plugin ne nécessite aucune configuration, il faut juste l’activer.
