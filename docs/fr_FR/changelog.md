@@ -4,6 +4,10 @@
 
 Pour rappel s’il n’y a pas d’information sur la mise à jour, c’est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
+## v1.4.0 (16/07/21)
+Ajout de la recherche de commande orpheline.
+Menu jeedom: Analyses => Equipements => Commandes orphelines
+
 ## V1.3.0 (11/06/21)
 + Ajout de surveillance de suivi de consigne
 

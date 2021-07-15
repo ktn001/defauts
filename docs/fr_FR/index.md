@@ -6,7 +6,7 @@ Le plugin **Défauts** permet de détecter des défauts en vérifiant la cohére
 - Une lampe éteinte mais consomation de plus de 1 watt (mauvais état de retour).
 - Une pompe enclenchée mais pas de débit.
 
-Le lugin peut aussi des deéfaut lorsque la valuer d'une mesure s'écarte trop d'une consigne.
+Le plugin peut aussi remonter des défaut lorsque la valeur d'une mesure s'écarte trop d'une consigne.
 
 # Configuration du plugin
 Le plugin ne nécessite aucune configuration, il faut juste l’activer.
@@ -45,7 +45,7 @@ Le panneau `surveillances` permet de géger les surveillances de l'équipement. 
 * ***Mesure :*** Info numérique à surveiller.
 * ***Limite :*** Valeur dant être atteinte pas le mesure lorsque l'état est à 1 (incohérence si cette valeur n'est pas atteinte. Il y a aussi incohérence si cette valeur est atteinte alors que l'état est à 0.
 * ***Temporisation :*** Délais pour atteindre la limite après changement d'état.
-* ***Inverser :*** Inversion de la surveillance. Lamesure doit être supérieure à la limite lorsque l'état est à 0.
+* ***Inverser :*** Inversion de la surveillance. La mesure doit être supérieure à la limite lorsque l'état est à 0.
 * ***En :*** Surveillance active lorsque l'état est à 1.
 * ***Hors :*** Surveillance active lorsque l'état est à 0.
 * ***Afficher :*** Affichage de l'info.
@@ -69,7 +69,7 @@ Le panneau `surveillances` permet de géger les surveillances de l'équipement. 
 
 La commande *historique* et son widget permettent de voir les cinq derniers défauts qui se sont produits. Le nombre d'événements listés est configurable.
 
-Une durée rétention de events listé peut-être configurée. Le events qui se sont produit avant la durée de rétention sont retiré de la liste. Ainsi les event qui se sont produit il y a plus de 2 jours sont retirés de la liste si la rétention est de 2 jours.
+Une durée de rétention des events listés peut-être configurée. Les events qui se sont produit avant la durée de rétention sont retiré de la liste. Ainsi les events qui se sont produit il y a plus de 2 jours sont retirés de la liste si la rétention est de 2 jours.
 
 #### L'historique a plusieurs paramètres:
 
