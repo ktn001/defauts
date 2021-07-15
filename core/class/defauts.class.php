@@ -61,41 +61,27 @@ class defauts extends eqLogic {
 		}
 	}
 
-	/*
-	 * Fonction exécutée automatiquement toutes les 5 minutes par Jeedom
-	  public static function cron5() {
-	  }
-	 */
-
-	/*
-	 * Fonction exécutée automatiquement toutes les 10 minutes par Jeedom
-	  public static function cron10() {
-	  }
-	 */
-
-	/*
-	 * Fonction exécutée automatiquement toutes les 15 minutes par Jeedom
-	  public static function cron15() {
-	  }
-	 */
-
-	/*
-	 * Fonction exécutée automatiquement toutes les 30 minutes par Jeedom
-	  public static function cron30() {
-	  }
-	 */
-
-	/*
-	 * Fonction exécutée automatiquement toutes les heures par Jeedom
-	  public static function cronHourly() {
-	  }
-	 */
-
-	/*
-	 * Fonction exécutée automatiquement tous les jours par Jeedom
-	  public static function cronDaily() {
-	  }
-	 */
+	public static function deadCmd() {
+		$return = array();
+		foreach (eqLogic::byType('defauts') as $defauts) {
+			foreach ($defauts->getCmd() as $cmd) {
+				$cfgs = array(
+					'etat' => 'Etat',
+					'mesure' => 'Mesure',
+					'consigne' => 'Consigne'
+				);
+				foreach ($cfgs as $cfg => $cfgName) {
+					preg_match_all("/#(\d+)#/", $cmd->getConfiguration($cfg), $matches);
+					foreach ($matches[1] as $cmd_id) {
+						if (!cmd::byId(str_replace('#','', $cmd_id))) {
+							$return[] = array('detail' => 'defauts ' . $defauts->getHumanName() . ' dans la commande ' . $cmd->getName(), 'help' => $cfgName, 'who' => '#' . $cmd_id . '#');
+						}
+					}
+				}
+			}
+		}
+		return $return;
+	}
 
 	/*     * *********************Méthodes d'instance************************* */
 
@@ -255,12 +241,12 @@ class defautsCmd extends cmd {
 
 	/*     * *********************Methode d'instance************************* */
 
-	public function dontRemoveCmd() {
-		if (in_array ($this->getLogicalId(), array("defaut","acquitter","historique"))) {
-			return true;
-		}
-		return false;
-	}
+	/*
+	 * Non obligatoire permet de demander de ne pas supprimer les commandes même si elles ne sont pas dans la nouvelle configuration de l'équipement envoyé en JS
+	  public function dontRemoveCmd() {
+	  return true;
+	  }
+	 */
 
 	public function widgetPossibility($_key = '', $_default = true){
 		if ($this->getLogicalId() == "defaut") {
