@@ -170,8 +170,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				    <div>{{Consigne}}</div>
 				    <div><span style="width:80px; display:inline-block">{{Limite}}</span><span>{{Temporisation}}</span></div>
 				</th>
-				<th>{{paramètres}}</th>
-				<th width="200px">{{Options}}</th>
+				<thi style="width:340px">{{paramètres}}</th>
+				<th style="width:200px">{{Options}}</th>
 				<?php
 				if (version_compare(jeedom::version(), '4.3.0', '>=')) {
 				?>
@@ -179,7 +179,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				<?php
 				}
 				?>
-				<th width="140px">{{Actions}}</th>
+				<th style="width:140px">{{Actions}}</th>
 			    </tr>
 			</thead>
 			<tbody>
