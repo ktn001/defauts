@@ -166,13 +166,20 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				    <div>{{Etat}}</div>
 				    <div>{{Mesure}}</div>
 				</th>
-				<th style="width:400px">
+				<th style="width:300p">
 				    <div>{{Consigne}}</div>
 				    <div><span style="width:80px; display:inline-block">{{Limite}}</span><span>{{Temporisation}}</span></div>
 				</th>
 				<th>{{paramètres}}</th>
 				<th width="200px">{{Options}}</th>
-				<th width="150px"></th>
+				<?php
+				if (version_compare(jeedom::version(), '4.3.0', '>=')) {
+				?>
+				    <th>{{Etat}}</th>
+				<?php
+				}
+				?>
+				<th width="140px">{{Actions}}</th>
 			    </tr>
 			</thead>
 			<tbody>

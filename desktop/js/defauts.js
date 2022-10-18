@@ -281,9 +281,9 @@ function _celOptions(_cmd) {
 }
 
 /*
- * Fonction créant la cellule "Gestion"
+ * Fonction créant la cellule "Action"
  */
-function _celGestion(_cmd) {
+function _celAction(_cmd) {
 	cel = '<td>';
 	if (is_numeric(_cmd.id)) {
 		cel += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
@@ -319,7 +319,10 @@ function addCmdToTable(_cmd) {
     tr += _celArguments(_cmd);
     tr += _celParametre(_cmd);
     tr += _celOptions(_cmd);
-    tr += _celGestion(_cmd);
+    if (typeof jeeFrontEnd !== 'undefined' && jeeFrontEnd.jeedomVersion !== 'undefined') {
+	tr += '<td><span class="cmdAttr" data-l1key="htmlstate"></span></td>';
+    }
+    tr += _celAction(_cmd);
     tr += '</tr>';
 
     $('#table_cmd tbody').append(tr);
