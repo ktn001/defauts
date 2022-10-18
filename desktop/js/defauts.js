@@ -287,9 +287,7 @@ function _celAction(_cmd) {
 	cel = '<td>';
 	if (is_numeric(_cmd.id)) {
 		cel += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
-		if (_cmd.type == "info") {
-			cel += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> {{Tester}}</a>';
-		}
+		cel += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> {{Tester}}</a>';
 	}
 	if (_cmd.logicalId != 'defaut' && _cmd.logicalId != 'acquitter' && _cmd.logicalId != 'historique') {
 		cel += '<i class="fas fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i></td>';
