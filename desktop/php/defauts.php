@@ -162,7 +162,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				<th width="50px">ID</th>
 				<th style="width:130px">{{Nom}}</th>
 				<th style="width:130px">{{Fonction}}</th>
-				<th style="width:400px">
+				<th style="width:280px">
 				    <div>{{Etat}}</div>
 				    <div>{{Mesure}}</div>
 				</th>
@@ -171,7 +171,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				    <div><span style="width:80px; display:inline-block">{{Limite}}</span><span>{{Temporisation}}</span></div>
 				</th>
 				<th style="width:380px">{{paramètres}}</th>
-				<th style="width:200px">{{Options}}</th>
+				<th style="width:180px">{{Options}}</th>
 				<?php
 				if (version_compare(jeedom::version(), '4.3.0', '>=')) {
 				?>
