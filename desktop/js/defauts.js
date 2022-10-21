@@ -99,19 +99,19 @@ function addCmdToTable(_cmd) {
     tr += '<td>';
     switch (_cmd.logicalId) {
 	case 'defaut':
-	    tr += 'Défaut';
+	    tr += '{{Défaut}}';
 	    break;
 	case 'acquitter':
-	    tr += 'Acquittement';
+	    tr += '{{Acquittement}}';
 	    break;
 	case 'historique':
-	    tr += 'Historique';
+	    tr += '{{Historique}}';
 	    break;
 	case 'surveillance':
-	    tr += 'Surveillance';
+	    tr += '{{Surveillance}}';
 	    break;
 	case 'survConsigne':
-	    tr += 'Consigne';
+	    tr += '{{Consigne}}';
 	    break;
     }
     tr += '</td>';
