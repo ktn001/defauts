@@ -266,9 +266,9 @@ function addCmdToTable(_cmd) {
     if (typeof jeeFrontEnd !== 'undefined' && jeeFrontEnd.jeedomVersion !== 'undefined') {
 	tr += '<td><span class="cmdAttr" data-l1key="htmlstate"></span></td>';
     }
-    tr += '<td>';
 
     // ACTIONS
+    tr += '<td>';
     if (is_numeric(_cmd.id)) {
 	tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
 	if (_cmd.type == 'action' || typeof jeeFrontEnd === 'undefined') {
