@@ -1,20 +1,32 @@
 {
-	"id" : "defauts",
-	"name" : "Défauts",
-	"description" : {
-		"fr_FR": "Surveillance de cohérence état/mesure"
+	"id": "defauts",
+	"name": "Défauts",
+	"description": {
+		"fr_FR": "Surveillance de cohérence état/mesure",
+		"en_US": "State/Measurement Consistency Monitoring",
+		"es_ES": "Supervisión de la coherencia entre el estado y la medición",
+		"de_DE": "Überwachung der Konsistenz zwischen Zustand und Messwert",
+		"it_IT": "Monitoraggio della coerenza tra stato e misura",
+		"pt_PT": "Monitorização da coerência entre o estado e a medição"
 	},
-	"licence" : "AGPL",
-	"author" : "ktn",
-	"require" : "4.1.20",
-	"category" : "monitoring",
-	"hasDependency" : false,
-	"hasOwnDeamon" : false,
-	"maxDependancyInstallTime" : 0,
-	"changelog" : "https://docsjeedom.ockolly.ch/plugins/defauts/#language#/changelog.html",
-	"documentation" : "https://docsjeedom.ockolly.ch/plugins/defauts/#language#/index.html",
-	"link" : "https://community.jeedom.com/tag/plugin-defauts",
-	"language" : ["fr_FR"],
+	"licence": "AGPL",
+	"author": "ktn",
+	"require": "4.1.20",
+	"category": "monitoring",
+	"hasDependency": false,
+	"hasOwnDeamon": false,
+	"maxDependancyInstallTime": 0,
+	"changelog": "https://docsjeedom.ockolly.ch/plugins/defauts/#language#/changelog.html",
+	"documentation": "https://docsjeedom.ockolly.ch/plugins/defauts/#language#/index.html",
+	"link": "https://community.jeedom.com/tag/plugin-defauts",
+	"language": [
+		"de_DE",
+		"en_US",
+		"es_ES",
+		"fr_FR",
+		"it_IT",
+		"pt_PT"
+	],
 	"compatibility": [
 		"smart",
 		"luna",
